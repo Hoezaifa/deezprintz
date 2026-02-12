@@ -6,7 +6,7 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Deez Prints",
-  description: " ",
+  description: "Premium Streetwear",
 };
 
 import { Navbar } from "@/components/layout/Navbar";
