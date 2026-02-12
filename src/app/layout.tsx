@@ -5,8 +5,8 @@ import "./globals.css";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Deez Prints | Islamic Gifts & Stationery",
-  description: "Premium Islamic-themed gifts, frames, and stationery.",
+  title: "Deez Prints",
+  description: " ",
 };
 
 import { Navbar } from "@/components/layout/Navbar";

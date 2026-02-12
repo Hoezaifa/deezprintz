@@ -3,14 +3,30 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { Container } from "@/components/ui/container"
+import { Button } from "@/components/ui/button"
 
 export default function AdminPage() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
     const [orders, setOrders] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchOrders()
-    }, [])
+        if (isAuthenticated) {
+            fetchOrders()
+        }
+    }, [isAuthenticated])
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (email === "admin@deez.com" && password === "123123123") {
+            setIsAuthenticated(true)
+        } else {
+            alert("Invalid credentials")
+        }
+    }
 
     const fetchOrders = async () => {
         try {
@@ -28,17 +44,62 @@ export default function AdminPage() {
         }
     }
 
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen pt-24 pb-20 bg-background flex items-center justify-center">
+                <Container>
+                    <div className="max-w-md mx-auto bg-zinc-900 border border-white/10 p-8 rounded-xl shadow-2xl">
+                        <h1 className="text-2xl font-bold text-white mb-6 text-center">Admin Login</h1>
+                        <form onSubmit={handleLogin} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-400 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none"
+                                    placeholder="admin@deez.com"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-400 mb-1">Password</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none"
+                                    placeholder="••••••••"
+                                />
+                            </div>
+                            <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold">
+                                Login
+                            </Button>
+                        </form>
+                    </div>
+                </Container>
+            </div>
+        )
+    }
+
     return (
         <div className="min-h-screen pt-24 pb-20 bg-black text-white">
             <Container>
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-3xl font-bold">Order Dashboard</h1>
-                    <button
-                        onClick={fetchOrders}
-                        className="px-4 py-2 bg-white text-black rounded hover:bg-zinc-200"
-                    >
-                        Refresh
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={fetchOrders}
+                            className="px-4 py-2 bg-white text-black rounded hover:bg-zinc-200"
+                        >
+                            Refresh
+                        </button>
+                        <button
+                            onClick={() => setIsAuthenticated(false)}
+                            className="px-4 py-2 border border-white/20 rounded hover:bg-zinc-900"
+                        >
+                            Logout
+                        </button>
+                    </div>
                 </div>
 
                 {loading ? (
