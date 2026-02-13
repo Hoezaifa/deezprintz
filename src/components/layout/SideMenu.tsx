@@ -134,9 +134,15 @@ export function SideMenu({ isOpen, onClose, navLinks }: SideMenuProps) {
                             </Link>
 
                             <div className="flex gap-6 text-gray-400">
-                                <Facebook className="w-5 h-5 hover:text-white cursor-pointer" />
-                                <Instagram className="w-5 h-5 hover:text-white cursor-pointer" />
-                                <Youtube className="w-5 h-5 hover:text-white cursor-pointer" />
+                                <Link href="https://www.facebook.com/profile.php?id=61556303432172" target="_blank" rel="noopener noreferrer">
+                                    <Facebook className="w-5 h-5 hover:text-white cursor-pointer" />
+                                </Link>
+                                <Link href="https://www.instagram.com/deez_prints/" target="_blank" rel="noopener noreferrer">
+                                    <Instagram className="w-5 h-5 hover:text-white cursor-pointer" />
+                                </Link>
+                                <Link href="#">
+                                    <Youtube className="w-5 h-5 hover:text-white cursor-pointer" />
+                                </Link>
                             </div>
                         </div>
                     </motion.div>

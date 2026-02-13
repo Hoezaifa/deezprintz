@@ -10,7 +10,7 @@ export interface CartItem extends Product {
 
 interface CartContextType {
     items: CartItem[]
-    addItem: (product: Product, size?: string) => void
+    addItem: (product: Product, size?: string, quantity?: number) => void
     removeItem: (productId: string) => void
     updateQuantity: (productId: string, quantity: number) => void
     clearCart: () => void
@@ -47,19 +47,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }, [items, isLoaded])
 
-    const addItem = (product: Product, size?: string) => {
+    const addItem = (product: Product, size?: string, quantity: number = 1) => {
         setItems(currentItems => {
             const existingItem = currentItems.find(item => item.id === product.id && item.selectedSize === size)
 
             if (existingItem) {
                 return currentItems.map(item =>
                     item.id === product.id && item.selectedSize === size
-                        ? { ...item, quantity: item.quantity + 1 }
+                        ? { ...item, quantity: item.quantity + quantity }
                         : item
                 )
             }
 
-            return [...currentItems, { ...product, quantity: 1, selectedSize: size }]
+            return [...currentItems, { ...product, quantity: quantity, selectedSize: size }]
         })
         setCartOpen(true)
     }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Minus, Plus, ShoppingCart, Heart, Share2, ArrowRight } from "lucide-react"
@@ -20,25 +20,51 @@ export default function ProductClient({ product }: ProductClientProps) {
     const { addItem, setCartOpen } = useCart()
     const router = useRouter()
 
+    const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || "Black")
     const [selectedSize, setSelectedSize] = useState("L")
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState(0)
+    const [isMounted, setIsMounted] = useState(false)
 
-    // Mock images (since we don't have real ones yet)
-    // We'll use the placeholder logic or repeated product image
-    const images = Array.from({ length: 4 }).map((_, i) => ({
-        id: i,
-        src: product.image, // In reality, these would be different
-        alt: `${product.title} View ${i + 1}`
-    }))
+    // Handle hydration mismatch for animations
+    // Only render AnimatePresence after client-side hydration is complete
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    // Generate 4 distinct image paths for the gallery
+    // Indices 0-3 map to suffixes -1 to -4
+    const images = Array.from({ length: 4 }).map((_, i) => {
+        if (!product.image) return { id: i, src: null, alt: "Placeholder" }
+
+        // Remove existing extension and suffix if any, then append new suffix
+        // We assume product.image is the "base" path or one of the variants
+        // If product.image is "/assets/.../shirt.jpg", we want "/assets/.../shirt-1.jpg" etc.
+
+        // Remove extension first
+        let base = product.image.replace(/\.[^/.]+$/, "")
+        // Remove trailing numbers like -1, -2 if they exist
+        base = base.replace(/-\d+$/, "")
+
+        const ext = product.image.split('.').pop() || 'jpg';
+        const src = `${base}-${i + 1}.${ext}`;
+
+        return {
+            id: i,
+            src,
+            alt: `${product.title} View ${i + 1}`
+        }
+    })
 
     const handleAddToCart = () => {
-        addItem(product, selectedSize)
+        // You might want to include selectedColor in the cart item unique ID or metadata
+        // For now, just adding the product
+        addItem({ ...product, id: `${product.id}-${selectedColor}-${selectedSize}` }, selectedSize, quantity)
         setCartOpen(true)
     }
 
     const handleBuyNow = () => {
-        addItem(product, selectedSize)
+        addItem({ ...product, id: `${product.id}-${selectedColor}-${selectedSize}` }, selectedSize, quantity)
         router.push("/checkout")
     }
 
@@ -56,18 +82,35 @@ export default function ProductClient({ product }: ProductClientProps) {
                         <div className="relative aspect-square w-full rounded-3xl bg-zinc-900/50 border border-white/10 overflow-hidden group">
                             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/5 to-transparent opacity-50" />
 
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeImage}
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="w-full h-full p-8 flex items-center justify-center"
-                                >
-                                    {product.image ? (
+                            {isMounted ? (
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeImage}
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="w-full h-full p-8 flex items-center justify-center"
+                                    >
+                                        {images[activeImage]?.src ? (
+                                            <Image
+                                                src={images[activeImage].src!}
+                                                alt={product.title}
+                                                fill
+                                                className="object-contain"
+                                                priority
+                                            />
+                                        ) : (
+                                            <StreetwearPlaceholder type="shirt" className="w-full h-full" />
+                                        )}
+                                    </motion.div>
+                                </AnimatePresence>
+                            ) : (
+                                /* Static render for SSR/Correction to avoid hydration mismatch */
+                                <div className="w-full h-full p-8 flex items-center justify-center">
+                                    {images[0]?.src ? (
                                         <Image
-                                            src={product.image}
+                                            src={images[0].src!}
                                             alt={product.title}
                                             fill
                                             className="object-contain"
@@ -76,8 +119,8 @@ export default function ProductClient({ product }: ProductClientProps) {
                                     ) : (
                                         <StreetwearPlaceholder type="shirt" className="w-full h-full" />
                                     )}
-                                </motion.div>
-                            </AnimatePresence>
+                                </div>
+                            )}
 
                             {/* Badges/Tags could go here */}
                             {product.category === 'jerseys' && (
@@ -94,14 +137,14 @@ export default function ProductClient({ product }: ProductClientProps) {
                                     key={idx}
                                     onClick={() => setActiveImage(idx)}
                                     className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx
-                                            ? "border-orange-500 ring-2 ring-orange-500/20 scale-95"
-                                            : "border-transparent bg-zinc-900/50 hover:bg-zinc-800"
+                                        ? "border-orange-500 ring-2 ring-orange-500/20 scale-95"
+                                        : "border-transparent bg-zinc-900/50 hover:bg-zinc-800"
                                         }`}
                                 >
                                     <div className="absolute inset-0 flex items-center justify-center p-2">
-                                        {product.image ? (
+                                        {img.src ? (
                                             <Image
-                                                src={product.image}
+                                                src={img.src}
                                                 alt="Thumbnail"
                                                 fill
                                                 className="object-contain"
@@ -110,11 +153,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                                             <StreetwearPlaceholder type="shirt" className="w-full h-full scale-75" />
                                         )}
                                     </div>
-                                    {/* Mock Color Overlay for "different colors" */}
-                                    {idx > 0 && !product.image && (
-                                        <div className={`absolute inset-0 mix-blend-overlay opacity-30 ${idx === 1 ? 'bg-red-500' : idx === 2 ? 'bg-blue-500' : 'bg-green-500'
-                                            }`} />
-                                    )}
+                                    {/* Mock Color Overlay: Remove or update if using real images */}
                                 </button>
                             ))}
                         </div>
@@ -147,16 +186,17 @@ export default function ProductClient({ product }: ProductClientProps) {
                         </p>
 
                         <div className="space-y-8 mb-auto">
-                            {/* Color Selector (Visual Only for now as requested) */}
+                            {/* Color Selector */}
                             <div className="space-y-3">
                                 <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Select Color</span>
                                 <div className="flex flex-wrap gap-3">
-                                    {["Black", "White", "Navy", "Charcoal"].map((color, i) => (
+                                    {(product.colors || ["Black", "White", "Navy", "Charcoal"]).map((color) => (
                                         <button
                                             key={color}
-                                            className={`px-4 py-2 rounded-lg border transition-all ${i === 0 // Default active
-                                                    ? "border-orange-500 bg-orange-500/10 text-white"
-                                                    : "border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
+                                            onClick={() => setSelectedColor(color)}
+                                            className={`px-4 py-2 rounded-lg border transition-all ${selectedColor === color
+                                                ? "border-orange-500 bg-orange-500/10 text-white"
+                                                : "border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
                                                 }`}
                                         >
                                             {color}
@@ -178,8 +218,8 @@ export default function ProductClient({ product }: ProductClientProps) {
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold transition-all border ${selectedSize === size
-                                                        ? "bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-                                                        : "bg-zinc-900 border-white/10 text-gray-400 hover:border-white/40 hover:text-white"
+                                                    ? "bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                                                    : "bg-zinc-900 border-white/10 text-gray-400 hover:border-white/40 hover:text-white"
                                                     }`}
                                             >
                                                 {size}

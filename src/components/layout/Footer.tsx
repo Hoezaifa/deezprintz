@@ -47,8 +47,8 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold text-white mb-4 tracking-widest uppercase text-xs">Stay Connected</h3>
                         <div className="flex gap-4 mb-6">
-                            <Link href="#" className="p-2 bg-secondary/20 rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/10"><Instagram className="h-4 w-4" /></Link>
-                            <Link href="#" className="p-2 bg-secondary/20 rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/10"><Facebook className="h-4 w-4" /></Link>
+                            <Link href="https://www.instagram.com/deez_prints/" target="_blank" rel="noopener noreferrer" className="p-2 bg-secondary/20 rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/10"><Instagram className="h-4 w-4" /></Link>
+                            <Link href="https://www.facebook.com/profile.php?id=61556303432172" target="_blank" rel="noopener noreferrer" className="p-2 bg-secondary/20 rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/10"><Facebook className="h-4 w-4" /></Link>
                             <Link href="#" className="p-2 bg-secondary/20 rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/10"><Twitter className="h-4 w-4" /></Link>
                         </div>
                         <p className="text-xs text-zinc-500">

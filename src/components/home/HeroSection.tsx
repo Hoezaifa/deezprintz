@@ -17,18 +17,18 @@ export function HeroSection() {
 
                 {/* Left Item (Jersey 1) */}
                 <motion.div
-                    initial={{ opacity: 0, x: -100, rotate: -10 }}
-                    animate={{ opacity: 1, x: 0, rotate: -5 }}
+                    initial={{ opacity: 0, x: -50, rotate: -10 }}
+                    animate={{ opacity: 1, x: 0, rotate: -6 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative group hidden lg:block"
+                    className="relative group hidden lg:flex lg:justify-center lg:items-center"
                 >
-                    <div className="absolute inset-0 bg-orange-500/20 blur-[60px] group-hover:bg-orange-500/30 transition-all duration-500" />
-                    <div className="relative z-10 w-[400px] h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+                    <div className="absolute inset-0 bg-orange-500/20 blur-[60px] group-hover:bg-orange-500/30 transition-all duration-500 rounded-full" />
+                    <div className="relative z-10 w-[350px] h-[350px] xl:w-[400px] xl:h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
                         <div className="relative w-full h-full flex items-center justify-center bg-zinc-900/50 border border-white/5 overflow-hidden rounded-2xl border-orange-500/20">
 
                             <div className="relative z-10 w-full h-full">
                                 <Image
-                                    src="/assets/hero/left-jersey.png"
+                                    src="/assets/hero/left-jersey-v2.png"
                                     alt="Left Jersey"
                                     fill
                                     className="object-cover"
@@ -44,10 +44,10 @@ export function HeroSection() {
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="relative flex flex-col items-center text-center"
+                    className="relative flex flex-col items-center text-center z-20"
                 >
                     {/* Glowing Centerpiece */}
-                    <div className="relative w-full aspect-square max-w-[500px]">
+                    <div className="relative w-full aspect-square max-w-[450px] xl:max-w-[500px]">
                         <div className="absolute inset-0 bg-white/10 blur-[80px] animate-pulse" />
                         <motion.div
                             animate={{ y: [0, -20, 0] }}
@@ -58,7 +58,7 @@ export function HeroSection() {
 
                                 <div className="relative z-10 w-full h-full">
                                     <Image
-                                        src="/assets/hero/center-hoodie.png"
+                                        src="/assets/hero/center-hoodie-v2.png"
                                         alt="Center Hoodie"
                                         fill
                                         className="object-cover"
@@ -72,18 +72,18 @@ export function HeroSection() {
 
                 {/* Right Item (Jersey 2) */}
                 <motion.div
-                    initial={{ opacity: 0, x: 100, rotate: 10 }}
-                    animate={{ opacity: 1, x: 0, rotate: 5 }}
+                    initial={{ opacity: 0, x: 50, rotate: 10 }}
+                    animate={{ opacity: 1, x: 0, rotate: 6 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="relative group hidden lg:block"
+                    className="relative group hidden lg:flex lg:justify-center lg:items-center"
                 >
-                    <div className="absolute inset-0 bg-zinc-500/20 blur-[60px] group-hover:bg-zinc-500/30 transition-all duration-500" />
-                    <div className="relative z-10 w-[400px] h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+                    <div className="absolute inset-0 bg-zinc-500/20 blur-[60px] group-hover:bg-zinc-500/30 transition-all duration-500 rounded-full" />
+                    <div className="relative z-10 w-[350px] h-[350px] xl:w-[400px] xl:h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
                         <div className="relative w-full h-full flex items-center justify-center bg-zinc-900/50 border border-white/5 overflow-hidden rounded-2xl border-zinc-500/20">
 
                             <div className="relative z-10 w-full h-full">
                                 <Image
-                                    src="/assets/hero/right-jersey.png"
+                                    src="/assets/hero/right-jersey-v2.png"
                                     alt="Right Jersey"
                                     fill
                                     className="object-cover"

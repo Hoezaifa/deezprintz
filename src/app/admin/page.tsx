@@ -4,6 +4,9 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
+import { OrderRow } from "@/components/admin/OrderRow"
+import { OrderSlip } from "@/components/admin/OrderSlip"
+import { AnimatePresence } from "framer-motion"
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -12,10 +15,14 @@ export default function AdminPage() {
 
     const [orders, setOrders] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
+    const [selectedOrder, setSelectedOrder] = useState<any | null>(null)
 
     useEffect(() => {
         if (isAuthenticated) {
             fetchOrders()
+            // Poll for new orders every 30 seconds
+            const interval = setInterval(fetchOrders, 30000)
+            return () => clearInterval(interval)
         }
     }, [isAuthenticated])
 
@@ -29,19 +36,104 @@ export default function AdminPage() {
     }
 
     const fetchOrders = async () => {
+        setLoading(true)
         try {
             const { data, error } = await supabase
                 .from('orders')
                 .select('*')
                 .order('created_at', { ascending: false })
 
-            if (error) throw error
-            setOrders(data || [])
+            if (error) {
+                console.error("Supabase error:", error)
+                // If table doesn't exist or other error, fallback to mock data for demo if needed
+                // But for now, let's just show empty or handle gracefully
+            }
+
+            // Add is_read field locally if it doesn't exist in DB yet (for backward compat)
+            const enhancedOrders = data?.map(o => ({
+                ...o,
+                is_read: o.is_read ?? false // Default to unread (false) if field missing
+            })) || []
+
+            setOrders(enhancedOrders)
         } catch (err) {
             console.error(err)
         } finally {
             setLoading(false)
         }
+    }
+
+    const handleToggleRead = async (id: string, currentStatus: boolean) => {
+        // Optimistic update
+        setOrders(orders.map(o => o.id === id ? { ...o, is_read: !currentStatus } : o))
+
+        try {
+            const { error } = await supabase
+                .from('orders')
+                .update({ is_read: !currentStatus })
+                .eq('id', id)
+
+            if (error) {
+                console.error("Supabase Error Details:", error)
+                throw error
+            }
+        } catch (err: any) {
+            console.error("Failed to update read status:", err)
+            // Revert on error
+            setOrders(orders.map(o => o.id === id ? { ...o, is_read: currentStatus } : o))
+
+            // Check if it's a known schema error (though specific message might vary)
+            if (err.message?.includes('column') || err.message?.includes('is_read') || JSON.stringify(err).includes('is_read')) {
+                alert("Error: Database outdated. Please run the SQL script to add 'is_read' column.")
+            } else {
+                alert(`Failed to update status. Error: ${err.message || JSON.stringify(err) || 'Unknown error'}`)
+            }
+        }
+    }
+
+    const handleDelete = async (id: string) => {
+        // Optimistic update
+        const backup = [...orders]
+        setOrders(orders.filter(o => o.id !== id))
+
+        try {
+            const { error } = await supabase
+                .from('orders')
+                .delete()
+                .eq('id', id)
+
+            if (error) throw error
+        } catch (err) {
+            console.error("Failed to delete order", err)
+            setOrders(backup)
+            alert("Failed to delete order")
+        }
+    }
+
+    const groupOrdersByDate = (orders: any[]) => {
+        const groups: { [key: string]: any[] } = {}
+
+        orders.forEach(order => {
+            const date = new Date(order.created_at)
+            const today = new Date()
+            const yesterday = new Date(today)
+            yesterday.setDate(yesterday.getDate() - 1)
+
+            let dateKey = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+
+            if (date.toDateString() === today.toDateString()) {
+                dateKey = "Today"
+            } else if (date.toDateString() === yesterday.toDateString()) {
+                dateKey = "Yesterday"
+            }
+
+            if (!groups[dateKey]) {
+                groups[dateKey] = []
+            }
+            groups[dateKey].push(order)
+        })
+
+        return groups
     }
 
     if (!isAuthenticated) {
@@ -81,88 +173,78 @@ export default function AdminPage() {
         )
     }
 
+    const groupedOrders = groupOrdersByDate(orders)
+
     return (
         <div className="min-h-screen pt-24 pb-20 bg-black text-white">
             <Container>
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Order Dashboard</h1>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold mb-1">Order Dashboard</h1>
+                        <p className="text-zinc-500 text-sm">Manage and track your incoming orders</p>
+                    </div>
                     <div className="flex gap-4">
-                        <button
+                        <Button
+                            variant="outline"
                             onClick={fetchOrders}
-                            className="px-4 py-2 bg-white text-black rounded hover:bg-zinc-200"
+                            className="bg-transparent border-white/20 hover:bg-zinc-900 text-white"
                         >
                             Refresh
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="destructive"
                             onClick={() => setIsAuthenticated(false)}
-                            className="px-4 py-2 border border-white/20 rounded hover:bg-zinc-900"
                         >
                             Logout
-                        </button>
+                        </Button>
                     </div>
                 </div>
 
-                {loading ? (
-                    <p>Loading orders...</p>
+                {loading && orders.length === 0 ? (
+                    <div className="flex justify-center py-20">
+                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-500"></div>
+                    </div>
                 ) : (
-                    <div className="space-y-4">
-                        {orders.map((order) => (
-                            <div key={order.id} className="bg-zinc-900 border border-white/10 p-6 rounded-xl">
-                                <div className="flex flex-col md:flex-row justify-between mb-4 gap-4">
-                                    <div>
-                                        <div className="flex items-center gap-3 mb-1">
-                                            <span className="font-mono text-orange-500 font-bold">#{order.id.slice(0, 8)}</span>
-                                            <span className={`px-2 py-0.5 text-xs rounded-full ${order.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' : 'bg-green-500/20 text-green-500'
-                                                }`}>
-                                                {order.status}
-                                            </span>
-                                        </div>
-                                        <p className="text-sm text-zinc-400">
-                                            {new Date(order.created_at).toLocaleString()}
-                                        </p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="font-bold text-xl">Rs. {order.total_amount?.toLocaleString()}</p>
-                                        <p className="text-sm capitalize text-zinc-400">{order.payment_method === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}</p>
-                                    </div>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-6 border-t border-white/5 pt-4">
-                                    {/* Customer Info */}
-                                    <div>
-                                        <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-2">Customer</h3>
-                                        <p className="font-bold">{order.customer_details?.name}</p>
-                                        <p className="text-zinc-300">{order.customer_details?.email}</p>
-                                        <p className="text-zinc-300">{order.customer_details?.phone}</p>
-                                        <p className="text-zinc-400 text-sm mt-1">
-                                            {order.customer_details?.address}, {order.customer_details?.city}
-                                        </p>
-                                    </div>
-
-                                    {/* Items */}
-                                    <div>
-                                        <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-2">Items</h3>
-                                        <div className="space-y-2">
-                                            {order.items?.map((item: any, i: number) => (
-                                                <div key={i} className="flex justify-between text-sm">
-                                                    <span>{item.quantity}x {item.title} ({item.selectedSize})</span>
-                                                    <span className="text-zinc-500">Rs. {item.price}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                    <div className="space-y-8">
+                        {Object.entries(groupedOrders).map(([date, dateOrders]) => (
+                            <div key={date}>
+                                <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-4 sticky top-20 bg-black/80 backdrop-blur-sm py-2 z-10">
+                                    {date}
+                                    <span className="ml-2 bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-full text-xs normal-case">{dateOrders.length} orders</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    <AnimatePresence mode="popLayout">
+                                        {dateOrders.map((order) => (
+                                            <OrderRow
+                                                key={order.id}
+                                                order={order}
+                                                onView={setSelectedOrder}
+                                                onToggleRead={handleToggleRead}
+                                                onDelete={handleDelete}
+                                            />
+                                        ))}
+                                    </AnimatePresence>
                                 </div>
                             </div>
                         ))}
 
-                        {orders.length === 0 && (
-                            <div className="text-center py-20 text-zinc-500">
-                                No orders found.
+                        {orders.length === 0 && !loading && (
+                            <div className="text-center py-20 text-zinc-500 bg-zinc-900/50 rounded-xl border border-dashed border-white/10">
+                                <p className="text-lg">No orders found yet.</p>
+                                <p className="text-sm mt-2">New orders will appear here automatically.</p>
                             </div>
                         )}
                     </div>
                 )}
             </Container>
+
+            {/* Order Slip Modal */}
+            {selectedOrder && (
+                <OrderSlip
+                    order={selectedOrder}
+                    onClose={() => setSelectedOrder(null)}
+                />
+            )}
         </div>
     )
 }
