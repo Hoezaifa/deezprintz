@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/CartContext"
 import { Product } from "@/lib/products"
 import { StreetwearPlaceholder } from "@/components/ui/StreetwearPlaceholder"
+import { Accordion } from "@/components/ui/accordion"
 import { useRouter } from "next/navigation"
 
 interface ProductClientProps {
@@ -269,6 +270,52 @@ export default function ProductClient({ product }: ProductClientProps) {
                                 Buy Now
                                 <ArrowRight className="w-5 h-5" />
                             </Button>
+                        </div>
+
+                        {/* Expandable Sections */}
+                        <div className="mt-12 space-y-2">
+                            <Accordion title="Materials & Details">
+                                <ul className="list-disc list-inside space-y-1">
+                                    {product.category === 'hoodies' ? (
+                                        <>
+                                            <li>Cotton Fleece Fabric</li>
+                                            <li>Warm fabric for winters</li>
+                                            <li>DTF Prints - Washable and Super Long Lasting</li>
+                                            <li>The Print/Design size on the shirt varies from 11x2 inches or 5x5 inches as per design and proportionally</li>
+                                            <li>The color of hoodie and print might vary tad bit from original</li>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <li>Cotton Jersey Fabric</li>
+                                            <li>Direct to Film prints (washable and durable)</li>
+                                            <li>The Print/Design size on the shirt varies from 10 to 14 inches as per design and proportionally</li>
+                                            <li>The color of Tshirts and print might vary tad bit from original</li>
+                                        </>
+                                    )}
+                                </ul>
+                            </Accordion>
+
+                            <Accordion title="Shipping Information">
+                                <p>
+                                    Standard delivery time is 4-7 working days and 2-4 working days for Karachi. You’ll get a confirmation call from us, once the order is confirmed verbally with mutual understanding then 4-7 working days of delivery will be counted. The call for order confirmation will be placed within 24-48 hours of order placement.
+                                </p>
+                            </Accordion>
+
+                            <Accordion title="Refund & Exchange">
+                                <p className="mb-4">
+                                    We don&apos;t have any return or exchange policy on size issues, nor there are any refund policy otherwise. So, please refer to our size chart before ordering.
+                                </p>
+                                <p>
+                                    If there&apos;s a defect in your product, we will exchange the product with new one. For that, you will have to mail us with the picture of defect at <a href="mailto:pg18tshirts@gmail.com" className="text-orange-500 hover:underline">pg18tshirts@gmail.com</a> and after verification you will receive the new order within standard delivery time.
+                                </p>
+                            </Accordion>
+
+                            <Accordion title="Care Instructions">
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li>Hand wash the tshirt inside out</li>
+                                    <li>Iron the tshirt inside out</li>
+                                </ul>
+                            </Accordion>
                         </div>
                     </div>
                 </div>
