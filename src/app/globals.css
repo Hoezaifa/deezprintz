@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+
+
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -32,6 +36,28 @@
 }
 
 :root {
+  /* LIGHT MODE (New) */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+
+  --primary: #f6861f;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #f6861f;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* DARK MODE (Original Preserved) */
   --background: #050505;
   --foreground: #ededed;
 
@@ -47,8 +73,6 @@
   --border: #27272a;
   --input: #27272a;
   --ring: #d4d4d8;
-
-  --radius: 0.5rem;
 }
 
 body {
@@ -57,15 +81,28 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Utilities for Glow */
 @utility glow-text {
+  /* Only apply glow in dark mode efficiently via media query or specific class usage if needed */
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Modify glow text to be subtle or gone in light mode */
+:root:not(.dark) .glow-text {
+  text-shadow: none;
+  color: #000;
+  font-weight: 800;
 }
 
 @utility glow-box {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+:root:not(.dark) .glow-box {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 @layer utilities {
@@ -79,6 +116,11 @@ body {
 
   .glow-white {
     filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  }
+
+  /* Disable white glow in light mode */
+  :root:not(.dark) .glow-white {
+    filter: none;
   }
 
   .glow-green {

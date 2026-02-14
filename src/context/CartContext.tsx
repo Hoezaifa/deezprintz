@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { Product } from "@/lib/products"
+import { supabase } from "@/lib/supabase"
+import { User, Session, AuthChangeEvent } from "@supabase/supabase-js"
 
 export interface CartItem extends Product {
     quantity: number
@@ -27,8 +29,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const [cartOpen, setCartOpen] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
 
-    // Load cart from localStorage
+    const [user, setUser] = useState<User | null>(null)
+
+    // Handle Auth & Initial Load
     useEffect(() => {
+        // 1. Check current user
+        supabase.auth.getUser().then(({ data: { user } }) => {
+            setUser(user)
+            if (user) {
+                loadRemoteCart(user.id)
+            } else {
+                loadLocalCart()
+            }
+        })
+
+        // 2. Listen for changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
+            const currentUser = session?.user
+            setUser(currentUser || null)
+
+            if (currentUser) {
+                loadRemoteCart(currentUser.id)
+            } else {
+                // Determine if we should clear or load local
+                // For now, let's load local to support guest mode isolation
+                setItems([]) // Clear user items
+                loadLocalCart() // Try to load guest items if any (optional)
+            }
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
+
+    const loadLocalCart = () => {
         const savedCart = localStorage.getItem("cart")
         if (savedCart) {
             try {
@@ -37,15 +70,53 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 console.error("Failed to parse cart", e)
             }
         }
-        setIsLoaded(true)
-    }, [])
+    }
 
-    // Save cart to localStorage
+    const loadRemoteCart = async (userId: string) => {
+        try {
+            const { data, error } = await supabase
+                .from('carts')
+                .select('items')
+                .eq('user_id', userId)
+                .single()
+
+            if (data && data.items) {
+                setItems(data.items)
+            } else if (error && error.code !== 'PGRST116') {
+                console.error("Error fetching cart:", error)
+            }
+        } catch (error) {
+            console.error("Cart load error:", error)
+        }
+    }
+
+    // Save Cart (Debounced for Remote)
     useEffect(() => {
-        if (isLoaded) {
+        if (!isLoaded && !user) {
+            // First load hasn't happened yet for guest
+            setIsLoaded(true)
+            return
+        }
+
+        if (user) {
+            // Save to Supabase
+            const saveToDb = setTimeout(async () => {
+                try {
+                    await supabase.from('carts').upsert({
+                        user_id: user.id,
+                        items: items,
+                        updated_at: new Date().toISOString()
+                    })
+                } catch (err) {
+                    console.error("Failed to save cart to DB", err)
+                }
+            }, 1000)
+            return () => clearTimeout(saveToDb)
+        } else {
+            // Save to LocalStorage
             localStorage.setItem("cart", JSON.stringify(items))
         }
-    }, [items, isLoaded])
+    }, [items, user])
 
     const addItem = (product: Product, size?: string, quantity: number = 1) => {
         setItems(currentItems => {

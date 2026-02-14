@@ -334,7 +334,7 @@ export default function CheckoutPage() {
                                     {/* WhatsApp Button */}
                                     <a
                                         href={`https://wa.me/923272487127?text=${encodeURIComponent(
-                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${cartTotal}\nPayment Method: ${paymentMethod === 'bank' ? 'Bank Transfer' : 'COD'}\n\n${paymentMethod === 'bank' ? 'Here is my payment screenshot:' : 'Please confirm my order.'}`
+                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${confirmedOrder?.total}\nPayment Method: ${paymentMethod === 'bank' ? 'Bank Transfer' : 'COD'}\n\n${paymentMethod === 'bank' ? 'Here is my payment screenshot:' : 'Please confirm my order.'}`
                                         )}`}
                                         target="_blank"
                                         rel="noopener noreferrer"

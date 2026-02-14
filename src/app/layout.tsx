@@ -14,20 +14,29 @@ import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/cart/CartSidebar";
 
+import { ThemeProvider } from "@/components/theme-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${outfit.className} antialiased bg-background text-foreground`}>
-        <CartProvider>
-          <Navbar />
-          <CartSidebar />
-          {children}
-          <Footer />
-        </CartProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CartProvider>
+            <Navbar />
+            <CartSidebar />
+            {children}
+            <Footer />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

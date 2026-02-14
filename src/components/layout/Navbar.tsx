@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { SideMenu } from "@/components/layout/SideMenu"
 import { useEffect } from "react"
 import { supabase } from "@/lib/supabase"
+import { ModeToggle } from "@/components/ui/mode-toggle"
 
 const navLinks = [
     {
@@ -86,10 +87,10 @@ export function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-white/5">
-            <Container className="flex h-20 items-center justify-between">
+            <Container className="flex h-20 items-center">
 
                 {/* Left: Menu Button & Logo */}
-                <div className="flex items-center gap-24 ml-4">
+                <div className="flex-1 flex items-center justify-start gap-4">
                     <button
                         className="p-2 -ml-2 text-white hover:bg-white/10 rounded-full transition-colors"
                         onClick={() => setIsMenuOpen(true)}
@@ -108,8 +109,8 @@ export function Navbar() {
                     </Link>
                 </div>
 
-                {/* Desktop Nav - Centered */}
-                <nav className="hidden lg:flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 gap-8">
+                {/* Desktop Nav - Centered in remaining space (effectively centered if sides are balanced) */}
+                <nav className="hidden lg:flex items-center justify-center gap-6">
                     {navLinks.map((item) => (
                         <div
                             key={item.name}
@@ -119,7 +120,7 @@ export function Navbar() {
                         >
                             <Link
                                 href={item.href}
-                                className="px-4 py-2 text-sm font-bold tracking-widest text-muted-foreground hover:text-white transition-colors duration-300 relative z-10 block"
+                                className="px-4 py-2 text-sm font-bold tracking-widest text-muted-foreground hover:text-white transition-colors duration-300 relative z-10 block whitespace-nowrap"
                             >
                                 {item.name}
                             </Link>
@@ -156,8 +157,8 @@ export function Navbar() {
                 </nav>
 
                 {/* Right Actions */}
-                <div className="flex items-center gap-4 z-10">
-                    <div className="relative hidden sm:flex items-center">
+                <div className="flex-1 flex items-center justify-end gap-4 z-10">
+                    <div className="relative hidden xl:flex items-center">
                         <div className="flex items-center bg-secondary/50 rounded-full px-4 py-2 border border-white/10">
                             <Search className="h-4 w-4 text-muted-foreground mr-2" />
                             <input
@@ -183,11 +184,17 @@ export function Navbar() {
                         )}
                     </Button>
 
+
+                    {/* Mode Toggle */}
+                    <div className="hidden sm:block">
+                        <ModeToggle />
+                    </div>
+
                     {/* User Auth */}
                     {user ? (
                         <div className="flex items-center gap-4">
                             <div className="hidden md:block text-right">
-                                <p className="text-sm font-bold text-white leading-none">{user.user_metadata?.full_name || 'My Account'}</p>
+                                <p className="text-sm font-bold text-white dark:text-white text-black leading-none">{user.user_metadata?.full_name || 'My Account'}</p>
                                 <button onClick={handleLogout} className="text-xs text-red-400 hover:text-red-300">
                                     Logout
                                 </button>
@@ -198,7 +205,7 @@ export function Navbar() {
                         </div>
                     ) : (
                         <Link href="/auth/login">
-                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white rounded-full">
+                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-black dark:text-white rounded-full">
                                 <User className="h-5 w-5" />
                             </Button>
                         </Link>
@@ -211,6 +218,8 @@ export function Navbar() {
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
                 navLinks={navLinks}
+                user={user}
+                onLogout={handleLogout}
             />
         </header>
     )

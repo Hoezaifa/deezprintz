@@ -11,9 +11,11 @@ interface SideMenuProps {
     isOpen: boolean
     onClose: () => void
     navLinks: any[]
+    user: any
+    onLogout: () => void
 }
 
-export function SideMenu({ isOpen, onClose, navLinks }: SideMenuProps) {
+export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenuProps) {
     const [expandedCategory, setExpandedCategory] = useState<string | null>("ACCESSORIES")
     const [mounted, setMounted] = useState(false)
 
@@ -72,76 +74,98 @@ export function SideMenu({ isOpen, onClose, navLinks }: SideMenuProps) {
                         {/* Content Area - Explicit Rendering */}
                         <div className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar">
                             <div className="flex flex-col space-y-4">
-                                {navLinks.map((item) => (
-                                    <div key={item.name} className="w-full">
-                                        {item.subcategories ? (
-                                            // Expandable
-                                            <div className="flex flex-col">
-                                                <button
-                                                    onClick={() => toggleCategory(item.name)}
-                                                    className="flex items-center justify-between w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"
-                                                >
-                                                    {item.name}
-                                                    <ChevronRight
-                                                        className={cn(
-                                                            "w-5 h-5 transition-transform duration-200",
-                                                            expandedCategory === item.name ? "rotate-90 text-orange-500" : "text-white/50"
-                                                        )}
-                                                    />
-                                                </button>
-
-                                                {/* Subcategories - Direct Render if expanded */}
-                                                {expandedCategory === item.name && (
-                                                    <div className="flex flex-col pl-4 mt-2 mb-2 space-y-2 border-l border-white/10 ml-1">
-                                                        {item.subcategories.map((sub: any) => (
-                                                            <Link
-                                                                key={sub.name}
-                                                                href={sub.href}
-                                                                onClick={onClose}
-                                                                className="text-base text-gray-400 hover:text-white py-1 block transition-colors"
-                                                            >
-                                                                {sub.name}
-                                                            </Link>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ) : (
-                                            // Simple Link
+                                {navLinks.map((item) => {
+                                    if (item.name === "ACCESSORIES" && item.subcategories) {
+                                        // Flatten Accessories for Side Menu
+                                        return item.subcategories.map((sub: any) => (
                                             <Link
-                                                href={item.href}
+                                                key={sub.name}
+                                                href={sub.href}
                                                 onClick={onClose}
                                                 className="block w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"
                                             >
-                                                {item.name}
+                                                {sub.name}
                                             </Link>
-                                        )}
-                                    </div>
-                                ))}
+                                        ))
+                                    }
+
+                                    return (
+                                        <div key={item.name} className="w-full">
+                                            {item.subcategories ? (
+                                                // Expandable (For other categories if any)
+                                                <div className="flex flex-col">
+                                                    <button
+                                                        onClick={() => toggleCategory(item.name)}
+                                                        className="flex items-center justify-between w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"
+                                                    >
+                                                        {item.name}
+                                                        <ChevronRight
+                                                            className={cn(
+                                                                "w-5 h-5 transition-transform duration-200",
+                                                                expandedCategory === item.name ? "rotate-90 text-orange-500" : "text-white/50"
+                                                            )}
+                                                        />
+                                                    </button>
+
+                                                    {/* Subcategories */}
+                                                    {expandedCategory === item.name && (
+                                                        <div className="flex flex-col pl-4 mt-2 mb-2 space-y-2 border-l border-white/10 ml-1">
+                                                            {item.subcategories.map((sub: any) => (
+                                                                <Link
+                                                                    key={sub.name}
+                                                                    href={sub.href}
+                                                                    onClick={onClose}
+                                                                    className="text-base text-gray-400 hover:text-white py-1 block transition-colors"
+                                                                >
+                                                                    {sub.name}
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                // Simple Link
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={onClose}
+                                                    className="block w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            )}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
 
                         {/* Footer */}
                         <div className="p-6 border-t border-white/10 bg-black/40">
-                            <Link href="/auth/login" onClick={onClose} className="flex items-center gap-4 mb-6 hover:bg-white/5 p-2 rounded-xl transition-colors cursor-pointer">
+                            <Link href={user ? "#" : "/auth/login"} onClick={user ? undefined : onClose} className="flex items-center gap-4 mb-6 hover:bg-white/5 p-2 rounded-xl transition-colors cursor-pointer">
                                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
                                     <User className="w-5 h-5" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white font-bold text-sm">My Account</span>
-                                    <span className="text-gray-500 text-xs">Login / Register</span>
+                                    {user ? (
+                                        <>
+                                            <span className="text-white font-bold text-sm">Hi, {user.user_metadata?.full_name?.split(' ')[0] || 'User'}</span>
+                                            <button onClick={onLogout} className="text-left text-red-500 text-xs hover:text-red-400">Logout</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span className="text-white font-bold text-sm">My Account</span>
+                                            <span className="text-gray-500 text-xs">Login / Register</span>
+                                        </>
+                                    )}
                                 </div>
                             </Link>
 
                             <div className="flex gap-6 text-gray-400">
                                 <Link href="https://www.facebook.com/profile.php?id=61556303432172" target="_blank" rel="noopener noreferrer">
-                                    <Facebook className="w-5 h-5 hover:text-white cursor-pointer" />
+                                    <Facebook className="w-5 h-5 hover:text-blue-500 cursor-pointer transition-colors" />
                                 </Link>
                                 <Link href="https://www.instagram.com/deez_prints/" target="_blank" rel="noopener noreferrer">
-                                    <Instagram className="w-5 h-5 hover:text-white cursor-pointer" />
-                                </Link>
-                                <Link href="#">
-                                    <Youtube className="w-5 h-5 hover:text-white cursor-pointer" />
+                                    <Instagram className="w-5 h-5 hover:text-pink-500 cursor-pointer transition-colors" />
                                 </Link>
                             </div>
                         </div>

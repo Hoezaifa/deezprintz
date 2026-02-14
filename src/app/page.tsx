@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/home/HeroSection";
+// import { HeroSectionV2 } from "@/components/home/HeroSectionV2";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Container } from "@/components/ui/container";
 
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <HeroSection />
+      {/* <HeroSectionV2 /> */}
 
       <section className="py-20 relative z-10">
         <Container>
