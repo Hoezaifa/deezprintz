@@ -16,6 +16,8 @@ import { CartSidebar } from "@/components/cart/CartSidebar";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
+import { Analytics } from "@vercel/analytics/next"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,6 +38,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </CartProvider>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
