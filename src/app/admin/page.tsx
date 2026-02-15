@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button"
 import { OrderRow } from "@/components/admin/OrderRow"
 import { OrderSlip } from "@/components/admin/OrderSlip"
 import { AnimatePresence } from "framer-motion"
+import { Search } from "lucide-react"
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [searchQuery, setSearchQuery] = useState("")
 
     const [orders, setOrders] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
@@ -173,7 +175,18 @@ export default function AdminPage() {
         )
     }
 
-    const groupedOrders = groupOrdersByDate(orders)
+    const filteredOrders = orders.filter(order => {
+        if (!searchQuery) return true
+        const query = searchQuery.toLowerCase()
+        return (
+            order.id.toLowerCase().includes(query) ||
+            order.customer_details?.name?.toLowerCase().includes(query) ||
+            order.customer_details?.email?.toLowerCase().includes(query) ||
+            order.customer_details?.phone?.toLowerCase().includes(query)
+        )
+    })
+
+    const groupedOrders = groupOrdersByDate(filteredOrders)
 
     return (
         <div className="min-h-screen pt-24 pb-20 bg-black text-white">
@@ -184,6 +197,16 @@ export default function AdminPage() {
                         <p className="text-zinc-500 text-sm">Manage and track your incoming orders</p>
                     </div>
                     <div className="flex gap-4">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                            <input
+                                type="text"
+                                placeholder="Search orders..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="pl-9 pr-4 py-2 bg-zinc-900 border border-white/10 rounded-md text-sm text-white focus:border-white/30 outline-none w-64"
+                            />
+                        </div>
                         <Button
                             variant="outline"
                             onClick={fetchOrders}

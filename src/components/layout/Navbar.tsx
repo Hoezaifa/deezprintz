@@ -3,14 +3,16 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingBag, Search, User, Menu, X, ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { SideMenu } from "@/components/layout/SideMenu"
-import { useEffect } from "react"
 import { supabase } from "@/lib/supabase"
 import { ModeToggle } from "@/components/ui/mode-toggle"
+import { PRODUCTS } from "@/lib/products"
+import { useCart } from "@/context/CartContext"
+import { useRouter } from "next/navigation"
 
 const navLinks = [
     {
@@ -40,11 +42,7 @@ const navLinks = [
             { name: "Corporate Gift Boxes", href: "/collections/gift-boxes" }
         ]
     },
-    // { name: "SALE", href: "/collections/sale" } // Removed to prevent overlap
 ]
-
-import { useCart } from "@/context/CartContext"
-import { useRouter } from "next/navigation"
 
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -84,6 +82,26 @@ export function Navbar() {
         await supabase.auth.signOut()
         window.location.reload()
     }
+
+    // Search Logic
+    const [filteredProducts, setFilteredProducts] = useState<any[]>([])
+
+    useEffect(() => {
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase()
+            // Defensive check for PRODUCTS
+            const productsList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : []
+            const results = productsList.filter(product =>
+                product.title.toLowerCase().includes(query) ||
+                product.category.toLowerCase().includes(query) ||
+                product.subcategory?.toLowerCase().includes(query) ||
+                product.artist?.toLowerCase().includes(query)
+            ).slice(0, 5) // Limit to 5 results
+            setFilteredProducts(results)
+        } else {
+            setFilteredProducts([])
+        }
+    }, [searchQuery])
 
     return (
         <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-white/5">
@@ -159,7 +177,7 @@ export function Navbar() {
                 {/* Right Actions */}
                 <div className="flex-1 flex items-center justify-end gap-4 z-10">
                     <div className="relative hidden xl:flex items-center">
-                        <div className="flex items-center bg-secondary/50 rounded-full px-4 py-2 border border-white/10">
+                        <div className="flex items-center bg-secondary/50 rounded-full px-4 py-2 border border-white/10 relative z-20">
                             <Search className="h-4 w-4 text-muted-foreground mr-2" />
                             <input
                                 type="text"
@@ -170,6 +188,54 @@ export function Navbar() {
                                 className="bg-transparent border-none outline-none text-sm text-white placeholder:text-muted-foreground w-20 focus:w-32 transition-all duration-300"
                             />
                         </div>
+
+                        {/* Real-time Search Dropdown */}
+                        <AnimatePresence>
+                            {searchQuery && filteredProducts.length > 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl overflow-hidden z-10"
+                                >
+                                    <div className="p-2">
+                                        {filteredProducts.map((product) => (
+                                            <Link
+                                                key={product.id}
+                                                href={`/products/${product.id}`}
+                                                className="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg transition-colors group"
+                                                onClick={() => setSearchQuery("")}
+                                            >
+                                                <div className="relative w-12 h-12 rounded-md overflow-hidden bg-white/5 flex-shrink-0">
+                                                    <Image
+                                                        src={product.image || '/assets/placeholder.jpg'}
+                                                        alt={product.title}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="text-sm font-medium text-white truncate group-hover:text-orange-500 transition-colors">
+                                                        {product.title}
+                                                    </h4>
+                                                    <p className="text-xs text-zinc-500 truncate">{product.artist || product.category}</p>
+                                                </div>
+                                                <div className="text-sm font-bold text-zinc-400">
+                                                    Rs. {product.price.toLocaleString()}
+                                                </div>
+                                            </Link>
+                                        ))}
+                                        <Link
+                                            href={`/collections/all?search=${encodeURIComponent(searchQuery)}`}
+                                            className="block text-center text-xs text-orange-500 hover:text-orange-400 py-2 border-t border-white/5 mt-1"
+                                            onClick={() => setSearchQuery("")}
+                                        >
+                                            View all results
+                                        </Link>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     <Button

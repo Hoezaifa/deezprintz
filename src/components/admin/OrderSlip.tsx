@@ -14,13 +14,13 @@ export function OrderSlip({ order, onClose }: OrderSlipProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <div className="bg-white text-black w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 relative">
+        <div className="fixed inset-0 z-[100] flex items-start justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto pt-10 md:pt-20">
+            <div className="bg-white text-black w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 relative mb-20">
                 {/* Header */}
                 <div className="bg-zinc-100 p-4 flex justify-between items-center border-b no-print">
                     <h2 className="font-bold text-lg">Order Details</h2>
                     <div className="flex gap-2">
-                        <Button variant="outline" size="sm" onClick={handlePrint} className="gap-2">
+                        <Button variant="default" size="sm" onClick={handlePrint} className="gap-2 bg-black text-white hover:bg-zinc-800">
                             <Printer className="w-4 h-4" />
                             Print
                         </Button>

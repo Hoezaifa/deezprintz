@@ -5,18 +5,18 @@ import Link from "next/link"
 import { Container } from "@/components/ui/container"
 
 const COLLECTIONS = [
-    { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/hero/hero-asset-1.svg" },
-    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/hero/hero-asset-1.svg" },
-    { title: "HOODIES", href: "/collections/hoodies", image: "/assets/hero/hero-asset-5.svg" },
-    { title: "MUGS", href: "/collections/mugs", image: "/assets/hero/hero-asset-3.svg" },
-    { title: "TAPESTRIES", href: "/collections/tapestries", image: "/assets/hero/hero-asset-4.svg" },
-    { title: "WRISTBANDS", href: "/collections/wristbands", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "BADGES", href: "/collections/badges", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "WALLET CARDS", href: "/collections/wallet-cards", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "KEYCHAINS", href: "/collections/keychains", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "MAGNETS", href: "/collections/magnets", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "NOTEBOOKS", href: "/collections/notebooks", image: "/assets/hero/hero-asset-2.svg" },
-    { title: "CORPORATE GIFT BOXES", href: "/collections/gift-boxes", image: "/assets/hero/hero-asset-2.svg" },
+    { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/collections/t-shirts.jpg" },
+    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/collections/drop-shoulder.jpg" },
+    { title: "HOODIES", href: "/collections/hoodies", image: "/assets/collections/hoodies.jpg" },
+    { title: "MUGS", href: "/collections/mugs", image: "/assets/collections/mugs.jpg" },
+    { title: "TAPESTRIES", href: "/collections/tapestries", image: "/assets/collections/tapestries.jpg" },
+    { title: "WRISTBANDS", href: "/collections/wristbands", image: "/assets/collections/wristbands.jpg" },
+    { title: "BADGES", href: "/collections/badges", image: "/assets/collections/badges.jpg" },
+    { title: "WALLET CARDS", href: "/collections/wallet-cards", image: "/assets/collections/wallet-cards.jpg" },
+    { title: "KEYCHAINS", href: "/collections/keychains", image: "/assets/collections/keychains.jpg" },
+    { title: "MAGNETS", href: "/collections/magnets", image: "/assets/collections/magnets.jpg" },
+    { title: "NOTEBOOKS", href: "/collections/notebooks", image: "/assets/collections/notebooks.jpg" },
+    { title: "CORPORATE GIFT BOXES", href: "/collections/gift-boxes", image: "/assets/collections/gift-boxes.jpg" },
 ]
 
 export function CollectionsSection() {
@@ -28,7 +28,7 @@ export function CollectionsSection() {
                     <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent ml-8" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" suppressHydrationWarning>
                     {COLLECTIONS.map((collection, index) => (
                         <Link
                             key={collection.title}
@@ -43,7 +43,7 @@ export function CollectionsSection() {
                                     src={collection.image}
                                     alt={collection.title}
                                     fill
-                                    className="object-contain p-8 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
                                 />
                             </div>
 
