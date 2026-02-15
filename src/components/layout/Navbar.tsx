@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { SideMenu } from "@/components/layout/SideMenu"
 import { supabase } from "@/lib/supabase"
-import { ModeToggle } from "@/components/ui/mode-toggle"
 import { PRODUCTS } from "@/lib/products"
 import { useCart } from "@/context/CartContext"
 import { useRouter } from "next/navigation"
@@ -251,10 +250,6 @@ export function Navbar() {
                     </Button>
 
 
-                    {/* Mode Toggle */}
-                    <div className="hidden sm:block">
-                        <ModeToggle />
-                    </div>
 
                     {/* User Auth */}
                     {user ? (

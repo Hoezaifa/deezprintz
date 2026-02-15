@@ -55,7 +55,7 @@ export function Footer() {
                             &copy; {new Date().getFullYear()} Deez Prints. Est. 2026.
                         </p>
                         <p className="text-[10px] text-zinc-800 mt-2">
-                            v1.2 - Collections & Analytics
+                            tera bhai seedhe maut
                         </p>
                     </div>
                 </div>
