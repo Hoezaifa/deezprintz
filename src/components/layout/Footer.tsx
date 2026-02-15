@@ -54,6 +54,9 @@ export function Footer() {
                         <p className="text-xs text-zinc-500">
                             &copy; {new Date().getFullYear()} Deez Prints. Est. 2026.
                         </p>
+                        <p className="text-[10px] text-zinc-800 mt-2">
+                            v1.2 - Collections & Analytics
+                        </p>
                     </div>
                 </div>
             </Container>
