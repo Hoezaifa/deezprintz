@@ -38,8 +38,8 @@ export default function RootLayout({
             {children}
             <Footer />
           </CartProvider>
-          <Analytics />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
