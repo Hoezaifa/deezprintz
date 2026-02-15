@@ -3,98 +3,73 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 
-
 export function HeroSection() {
     return (
-        <section className="relative min-h-[80vh] w-full flex items-center justify-center overflow-hidden py-20">
-            {/* Background Atmosphere */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full mix-blend-overlay" />
-            </div>
+        <section className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black text-white py-10 lg:py-0">
+            <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            {/* Content Container */}
-            <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+                {/* Left Column: Typography & Info */}
+                <div className="flex flex-col justify-center items-center lg:items-start z-20 w-full pl-0 lg:pl-30">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative w-full max-w-[400px] lg:max-w-[500px] aspect-[4/3] -mt-10 lg:-mt-10"
+                    >
+                        <Image
+                            src="/assets/hero/hero-typography.svg"
+                            alt="deez PRINTS Modern Printing Solution"
+                            fill
+                            className="object-contain object-center lg:object-left"
+                            priority
+                        />
+                    </motion.div>
+                </div>
 
-                {/* Left Item (Jersey 1) */}
-                <motion.div
-                    initial={{ opacity: 0, x: -50, rotate: -10 }}
-                    animate={{ opacity: 1, x: 0, rotate: -6 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative group hidden lg:flex lg:justify-center lg:items-center"
-                >
-                    <div className="absolute inset-0 bg-orange-500/20 blur-[60px] group-hover:bg-orange-500/30 transition-all duration-500 rounded-full" />
-                    <div className="relative z-10 w-[350px] h-[350px] xl:w-[400px] xl:h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
-                        <div className="relative w-full h-full flex items-center justify-center bg-zinc-900/50 border border-white/5 overflow-hidden rounded-2xl border-orange-500/20">
-
-                            <div className="relative z-10 w-full h-full">
-                                <Image
-                                    src="/assets/hero/left-jersey-v2.png"
-                                    alt="Left Jersey"
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Center Item (Main Hoodie) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="relative flex flex-col items-center text-center z-20"
-                >
-                    {/* Glowing Centerpiece */}
-                    <div className="relative w-full aspect-square max-w-[450px] xl:max-w-[500px]">
-                        <div className="absolute inset-0 bg-white/10 blur-[80px] animate-pulse" />
-                        <motion.div
-                            animate={{ y: [0, -20, 0] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                            className="relative z-10 w-full h-full"
-                        >
-                            <div className="relative w-full h-full flex items-center justify-center bg-zinc-900/50 border border-white/5 overflow-hidden rounded-3xl border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
-
-                                <div className="relative z-10 w-full h-full">
-                                    <Image
-                                        src="/assets/hero/center-hoodie-v2.png"
-                                        alt="Center Hoodie"
-                                        fill
-                                        className="object-cover"
-                                        priority
-                                    />
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-                </motion.div>
-
-                {/* Right Item (Jersey 2) */}
-                <motion.div
-                    initial={{ opacity: 0, x: 50, rotate: 10 }}
-                    animate={{ opacity: 1, x: 0, rotate: 6 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="relative group hidden lg:flex lg:justify-center lg:items-center"
-                >
-                    <div className="absolute inset-0 bg-zinc-500/20 blur-[60px] group-hover:bg-zinc-500/30 transition-all duration-500 rounded-full" />
-                    <div className="relative z-10 w-[350px] h-[350px] xl:w-[400px] xl:h-[400px] filter drop-shadow-2xl hover:scale-105 transition-transform duration-500">
-                        <div className="relative w-full h-full flex items-center justify-center bg-zinc-900/50 border border-white/5 overflow-hidden rounded-2xl border-zinc-500/20">
-
-                            <div className="relative z-10 w-full h-full">
-                                <Image
-                                    src="/assets/hero/right-jersey-v2.png"
-                                    alt="Right Jersey"
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-
+                {/* Right Column: Floating Assets */}
+                <div className="relative h-[400px] lg:h-[600px] w-full hidden lg:block overflow-visible mt-10 lg:-mt-20">
+                    <FloatingElement
+                        src="/assets/hero/objects-01.svg"
+                        alt="Hero Objects"
+                        className="top-1/2 right-0 lg:right-30 -translate-y-1/2 w-[300px] lg:w-[500px] xl:w-[650px] z-10"
+                        delay={0.2}
+                    />
+                </div>
             </div>
         </section>
+    )
+}
+
+function FloatingElement({ src, alt, className, delay }: { src: string, alt: string, className: string, delay: number }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{
+                opacity: 1,
+                scale: 1,
+                y: [0, -15, 0]
+            }}
+            transition={{
+                opacity: { duration: 0.5, delay },
+                scale: { duration: 0.5, delay },
+                y: {
+                    duration: 4,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut",
+                    delay: delay + 1 // Offset floating animation start
+                }
+            }}
+            className={`absolute ${className} cursor-pointer drop-shadow-2xl`}
+        >
+            <Image
+                src={src}
+                alt={alt}
+                width={500}
+                height={500}
+                className="w-full h-auto object-contain"
+                priority
+            />
+        </motion.div>
     )
 }
