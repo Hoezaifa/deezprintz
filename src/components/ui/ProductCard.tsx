@@ -36,7 +36,7 @@ export function ProductCard({ id, title, price, image, category, rating = 5, hre
 
     return (
         <div className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30 cursor-pointer">
-            <Link href={href} className="absolute inset-0 z-10 rounded-3xl" />
+            <Link href={href} className="absolute inset-0 z-10 rounded-3xl" aria-label={`View ${title}`} />
 
             {/* Image Container with Glow */}
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-black/20">
@@ -60,6 +60,7 @@ export function ProductCard({ id, title, price, image, category, rating = 5, hre
                 <Button
                     size="icon"
                     onClick={handleAddToCart}
+                    aria-label="Add to Cart"
                     className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-white text-black 
                              hover:bg-white/90 hover:scale-110 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] z-20
                              opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0"

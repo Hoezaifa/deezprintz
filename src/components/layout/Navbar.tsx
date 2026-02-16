@@ -113,6 +113,7 @@ export function Navbar() {
                     <button
                         className="p-2 -ml-2 text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
                         onClick={() => setIsMenuOpen(true)}
+                        aria-label="Open Menu"
                     >
                         <Menu className="w-6 h-6" />
                     </button>
@@ -244,6 +245,7 @@ export function Navbar() {
                         size="icon"
                         className="relative hover:bg-white/10 text-white rounded-full"
                         onClick={() => setCartOpen(true)}
+                        aria-label="Open Cart"
                     >
                         <ShoppingBag className="h-5 w-5" />
                         {cartCount > 0 && (
@@ -267,8 +269,8 @@ export function Navbar() {
                             </div>
                         </div>
                     ) : (
-                        <Link href="/auth/login">
-                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-black dark:text-white rounded-full">
+                        <Link href="/auth/login" aria-label="Login">
+                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-black dark:text-white rounded-full" aria-label="User Account">
                                 <User className="h-5 w-5" />
                             </Button>
                         </Link>
