@@ -16,13 +16,16 @@ interface ProductClientProps {
 }
 
 const SIZES = ["S", "M", "L", "XL", "XXL"]
+const TAPESTRY_SIZES = ["24\"x36\"", "36\"x48\"", "48\"x60\""]
 
 export default function ProductClient({ product }: ProductClientProps) {
     const { addItem, setCartOpen } = useCart()
     const router = useRouter()
 
+    const isTapestry = product.subcategory === 'tapestries'
+
     const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || "Black")
-    const [selectedSize, setSelectedSize] = useState("L")
+    const [selectedSize, setSelectedSize] = useState(isTapestry ? "36\"x48\"" : "L")
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState(0)
     const [isMounted, setIsMounted] = useState(false)
@@ -33,29 +36,32 @@ export default function ProductClient({ product }: ProductClientProps) {
         setIsMounted(true)
     }, [])
 
-    // Generate 4 distinct image paths for the gallery
-    // Indices 0-3 map to suffixes -1 to -4
-    const images = Array.from({ length: 4 }).map((_, i) => {
-        if (!product.image) return { id: i, src: null, alt: "Placeholder" }
+    // Generate distinct image paths for the gallery
+    // For tapestries: Single image
+    // For others: 5 distinct images (v1-v5)
+    const images = isTapestry
+        ? [{ id: 0, src: product.image, alt: product.title }]
+        : Array.from({ length: 5 }).map((_, i) => {
+            if (!product.image) return { id: i, src: null, alt: "Placeholder" }
 
-        // Remove existing extension and suffix if any, then append new suffix
-        // We assume product.image is the "base" path or one of the variants
-        // If product.image is "/assets/.../shirt.jpg", we want "/assets/.../shirt-1.jpg" etc.
+            // Remove existing extension and suffix if any, then append new suffix
+            // We assume product.image is the "base" path or one of the variants
+            // If product.image is "/assets/.../shirt-v1.jpg", we want "/assets/.../shirt-v1.jpg", "...-v2.jpg" etc.
 
-        // Remove extension first
-        let base = product.image.replace(/\.[^/.]+$/, "")
-        // Remove trailing numbers like -1, -2 if they exist
-        base = base.replace(/-\d+$/, "")
+            // Remove extension first
+            let base = product.image.replace(/\.[^/.]+$/, "")
+            // Remove trailing -v followed by numbers like -v1, -v2 if they exist
+            base = base.replace(/-v\d+$/, "")
 
-        const ext = product.image.split('.').pop() || 'jpg';
-        const src = `${base}-${i + 1}.${ext}`;
+            const ext = product.image.split('.').pop() || 'jpg';
+            const src = `${base}-v${i + 1}.${ext}`;
 
-        return {
-            id: i,
-            src,
-            alt: `${product.title} View ${i + 1}`
-        }
-    })
+            return {
+                id: i,
+                src,
+                alt: `${product.title} View ${i + 1}`
+            }
+        })
 
     const handleAddToCart = () => {
         // You might want to include selectedColor in the cart item unique ID or metadata
@@ -132,32 +138,33 @@ export default function ProductClient({ product }: ProductClientProps) {
                         </div>
 
                         {/* Thumbnails */}
-                        <div className="grid grid-cols-4 gap-4">
-                            {images.map((img, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => setActiveImage(idx)}
-                                    className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx
-                                        ? "border-orange-500 ring-2 ring-orange-500/20 scale-95"
-                                        : "border-transparent bg-zinc-900/50 hover:bg-zinc-800"
-                                        }`}
-                                >
-                                    <div className="absolute inset-0 flex items-center justify-center p-2">
-                                        {img.src ? (
-                                            <Image
-                                                src={img.src}
-                                                alt="Thumbnail"
-                                                fill
-                                                className="object-contain"
-                                            />
-                                        ) : (
-                                            <StreetwearPlaceholder type="shirt" className="w-full h-full scale-75" />
-                                        )}
-                                    </div>
-                                    {/* Mock Color Overlay: Remove or update if using real images */}
-                                </button>
-                            ))}
-                        </div>
+                        {images.length > 1 && (
+                            <div className="grid grid-cols-4 gap-4">
+                                {images.slice(1).map((img, idx) => (
+                                    <button
+                                        key={img.id}
+                                        onClick={() => setActiveImage(img.id)}
+                                        className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === img.id
+                                            ? "border-orange-500 ring-2 ring-orange-500/20 scale-95"
+                                            : "border-transparent bg-zinc-900/50 hover:bg-zinc-800"
+                                            }`}
+                                    >
+                                        <div className="absolute inset-0 flex items-center justify-center p-2">
+                                            {img.src ? (
+                                                <Image
+                                                    src={img.src}
+                                                    alt={img.alt}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            ) : (
+                                                <StreetwearPlaceholder type="shirt" className="w-full h-full scale-75" />
+                                            )}
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* Right Column: Product Details */}
@@ -187,24 +194,26 @@ export default function ProductClient({ product }: ProductClientProps) {
                         </p>
 
                         <div className="space-y-8 mb-auto">
-                            {/* Color Selector */}
-                            <div className="space-y-3">
-                                <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Select Color</span>
-                                <div className="flex flex-wrap gap-3">
-                                    {(product.colors || ["Black", "White", "Navy", "Charcoal"]).map((color) => (
-                                        <button
-                                            key={color}
-                                            onClick={() => setSelectedColor(color)}
-                                            className={`px-4 py-2 rounded-lg border transition-all ${selectedColor === color
-                                                ? "border-orange-500 bg-orange-500/10 text-white"
-                                                : "border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
-                                                }`}
-                                        >
-                                            {color}
-                                        </button>
-                                    ))}
+                            {/* Color Selector - Hidden for Tapestries */}
+                            {!isTapestry && (
+                                <div className="space-y-3">
+                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Select Color</span>
+                                    <div className="flex flex-wrap gap-3">
+                                        {(product.colors || ["Black", "White", "Navy", "Charcoal"]).map((color) => (
+                                            <button
+                                                key={color}
+                                                onClick={() => setSelectedColor(color)}
+                                                className={`px-4 py-2 rounded-lg border transition-all ${selectedColor === color
+                                                    ? "border-orange-500 bg-orange-500/10 text-white"
+                                                    : "border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
+                                                    }`}
+                                            >
+                                                {color}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <div className="grid grid-cols-2 gap-8">
                                 {/* Size Selector */}
@@ -214,11 +223,11 @@ export default function ProductClient({ product }: ProductClientProps) {
                                         <button className="text-xs text-orange-500 hover:underline">Size Guide</button>
                                     </div>
                                     <div className="flex flex-wrap gap-2">
-                                        {SIZES.map((size) => (
+                                        {(isTapestry ? TAPESTRY_SIZES : SIZES).map((size) => (
                                             <button
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
-                                                className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold transition-all border ${selectedSize === size
+                                                className={`min-w-12 h-12 px-2 rounded-lg flex items-center justify-center font-bold transition-all border ${selectedSize === size
                                                     ? "bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.3)]"
                                                     : "bg-zinc-900 border-white/10 text-gray-400 hover:border-white/40 hover:text-white"
                                                     }`}

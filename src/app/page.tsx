@@ -4,11 +4,12 @@ import { CollectionsSection } from "@/components/home/CollectionsSection";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Container } from "@/components/ui/container";
 
-import { PRODUCTS } from "@/lib/products";
+import { getProducts } from "@/lib/products";
 
-const FEATURED_PRODUCTS = PRODUCTS.slice(0, 4);
+export default async function Home() {
+  const products = await getProducts();
+  const FEATURED_PRODUCTS = products.slice(0, 4);
 
-export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <HeroSection />

@@ -1,6 +1,5 @@
 "use client"
 
-import { Shirt } from "lucide-react"
 // Note: Lucide might not have Hoodie, checking... Lucide has 'Shirt'. I'll use Shirt for now or custom SVG.
 
 export function StreetwearPlaceholder({ type = "shirt", className }: { type?: "shirt" | "hoodie" | "jersey", className?: string }) {

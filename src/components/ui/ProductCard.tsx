@@ -35,7 +35,7 @@ export function ProductCard({ id, title, price, image, category, rating = 5, hre
     }
 
     return (
-        <div className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30">
+        <div className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30 cursor-pointer">
             <Link href={href} className="absolute inset-0 z-10 rounded-3xl" />
 
             {/* Image Container with Glow */}

@@ -1,4 +1,4 @@
-import { PRODUCTS } from "@/lib/products";
+import { getProducts } from "@/lib/products";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Container } from "@/components/ui/container";
 import { notFound } from "next/navigation";
@@ -17,6 +17,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     // Handle "all" or specific categories
     const category = slug.toLowerCase();
     const searchQuery = typeof search === 'string' ? search.toLowerCase() : '';
+
+    const PRODUCTS = await getProducts();
 
     // Filter products
     // Logic: If category matches high-level 'category' OR 'subcategory'

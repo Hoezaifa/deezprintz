@@ -7,11 +7,22 @@ import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import { cn } from "@/lib/utils"
 
+interface SubCategory {
+    name: string
+    href: string
+}
+
+interface NavLink {
+    name: string
+    href: string
+    subcategories?: SubCategory[]
+}
+
 interface SideMenuProps {
     isOpen: boolean
     onClose: () => void
-    navLinks: any[]
-    user: any
+    navLinks: NavLink[]
+    user: any // Keeping user as any for now to avoid large refactor chain, or User | null
     onLogout: () => void
 }
 
@@ -20,7 +31,11 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
+        // eslint-disable-next-line
         setMounted(true)
+    }, [])
+
+    useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden'
         } else {
@@ -65,7 +80,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                             <span className="text-xl font-bold tracking-tighter text-white">MENU</span>
                             <button
                                 onClick={onClose}
-                                className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+                                className="p-2 hover:bg-white/10 rounded-full transition-colors text-white cursor-pointer"
                             >
                                 <X className="w-6 h-6" />
                             </button>
@@ -77,7 +92,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                 {navLinks.map((item) => {
                                     if (item.name === "ACCESSORIES" && item.subcategories) {
                                         // Flatten Accessories for Side Menu
-                                        return item.subcategories.map((sub: any) => (
+                                        return item.subcategories.map((sub: SubCategory) => (
                                             <Link
                                                 key={sub.name}
                                                 href={sub.href}
@@ -96,7 +111,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                                 <div className="flex flex-col">
                                                     <button
                                                         onClick={() => toggleCategory(item.name)}
-                                                        className="flex items-center justify-between w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"
+                                                        className="flex items-center justify-between w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors cursor-pointer"
                                                     >
                                                         {item.name}
                                                         <ChevronRight
@@ -110,7 +125,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                                     {/* Subcategories */}
                                                     {expandedCategory === item.name && (
                                                         <div className="flex flex-col pl-4 mt-2 mb-2 space-y-2 border-l border-white/10 ml-1">
-                                                            {item.subcategories.map((sub: any) => (
+                                                            {item.subcategories.map((sub: SubCategory) => (
                                                                 <Link
                                                                     key={sub.name}
                                                                     href={sub.href}

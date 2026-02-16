@@ -6,8 +6,9 @@ import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { OrderRow } from "@/components/admin/OrderRow"
 import { OrderSlip } from "@/components/admin/OrderSlip"
+import { ProductManager } from "@/components/admin/ProductManager"
 import { AnimatePresence } from "framer-motion"
-import { Search } from "lucide-react"
+import { Search, ShoppingBag, Package } from "lucide-react"
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -15,26 +16,69 @@ export default function AdminPage() {
     const [password, setPassword] = useState("")
     const [searchQuery, setSearchQuery] = useState("")
 
+    // Tab State
+    const [activeTab, setActiveTab] = useState<'orders' | 'products'>('orders')
+
     const [orders, setOrders] = useState<any[]>([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false) // Fixed: Start as false so login button is enabled
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null)
 
+    // Check for existing session on mount
     useEffect(() => {
-        if (isAuthenticated) {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+            if (session) {
+                setIsAuthenticated(true)
+                if (session.user.email) setEmail(session.user.email)
+            }
+        }
+        checkSession()
+    }, [])
+
+    useEffect(() => {
+        if (isAuthenticated && activeTab === 'orders') {
             fetchOrders()
-            // Poll for new orders every 30 seconds
             const interval = setInterval(fetchOrders, 30000)
             return () => clearInterval(interval)
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, activeTab])
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (email === "admin@deez.com" && password === "123123123") {
+        setLoading(true)
+
+        // Try Supabase Auth first
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        })
+
+        if (!error) {
             setIsAuthenticated(true)
         } else {
-            alert("Invalid credentials")
+            console.log("Login failed:", error.message)
+
+            // If user not found, try auto-signup as a convenience
+            if (error.message.includes("Invalid login credentials")) {
+                console.log("Attempting auto-signup...")
+                const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+                    email,
+                    password,
+                })
+
+                if (!signUpError && signUpData.user) {
+                    setIsAuthenticated(true)
+                    alert("Account created and logged in! You can now save products.")
+                } else {
+                    // It might fail if user exists but password was wrong (not 'Invalid login credentials' but specifically auth fail)
+                    // Or if signups are disabled
+                    alert(`Login Failed: ${error.message}\n(Auto-signup also failed: ${signUpError?.message})`)
+                }
+            } else {
+                alert(`Login Failed: ${error.message}`)
+            }
         }
+        setLoading(false)
     }
 
     const fetchOrders = async () => {
@@ -47,14 +91,11 @@ export default function AdminPage() {
 
             if (error) {
                 console.error("Supabase error:", error)
-                // If table doesn't exist or other error, fallback to mock data for demo if needed
-                // But for now, let's just show empty or handle gracefully
             }
 
-            // Add is_read field locally if it doesn't exist in DB yet (for backward compat)
             const enhancedOrders = data?.map(o => ({
                 ...o,
-                is_read: o.is_read ?? false // Default to unread (false) if field missing
+                is_read: o.is_read ?? false
             })) || []
 
             setOrders(enhancedOrders)
@@ -66,45 +107,19 @@ export default function AdminPage() {
     }
 
     const handleToggleRead = async (id: string, currentStatus: boolean) => {
-        // Optimistic update
         setOrders(orders.map(o => o.id === id ? { ...o, is_read: !currentStatus } : o))
-
         try {
-            const { error } = await supabase
-                .from('orders')
-                .update({ is_read: !currentStatus })
-                .eq('id', id)
-
-            if (error) {
-                console.error("Supabase Error Details:", error)
-                throw error
-            }
-        } catch (err: any) {
+            await supabase.from('orders').update({ is_read: !currentStatus }).eq('id', id)
+        } catch (err) {
             console.error("Failed to update read status:", err)
-            // Revert on error
-            setOrders(orders.map(o => o.id === id ? { ...o, is_read: currentStatus } : o))
-
-            // Check if it's a known schema error (though specific message might vary)
-            if (err.message?.includes('column') || err.message?.includes('is_read') || JSON.stringify(err).includes('is_read')) {
-                alert("Error: Database outdated. Please run the SQL script to add 'is_read' column.")
-            } else {
-                alert(`Failed to update status. Error: ${err.message || JSON.stringify(err) || 'Unknown error'}`)
-            }
         }
     }
 
     const handleDelete = async (id: string) => {
-        // Optimistic update
         const backup = [...orders]
         setOrders(orders.filter(o => o.id !== id))
-
         try {
-            const { error } = await supabase
-                .from('orders')
-                .delete()
-                .eq('id', id)
-
-            if (error) throw error
+            await supabase.from('orders').delete().eq('id', id)
         } catch (err) {
             console.error("Failed to delete order", err)
             setOrders(backup)
@@ -114,27 +129,17 @@ export default function AdminPage() {
 
     const groupOrdersByDate = (orders: any[]) => {
         const groups: { [key: string]: any[] } = {}
-
         orders.forEach(order => {
             const date = new Date(order.created_at)
             const today = new Date()
             const yesterday = new Date(today)
             yesterday.setDate(yesterday.getDate() - 1)
-
             let dateKey = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-
-            if (date.toDateString() === today.toDateString()) {
-                dateKey = "Today"
-            } else if (date.toDateString() === yesterday.toDateString()) {
-                dateKey = "Yesterday"
-            }
-
-            if (!groups[dateKey]) {
-                groups[dateKey] = []
-            }
+            if (date.toDateString() === today.toDateString()) dateKey = "Today"
+            else if (date.toDateString() === yesterday.toDateString()) dateKey = "Yesterday"
+            if (!groups[dateKey]) groups[dateKey] = []
             groups[dateKey].push(order)
         })
-
         return groups
     }
 
@@ -147,26 +152,14 @@ export default function AdminPage() {
                         <form onSubmit={handleLogin} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-zinc-400 mb-1">Email</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none"
-                                    placeholder="admin@deez.com"
-                                />
+                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none" placeholder="admin@deez.com" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-zinc-400 mb-1">Password</label>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none"
-                                    placeholder="••••••••"
-                                />
+                                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-zinc-800 border border-white/10 rounded px-4 py-2 text-white focus:border-white/30 outline-none" placeholder="••••••••" />
                             </div>
-                            <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold">
-                                Login
+                            <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold" disabled={loading}>
+                                {loading ? "Logging in..." : "Login"}
                             </Button>
                         </form>
                     </div>
@@ -191,35 +184,31 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen pt-24 pb-20 bg-black text-white">
             <Container>
+                {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold mb-1">Order Dashboard</h1>
-                        <p className="text-zinc-500 text-sm">Manage and track your incoming orders</p>
+                        <h1 className="text-3xl font-bold mb-1">Admin Dashboard</h1>
+                        <p className="text-zinc-500 text-sm">Manage orders</p>
                     </div>
                     <div className="flex gap-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
-                            <input
-                                type="text"
-                                placeholder="Search orders..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-9 pr-4 py-2 bg-zinc-900 border border-white/10 rounded-md text-sm text-white focus:border-white/30 outline-none w-64"
-                            />
-                        </div>
-                        <Button
-                            variant="outline"
-                            onClick={fetchOrders}
-                            className="bg-transparent border-white/20 hover:bg-zinc-900 text-white"
-                        >
-                            Refresh
-                        </Button>
-                        <Button
-                            variant="destructive"
-                            onClick={() => setIsAuthenticated(false)}
-                        >
-                            Logout
-                        </Button>
+                        <Button variant="destructive" onClick={() => {
+                            supabase.auth.signOut()
+                            setIsAuthenticated(false)
+                        }}>Logout</Button>
+                    </div>
+                </div>
+
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-bold">Orders</h2>
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                        <input
+                            type="text"
+                            placeholder="Search orders..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-9 pr-4 py-2 bg-zinc-900 border border-white/10 rounded-md text-sm text-white focus:border-white/30 outline-none w-64"
+                        />
                     </div>
                 </div>
 
@@ -261,12 +250,8 @@ export default function AdminPage() {
                 )}
             </Container>
 
-            {/* Order Slip Modal */}
             {selectedOrder && (
-                <OrderSlip
-                    order={selectedOrder}
-                    onClose={() => setSelectedOrder(null)}
-                />
+                <OrderSlip order={selectedOrder} onClose={() => setSelectedOrder(null)} />
             )}
         </div>
     )

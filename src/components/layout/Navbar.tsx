@@ -3,13 +3,13 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingBag, Search, User, Menu, X, ChevronDown } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { SideMenu } from "@/components/layout/SideMenu"
 import { supabase } from "@/lib/supabase"
-import { PRODUCTS } from "@/lib/products"
+import { PRODUCTS, Product, getProducts } from "@/lib/products"
 import { useCart } from "@/context/CartContext"
 import { useRouter } from "next/navigation"
 
@@ -83,24 +83,26 @@ export function Navbar() {
     }
 
     // Search Logic
-    const [filteredProducts, setFilteredProducts] = useState<any[]>([])
+    const [products, setProducts] = useState<Product[]>([])
 
     useEffect(() => {
-        if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase()
-            // Defensive check for PRODUCTS
-            const productsList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : []
-            const results = productsList.filter(product =>
-                product.title.toLowerCase().includes(query) ||
-                product.category.toLowerCase().includes(query) ||
-                product.subcategory?.toLowerCase().includes(query) ||
-                product.artist?.toLowerCase().includes(query)
-            ).slice(0, 5) // Limit to 5 results
-            setFilteredProducts(results)
-        } else {
-            setFilteredProducts([])
+        const loadProducts = async () => {
+            const data = await getProducts()
+            setProducts(data)
         }
-    }, [searchQuery])
+        loadProducts()
+    }, [])
+
+    const filteredProducts = useMemo(() => {
+        if (!searchQuery.trim()) return []
+        const query = searchQuery.toLowerCase()
+        return products.filter((product: Product) =>
+            product.title.toLowerCase().includes(query) ||
+            product.category.toLowerCase().includes(query) ||
+            product.subcategory?.toLowerCase().includes(query) ||
+            product.artist?.toLowerCase().includes(query)
+        ).slice(0, 5) // Limit to 5 results
+    }, [searchQuery, products])
 
     return (
         <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-white/5">
@@ -109,7 +111,7 @@ export function Navbar() {
                 {/* Left: Menu Button & Logo */}
                 <div className="flex-1 flex items-center justify-start gap-4">
                     <button
-                        className="p-2 -ml-2 text-white hover:bg-white/10 rounded-full transition-colors"
+                        className="p-2 -ml-2 text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
                         onClick={() => setIsMenuOpen(true)}
                     >
                         <Menu className="w-6 h-6" />

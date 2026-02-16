@@ -3,6 +3,7 @@ import ProductClient from "./product-client"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 
+// Force static generation for these paths
 export async function generateStaticParams() {
     return PRODUCTS.map((product) => ({
         slug: product.id,
@@ -33,6 +34,7 @@ interface PageProps {
 
 export default async function ProductPage({ params }: PageProps) {
     const { slug } = await params
+    // Ensure we await the params before using slug, and find the product synchronously from the array
     const product = PRODUCTS.find((p) => p.id === slug)
 
     if (!product) {

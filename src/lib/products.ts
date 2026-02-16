@@ -10,24 +10,28 @@ export interface Product {
     colors?: string[];
 }
 
+export async function getProducts() {
+    return PRODUCTS
+}
+
 export const PRODUCTS: Product[] = [
-    // --- FEATURED (Homepage) ---
+    // --- FEATURED ---
     {
         id: "kanye-yeezus-shirt",
         title: "KANYE WEST YEEZUS T-SHIRT",
         artist: "KANYE WEST",
         price: 3200,
-        image: '/assets/products/kanye-yeezus-shirt.jpg',
+        image: '/assets/products/regular-t-shirts/kanye-yeezus-shirt-v1.jpg',
         rating: 5,
         category: "t-shirts",
         subcategory: "graphic"
     },
     {
         id: "kanye-west-hoodie",
-        title: "KANYE WEST HOODIE",
+        title: "KeNYE WEST HOODIE",
         artist: "KANYE WEST",
         price: 5500,
-        image: '/assets/products/kanye-west-hoodie.jpg',
+        image: '/assets/products/hoodies/kanye-west-hoodie-v1.jpg',
         rating: 5,
         category: "hoodies",
         subcategory: "original",
@@ -38,7 +42,7 @@ export const PRODUCTS: Product[] = [
         title: "THE NIGHT WE MET",
         artist: "LORD HURON",
         price: 2800,
-        image: '/assets/products/night-met-shirt.jpg',
+        image: '/assets/products/regular-t-shirts/night-met-shirt-v1.jpg',
         rating: 5,
         category: "t-shirts",
         subcategory: "graphic"
@@ -48,7 +52,7 @@ export const PRODUCTS: Product[] = [
         title: "SEEDHE MAUT TSHIRT",
         artist: "SEEDHE MAUT",
         price: 2500,
-        image: '/assets/products/seedhe-maut-shirt.jpg',
+        image: '/assets/products/regular-t-shirts/seedhe-maut-shirt-v1.jpg',
         rating: 4,
         category: "t-shirts",
         subcategory: "graphic"
@@ -58,173 +62,240 @@ export const PRODUCTS: Product[] = [
         title: "OVERSIZED TEE",
         artist: "TBSM",
         price: 2900,
-        image: '/assets/products/oversized-tee-tbsm.jpg',
+        image: '/assets/products/drop-shoulder-t-shirts/oversized-tee-tbsm-v1.jpg',
         rating: 5,
         category: "t-shirts",
         subcategory: "drop-shoulder",
         colors: ["Black", "White", "Olive", "Sand"]
     },
-    // --- HOODIES ---
-    ...Array.from({ length: 10 }).map((_, i) => ({
-        id: `hoodie-${i}`,
-        title: `Streetwear Hoodie ${i + 1}`,
+
+    // --- HOODIES (Expanded Loop) ---
+    {
+        id: "hoodie-1",
+        title: "Streetwear Hoodie 1",
         price: 4500,
-        image: `/assets/products/hoodie-${i}.jpg`,
+        image: "/assets/products/hoodies/hoodie-1-v1.jpg",
         category: 'hoodies',
         artist: 'DEEZ ORIGINALS',
         rating: 5,
         colors: ["Black", "White", "Grey", "Navy"]
-    })),
+    },
+    {
+        id: "hoodie-2",
+        title: "Streetwear Hoodie 2",
+        price: 4500,
+        image: "/assets/products/hoodies/hoodie-2-v1.jpg",
+        category: 'hoodies',
+        artist: 'DEEZ ORIGINALS',
+        rating: 5,
+        colors: ["Black", "White", "Grey", "Navy"]
+    },
+    {
+        id: "hoodie-3",
+        title: "Streetwear Hoodie 3",
+        price: 4500,
+        image: "/assets/products/hoodies/hoodie-3-v1.jpg",
+        category: 'hoodies',
+        artist: 'DEEZ ORIGINALS',
+        rating: 5,
+        colors: ["Black", "White", "Grey", "Navy"]
+    },
 
-    // --- T-SHIRTS ---
-    // Regular
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `tshirt-reg-${i}`,
-        title: `Regular Fit Graphic Tee ${i + 1}`,
+    // --- REGULAR T-SHIRTS ---
+    {
+        id: "tshirt-reg-1",
+        title: "Pewdiepie Exclusive Tee",
         price: 2500,
-        image: `/assets/products/tshirt-reg-${i}.jpg`,
+        image: "/assets/products/regular-t-shirts/pdp-v1.jpg",
         category: 't-shirts',
         subcategory: 'regular',
         artist: 'TBSM',
         rating: 4,
         colors: ["Black", "White", "Blue", "Red"]
-    })),
-    // Drop Shoulder
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `tshirt-drop-${i}`,
-        title: `Oversized Drop Shoulder Tee ${i + 1}`,
+    },
+    {
+        id: "tshirt-reg-2",
+        title: "Regular Fit Graphic Tee 2",
+        price: 2500,
+        image: "/assets/products/regular-t-shirts/tshirt-reg-2.jpg",
+        category: 't-shirts',
+        subcategory: 'regular',
+        artist: 'TBSM',
+        rating: 4,
+        colors: ["Black", "White", "Blue", "Red"]
+    },
+
+    // --- DROP SHOULDER T-SHIRTS ---
+    {
+        id: "tshirt-drop-1",
+        title: "Oversized Drop Shoulder Tee 1",
         price: 2900,
-        image: `/assets/products/tshirt-drop-${i}.jpg`,
+        image: "/assets/products/drop-shoulder-t-shirts/tshirt-drop-1.jpg",
         category: 't-shirts',
         subcategory: 'drop-shoulder',
         artist: 'OVERSIZED',
         rating: 5,
         colors: ["Black", "beige", "White"]
-    })),
-    // Acid Wash
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `tshirt-acid-${i}`,
-        title: `Vintage Acid Wash Tee ${i + 1}`,
+    },
+    {
+        id: "tshirt-drop-2",
+        title: "Oversized Drop Shoulder Tee 2",
+        price: 2900,
+        image: "/assets/products/drop-shoulder-t-shirts/tshirt-drop-2.jpg",
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black", "beige", "White"]
+    },
+
+    // --- ACID WASH T-SHIRTS ---
+    {
+        id: "tshirt-acid-1",
+        title: "Vintage Acid Wash Tee 1",
         price: 3200,
-        image: `/assets/products/tshirt-acid-${i}.jpg`,
+        image: "/assets/products/acid-wash-t-shirts/tshirt-acid-1.jpg",
         category: 't-shirts',
         subcategory: 'acid-wash',
         artist: 'VINTAGE',
         rating: 5,
         colors: ["Acid Black", "Acid Wash Blue"]
-    })),
+    },
 
     // --- JERSEYS ---
-    ...Array.from({ length: 8 }).map((_, i) => ({
-        id: `jersey-${i}`,
-        title: `Pro Moto Jersey ${i + 1}`,
+    {
+        id: "jersey-1",
+        title: "Pro Moto Jersey 1",
         price: 5500,
-        image: `/assets/products/jersey-${i}.jpg`,
+        image: "/assets/products/jerseys/jersey-1.jpg",
         category: 'jerseys',
         artist: 'RACING',
         rating: 5
-    })),
+    },
+    {
+        id: "jersey-2",
+        title: "Pro Moto Jersey 2",
+        price: 5500,
+        image: "/assets/products/jerseys/jersey-2.jpg",
+        category: 'jerseys',
+        artist: 'RACING',
+        rating: 5
+    },
 
-    // --- ACCESSORIES / CUSTOMIZED ITEMS ---
-    // Mugs
-    { id: 'mug-white', title: 'Sublimation Mug (Inner White)', price: 900, category: 'accessories', subcategory: 'mugs', rating: 4, image: '/assets/products/mug-white.jpg' },
-    { id: 'mug-colored', title: 'Sublimation Mug (Inner + Handle Colored)', price: 1200, category: 'accessories', subcategory: 'mugs', rating: 5, image: '/assets/products/mug-colored.jpg' },
-    { id: 'mug-magic', title: 'Magic Color Changing Mug', price: 1500, category: 'accessories', subcategory: 'mugs', rating: 5, image: '/assets/products/mug-magic.jpg' },
+    // --- MUGS ---
+    {
+        id: 'mug-white',
+        title: 'Sublimation Mug (Inner White)',
+        price: 900,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 4,
+        image: '/assets/products/mugs/mug-white.jpg'
+    },
+    {
+        id: 'mug-colored',
+        title: 'Sublimation Mug (Inner + Handle Colored)',
+        price: 1200,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 5,
+        image: '/assets/products/mugs/mug-colored.jpg'
+    },
 
-    // Flags
-    ...Array.from({ length: 4 }).map((_, i) => ({
-        id: `flag-${i}`,
-        title: `Custom Tapestry Flag ${i + 1}`,
+    // --- FLAGS ---
+    {
+        id: "flag-1",
+        title: "Custom Tapestry Flag 1",
         price: 1900,
-        image: `/assets/products/flag-${i}.jpg`,
+        image: "/assets/products/flags/flag-1.jpg",
         category: 'accessories',
         subcategory: 'flags',
         rating: 5
-    })),
+    },
 
-    // Tapestries
-    ...Array.from({ length: 4 }).map((_, i) => ({
-        id: `tapestry-${i}`,
-        title: `Wall Tapestry ${i + 1}`,
+    // --- TAPESTRIES ---
+    {
+        id: "tapestry-1",
+        title: "Wall Tapestry 1",
         price: 2400,
-        image: `/assets/products/tapestry.jpg`,
+        image: "/assets/products/tapestries/tapestry-1.jpg",
         category: 'accessories',
         subcategory: 'tapestries',
         rating: 5
-    })),
+    },
 
-    // Wristbands
-    ...Array.from({ length: 4 }).map((_, i) => ({
-        id: `wristband-${i}`,
-        title: `Silicone Wristband ${i + 1}`,
+    // --- WRISTBANDS ---
+    {
+        id: "wristband-1",
+        title: "Silicone Wristband 1",
         price: 499,
-        image: `/assets/products/wristband-${i}.jpg`,
+        image: "/assets/products/wristbands/wristband-1.jpg",
         category: 'accessories',
         subcategory: 'wristbands',
         rating: 4
-    })),
+    },
 
-    // Badges
-    ...Array.from({ length: 6 }).map((_, i) => ({
-        id: `badge-${i}`,
-        title: `Button Badge ${i + 1}`,
+    // --- BADGES ---
+    {
+        id: "badge-1",
+        title: "Button Badge 1",
         price: 299,
-        image: `/assets/products/badge-${i}.jpg`,
+        image: "/assets/products/badges/badge-1.jpg",
         category: 'accessories',
         subcategory: 'badges',
         rating: 4
-    })),
+    },
 
-    // Wallet Cards
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `wallet-card-${i}`,
-        title: `Metal Wallet Card ${i + 1}`,
+    // --- WALLET CARDS ---
+    {
+        id: "wallet-card-1",
+        title: "Metal Wallet Card 1",
         price: 1400,
-        image: `/assets/products/wallet-card-${i}.jpg`,
+        image: "/assets/products/wallet-cards/wallet-card-1.jpg",
         category: 'accessories',
         subcategory: 'wallet-cards',
         rating: 5
-    })),
+    },
 
-    // Keychains
-    ...Array.from({ length: 6 }).map((_, i) => ({
-        id: `keychain-${i}`,
-        title: `Acrylic Keychain ${i + 1}`,
+    // --- KEYCHAINS ---
+    {
+        id: "keychain-1",
+        title: "Acrylic Keychain 1",
         price: 699,
-        image: `/assets/products/keychain-${i}.jpg`,
+        image: "/assets/products/keychains/keychain-1.jpg",
         category: 'accessories',
         subcategory: 'keychains',
         rating: 5
-    })),
+    },
 
-    // Magnets
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `magnet-${i}`,
-        title: `Fridge Magnet ${i + 1}`,
+    // --- MAGNETS ---
+    {
+        id: "magnet-1",
+        title: "Fridge Magnet 1",
         price: 499,
-        image: `/assets/products/magnet-${i}.jpg`,
+        image: "/assets/products/magnets/magnet-1.jpg",
         category: 'accessories',
         subcategory: 'magnets',
         rating: 4
-    })),
+    },
 
-    // Notebooks
-    ...Array.from({ length: 5 }).map((_, i) => ({
-        id: `notebook-${i}`,
-        title: `Spiral Notebook ${i + 1}`,
+    // --- NOTEBOOKS ---
+    {
+        id: "notebook-1",
+        title: "Spiral Notebook 1",
         price: 899,
-        image: `/assets/products/notebook-${i}.jpg`,
+        image: "/assets/products/notebooks/notebook-1.jpg",
         category: 'accessories',
         subcategory: 'notebooks',
         rating: 4
-    })),
+    },
 
-    // Gift Boxes
+    // --- GIFT BOXES ---
     {
         id: 'gift-box-corporate',
         title: 'Corporate Gift Box (Set of 4)',
         price: 4999,
-        image: '/assets/products/gift-box-corporate.jpg',
+        image: '/assets/products/gift-boxes/gift-box-corporate.jpg',
         category: 'accessories',
         subcategory: 'gift-boxes',
         rating: 5,
@@ -234,7 +305,7 @@ export const PRODUCTS: Product[] = [
         id: 'gift-box-premium',
         title: 'Premium Gift Hamper',
         price: 7999,
-        image: '/assets/products/gift-box-premium.jpg',
+        image: '/assets/products/gift-boxes/gift-box-premium.jpg',
         category: 'accessories',
         subcategory: 'gift-boxes',
         rating: 5,

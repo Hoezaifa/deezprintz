@@ -59,8 +59,7 @@ export async function POST(request: Request) {
     // We will send a copy to the same email as the 'to' if it matches the verified one, 
     // OR we just try to send to the admin email if provided in env var.
 
-    // For reliability, we will log the result.
-    console.log("Email sent to user:", userEmail);
+    // console.log("Email sent to user:", userEmail);
 
     return NextResponse.json(userEmail);
   } catch (error) {
