@@ -12,7 +12,7 @@ import html2canvas from "html2canvas"
 export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart()
     const [step, setStep] = useState(1) // 1: Info, 2: Payment, 3: Success
-    const [paymentMethod, setPaymentMethod] = useState<"cod" | "bank">("cod")
+    const [paymentMethod, setPaymentMethod] = useState<"cod" | "bank">("bank") // Default to bank since COD is disabled
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -211,7 +211,8 @@ export default function CheckoutPage() {
                                 >
                                     <h2 className="text-2xl font-bold text-white">Payment Method</h2>
                                     <div className="space-y-4">
-                                        <button
+                                        {/* COD Disabled */}
+                                        {/* <button
                                             onClick={() => setPaymentMethod("cod")}
                                             className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${paymentMethod === "cod" ? "bg-white/10 border-white" : "bg-zinc-900/50 border-white/10 hover:border-white/30"}`}
                                         >
@@ -220,7 +221,7 @@ export default function CheckoutPage() {
                                                 <span className="font-bold">Cash on Delivery</span>
                                             </div>
                                             {paymentMethod === "cod" && <div className="w-3 h-3 bg-white rounded-full" />}
-                                        </button>
+                                        </button> */}
 
                                         <button
                                             onClick={() => setPaymentMethod("bank")}

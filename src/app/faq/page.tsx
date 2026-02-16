@@ -33,7 +33,7 @@ const faqs = [
     },
     {
         question: "What payment methods do you accept?",
-        answer: "We accept Cash on Delivery (COD) and Bank Transfers (Meezan Bank, Easypaisa, Jazzcash, SadaPay)."
+        answer: "We currently accept Bank Transfers (Meezan Bank, Easypaisa, Jazzcash, SadaPay)."
     },
     {
         question: "Do you offer international shipping?",
