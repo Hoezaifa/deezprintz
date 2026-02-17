@@ -3,8 +3,17 @@
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { CheckCircle2 } from "lucide-react"
 
 export default function SignupPage() {
     const [name, setName] = useState("")
@@ -12,6 +21,7 @@ export default function SignupPage() {
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [showSuccessDialog, setShowSuccessDialog] = useState(false)
     const router = useRouter()
 
     const handleSignup = async (e: React.FormEvent) => {
@@ -26,16 +36,15 @@ export default function SignupPage() {
                 options: {
                     data: {
                         full_name: name,
-                    }
+                    },
+                    emailRedirectTo: `${window.location.origin}/auth/callback`,
                 }
             })
 
             if (error) throw error
 
-            // Check if email confirmation is required (Supabase default)
-            // For now, assume it might be, or we can disable it in Supabase dashboard
-            alert("Account created! Please check your email to verify.")
-            router.push("/auth/login")
+            // Show success dialog instead of alert
+            setShowSuccessDialog(true)
 
         } catch (err: any) {
             console.error("Signup Error:", err)
@@ -50,6 +59,11 @@ export default function SignupPage() {
         } finally {
             setLoading(false)
         }
+    }
+
+    const handleCloseDialog = () => {
+        setShowSuccessDialog(false)
+        router.push("/auth/login")
     }
 
     return (
@@ -111,6 +125,38 @@ export default function SignupPage() {
                     Log in
                 </Link>
             </div>
+
+            <Dialog open={showSuccessDialog} onOpenChange={handleCloseDialog}>
+                <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10 text-white">
+                    <DialogHeader>
+                        <div className="flex items-center gap-4">
+                            <CheckCircle2 className="w-10 h-10 text-green-500" />
+                            <div className="space-y-1">
+                                <DialogTitle className="text-xl">Account Created!</DialogTitle>
+                                <DialogDescription className="text-gray-400">
+                                    Welcome to Deez Prints.
+                                </DialogDescription>
+                            </div>
+                        </div>
+                    </DialogHeader>
+                    <div className="py-4">
+                        <p className="text-gray-300">
+                            We've sent a verification link to <strong>{email}</strong>.
+                            <br /><br />
+                            Please check your email to activate your account.
+                        </p>
+                    </div>
+                    <DialogFooter className="sm:justify-start">
+                        <Button
+                            type="button"
+                            className="w-full bg-white text-black hover:bg-zinc-200"
+                            onClick={handleCloseDialog}
+                        >
+                            Okay, Got it
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }

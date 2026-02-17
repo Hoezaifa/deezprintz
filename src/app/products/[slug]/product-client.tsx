@@ -315,7 +315,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                                     We don&apos;t have any return or exchange policy on size issues, nor there are any refund policy otherwise. So, please refer to our size chart before ordering.
                                 </p>
                                 <p>
-                                    If there&apos;s a defect in your product, we will exchange the product with new one. For that, you will have to mail us with the picture of defect at <a href="mailto:pg18tshirts@gmail.com" className="text-orange-500 hover:underline">pg18tshirts@gmail.com</a> and after verification you will receive the new order within standard delivery time.
+                                    If there&apos;s a defect in your product, we will exchange the product with new one. For that, you will have to mail us with the picture of defect at <a href="mailto:deezprints69@gmail.com" className="text-orange-500 hover:underline">deezprints69@gmail.com</a> and after verification you will receive the new order within standard delivery time.
                                 </p>
                             </Accordion>
 
