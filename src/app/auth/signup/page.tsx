@@ -47,16 +47,19 @@ export default function SignupPage() {
             setShowSuccessDialog(true)
 
         } catch (err: any) {
-            console.error("Signup Error:", err)
             // Handle Supabase specific error structure or standard error message
             const errorMessage = err?.message || err?.error_description || "An error occurred"
 
             if (errorMessage.toLowerCase().includes("rate limit") || err.status === 429) {
-                setError("Security Limit Reached: Too many signup attempts. Please wait a while or try a different email.")
+                // Don't error spam console for rate limits, just warn
+                console.warn("Supabase Signup Rate Limit Hit:", errorMessage)
+                setError("Security Limit Reached: Too many signup attempts. Please wait 15-60 minutes or use a different email.")
             } else if (errorMessage.toLowerCase().includes("already registered")) {
+                console.warn("User already registered:", email)
                 setError("This email is already registered. Please log in.")
                 setTimeout(() => router.push("/auth/login"), 2000)
             } else {
+                console.error("Signup Error:", err)
                 setError(errorMessage)
             }
         } finally {
