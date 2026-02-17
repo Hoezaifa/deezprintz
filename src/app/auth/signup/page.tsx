@@ -48,13 +48,16 @@ export default function SignupPage() {
 
         } catch (err: any) {
             console.error("Signup Error:", err)
-            if (err.message?.includes("rate limit") || err.status === 429) {
-                setError("Too many signup attempts. Please try again later or use a different email.")
-            } else if (err.message?.includes("already registered")) {
+            // Handle Supabase specific error structure or standard error message
+            const errorMessage = err?.message || err?.error_description || "An error occurred"
+
+            if (errorMessage.toLowerCase().includes("rate limit") || err.status === 429) {
+                setError("Security Limit Reached: Too many signup attempts. Please wait a while or try a different email.")
+            } else if (errorMessage.toLowerCase().includes("already registered")) {
                 setError("This email is already registered. Please log in.")
                 setTimeout(() => router.push("/auth/login"), 2000)
             } else {
-                setError(err.message)
+                setError(errorMessage)
             }
         } finally {
             setLoading(false)
