@@ -64,16 +64,21 @@ export default function AdminPage() {
                 const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
                     email,
                     password,
+                    options: {
+                        emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    }
                 })
 
                 if (!signUpError && signUpData.user) {
                     setIsAuthenticated(true)
-                    alert("Account created and logged in! You can now save products.")
+                    alert("Account created! Please check your email to confirm your account before logging in.")
                 } else {
                     // It might fail if user exists but password was wrong (not 'Invalid login credentials' but specifically auth fail)
                     // Or if signups are disabled
                     alert(`Login Failed: ${error.message}\n(Auto-signup also failed: ${signUpError?.message})`)
                 }
+            } else if (error.message.includes("Email not confirmed")) {
+                alert("Login Failed: Email not confirmed. Please check your inbox and verify your email address.")
             } else {
                 alert(`Login Failed: ${error.message}`)
             }
