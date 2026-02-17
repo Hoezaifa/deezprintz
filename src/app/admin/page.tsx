@@ -57,6 +57,8 @@ export default function AdminPage() {
             setIsAuthenticated(true)
         } else {
             console.log("Login failed:", error.message)
+            // Force update: 2026-02-17 18:22
+
 
             // If user not found, try auto-signup as a convenience
             if (error.message.includes("Invalid login credentials")) {
