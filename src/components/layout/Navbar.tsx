@@ -256,25 +256,7 @@ export function Navbar() {
 
 
                     {/* User Auth */}
-                    {user ? (
-                        <div className="flex items-center gap-4">
-                            <div className="hidden md:block text-right">
-                                <p className="text-sm font-bold text-white dark:text-white text-black leading-none">{user.user_metadata?.full_name || 'My Account'}</p>
-                                <button onClick={handleLogout} className="text-xs text-red-400 hover:text-red-300">
-                                    Logout
-                                </button>
-                            </div>
-                            <div className="h-8 w-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-white font-bold">
-                                {(user.user_metadata?.full_name?.[0] || user.email?.[0] || 'U').toUpperCase()}
-                            </div>
-                        </div>
-                    ) : (
-                        <Link href="/auth/login" aria-label="Login">
-                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-black dark:text-white rounded-full" aria-label="User Account">
-                                <User className="h-5 w-5" />
-                            </Button>
-                        </Link>
-                    )}
+                    {/* User Login - Disabled */}
                 </div>
             </Container>
 

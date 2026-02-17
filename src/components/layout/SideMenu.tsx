@@ -156,24 +156,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
 
                         {/* Footer */}
                         <div className="p-6 border-t border-white/10 bg-black/40">
-                            <Link href={user ? "#" : "/auth/login"} onClick={user ? undefined : onClose} className="flex items-center gap-4 mb-6 hover:bg-white/5 p-2 rounded-xl transition-colors cursor-pointer">
-                                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
-                                    <User className="w-5 h-5" />
-                                </div>
-                                <div className="flex flex-col">
-                                    {user ? (
-                                        <>
-                                            <span className="text-white font-bold text-sm">Hi, {user.user_metadata?.full_name?.split(' ')[0] || 'User'}</span>
-                                            <button onClick={onLogout} className="text-left text-red-500 text-xs hover:text-red-400">Logout</button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span className="text-white font-bold text-sm">My Account</span>
-                                            <span className="text-gray-500 text-xs">Login / Register</span>
-                                        </>
-                                    )}
-                                </div>
-                            </Link>
+                            {/* User Login - Disabled */}
 
                             <div className="flex gap-6 text-gray-400">
                                 <Link href="https://www.facebook.com/profile.php?id=61556303432172" target="_blank" rel="noopener noreferrer">
