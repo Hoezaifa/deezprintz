@@ -13,6 +13,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/cart/CartSidebar";
+import { ChatBot } from "@/components/chat/ChatBot";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <Navbar />
             <CartSidebar />
             {children}
+            {/* <ChatBot /> */}
             <Footer />
           </CartProvider>
           <Analytics />

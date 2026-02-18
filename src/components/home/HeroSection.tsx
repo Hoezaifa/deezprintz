@@ -16,7 +16,7 @@ export function HeroSection() {
                             fill
                             className="object-contain object-center lg:object-left"
                             priority
-                            // Optimize for LCP: eager loading, high priority
+                            // Optimize for LCP: eager loSSading, high priority
                             fetchPriority="high"
                             unoptimized
                         />

@@ -5,8 +5,8 @@ import Link from "next/link"
 import { Container } from "@/components/ui/container"
 
 const COLLECTIONS = [
-    { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/collections/t-shirts.jpg" },
-    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/collections/drop-shoulder.jpg" },
+    { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/collections/tshirt.jpg" },
+    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/collections/dropshoulder.jpg" },
     { title: "HOODIES", href: "/collections/hoodies", image: "/assets/collections/hoodies.jpg" },
     { title: "MUGS", href: "/collections/mugs", image: "/assets/collections/mugs.jpg" },
     { title: "TAPESTRIES", href: "/collections/tapestries", image: "/assets/collections/tapestries.jpg" },
