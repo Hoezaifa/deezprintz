@@ -8,7 +8,7 @@ const COLLECTIONS = [
     { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/collections/tshirt.jpg" },
     { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/collections/dropshoulder.jpg" },
     { title: "HOODIES", href: "/collections/hoodies", image: "/assets/collections/hoodies.jpg" },
-    { title: "MUGS", href: "/collections/mugs", image: "/assets/collections/mugs.jpg" },
+    { title: "MUGS", href: "/collections/mugs", image: "/assets/collections/mugs.png" },
     { title: "TAPESTRIES", href: "/collections/tapestries", image: "/assets/collections/tapestries.jpg" },
     { title: "WRISTBANDS", href: "/collections/wristbands", image: "/assets/collections/wristbands.jpg" },
     { title: "BADGES", href: "/collections/badges", image: "/assets/collections/badges.jpg" },

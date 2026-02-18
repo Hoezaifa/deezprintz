@@ -18,6 +18,7 @@ import { ChatBot } from "@/components/chat/ChatBot";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import { Analytics } from "@vercel/analytics/next"
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function RootLayout({
   children,
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Footer />
           </CartProvider>
           <Analytics />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
         </ThemeProvider>
       </body>
     </html>
