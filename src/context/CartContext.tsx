@@ -8,11 +8,12 @@ import { User, Session, AuthChangeEvent } from "@supabase/supabase-js"
 export interface CartItem extends Product {
     quantity: number
     selectedSize?: string
+    selectedColor?: string
 }
 
 interface CartContextType {
     items: CartItem[]
-    addItem: (product: Product, size?: string, quantity?: number) => void
+    addItem: (product: Product, size?: string, quantity?: number, color?: string, specificImage?: string) => void
     removeItem: (productId: string) => void
     updateQuantity: (productId: string, quantity: number) => void
     clearCart: () => void
@@ -117,19 +118,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }, [items, user, isLoaded])
 
-    const addItem = (product: Product, size?: string, quantity: number = 1) => {
+    const addItem = (product: Product, size?: string, quantity: number = 1, color?: string, specificImage?: string) => {
         setItems(currentItems => {
-            const existingItem = currentItems.find(item => item.id === product.id && item.selectedSize === size)
+            const existingItem = currentItems.find(item =>
+                item.id === product.id &&
+                item.selectedSize === size &&
+                item.selectedColor === color
+            )
 
             if (existingItem) {
                 return currentItems.map(item =>
-                    item.id === product.id && item.selectedSize === size
+                    item.id === product.id && item.selectedSize === size && item.selectedColor === color
                         ? { ...item, quantity: item.quantity + quantity }
                         : item
                 )
             }
 
-            return [...currentItems, { ...product, quantity: quantity, selectedSize: size }]
+            return [...currentItems, {
+                ...product,
+                // If a specific image variant was passed, use that as the main image for the cart
+                image: specificImage || product.image,
+                quantity: quantity,
+                selectedSize: size,
+                selectedColor: color
+            }]
         })
         setCartOpen(true)
     }
