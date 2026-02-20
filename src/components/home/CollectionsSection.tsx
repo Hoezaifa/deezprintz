@@ -28,15 +28,15 @@ export function CollectionsSection() {
                     <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent ml-8" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" suppressHydrationWarning>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6" suppressHydrationWarning>
                     {COLLECTIONS.map((collection, index) => (
                         <Link
                             key={collection.title}
                             href={collection.href}
-                            className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30"
+                            className="group relative flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30"
                         >
                             {/* Image Container with Glow */}
-                            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-black/20">
+                            <div className="relative aspect-square w-full overflow-hidden rounded-xl sm:rounded-2xl bg-black/20">
                                 <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                 <Image
@@ -49,10 +49,10 @@ export function CollectionsSection() {
 
                             {/* Content */}
                             <div className="space-y-1 pointer-events-none text-center">
-                                <h3 className="font-bold text-lg leading-tight text-white group-hover:text-primary transition-colors uppercase tracking-widest">
+                                <h3 className="font-bold text-sm sm:text-lg leading-tight text-white group-hover:text-primary transition-colors uppercase tracking-widest">
                                     {collection.title}
                                 </h3>
-                                <p className="text-xs text-muted-foreground group-hover:text-white transition-colors">
+                                <p className="text-[10px] sm:text-xs text-muted-foreground group-hover:text-white transition-colors">
                                     View Collection
                                 </p>
                             </div>

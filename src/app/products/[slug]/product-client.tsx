@@ -10,15 +10,17 @@ import { Product } from "@/lib/products"
 import { StreetwearPlaceholder } from "@/components/ui/StreetwearPlaceholder"
 import { Accordion } from "@/components/ui/accordion"
 import { useRouter } from "next/navigation"
+import { ProductCard } from "@/components/ui/ProductCard"
 
 interface ProductClientProps {
     product: Product
+    relatedProducts: Product[]
 }
 
 const SIZES = ["S", "M", "L", "XL", "XXL"]
 const TAPESTRY_SIZES = ["24\"x36\"", "36\"x48\"", "48\"x60\""]
 
-export default function ProductClient({ product }: ProductClientProps) {
+export default function ProductClient({ product, relatedProducts }: ProductClientProps) {
     const { addItem, setCartOpen } = useCart()
     const router = useRouter()
 
@@ -190,9 +192,9 @@ export default function ProductClient({ product }: ProductClientProps) {
     }
 
     return (
-        <div className="min-h-screen bg-background text-white pt-24 pb-20">
+        <div className="min-h-screen bg-background text-white pt-12 md:pt-24 pb-20">
             <div className="container px-4 mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
 
                     {/* Left Column: Image Gallery */}
                     <div className="space-y-6">
@@ -250,7 +252,7 @@ export default function ProductClient({ product }: ProductClientProps) {
 
                         {/* Thumbnails */}
                         {images.length > 1 && (
-                            <div className="grid grid-cols-4 gap-4">
+                            <div className="grid grid-cols-4 gap-2 md:gap-4 mt-4 md:mt-0">
                                 {images.slice(0).map((img, idx) => (
                                     <button
                                         key={img.id}
@@ -279,32 +281,39 @@ export default function ProductClient({ product }: ProductClientProps) {
                     </div>
 
                     {/* Right Column: Product Details */}
-                    <div className="flex flex-col h-full py-4">
-                        <div className="space-y-4 mb-8">
+                    <div className="flex flex-col h-full py-0 md:py-4 mt-2 md:mt-0">
+                        <div className="space-y-2 md:space-y-4 mb-4 md:mb-6">
                             {product.artist && (
                                 <div className="text-orange-500 font-bold tracking-widest text-sm uppercase">
                                     {product.artist}
                                 </div>
                             )}
-                            <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
+                            <h1 className="text-3xl md:text-5xl font-black tracking-tighter leading-tight">
                                 {product.title}
                             </h1>
-                            <div className="flex items-center gap-4 text-2xl font-bold">
-                                <span>Rs. {currentPrice.toLocaleString()}</span>
-                                {product.rating >= 4.5 && (
-                                    <span className="text-sm font-normal text-muted-foreground bg-white/5 px-2 py-1 rounded-md">
-                                        Best Seller
-                                    </span>
-                                )}
+                            <div className="flex flex-col gap-2">
+                                <div className="flex items-center gap-4 text-xl md:text-2xl font-bold">
+                                    <span>Rs. {currentPrice.toLocaleString()}</span>
+                                    {product.rating >= 4.5 && (
+                                        <span className="text-sm font-normal text-muted-foreground bg-white/5 px-2 py-1 rounded-md">
+                                            Best Seller
+                                        </span>
+                                    )}
+                                </div>
+                                {/* Trust Indicators */}
+                                <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-xs text-muted-foreground font-medium">
+                                    <div className="flex items-center gap-1">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-green-500" /> Premium Material
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500" /> 7 Day Return Policy
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500" /> All Over Pakistan Delivery
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <p className="text-gray-400 leading-relaxed mb-10 text-lg">
-                            {product.category === 'accessories'
-                                ? "Premium accessory designed with durability and aesthetics in mind. Perfect for gifts or personal collection."
-                                : "Premium heavyweight cotton blend designed for oversized comfort and street aesthetics. Features high-definition prints and durable construction tailored for the modern fit."
-                            }
-                        </p>
 
                         <div className="space-y-8 mb-auto">
                             {/* Color Selector */}
@@ -421,8 +430,16 @@ export default function ProductClient({ product }: ProductClientProps) {
                             </Button>
                         </div>
 
+                        {/* Product Description */}
+                        <p className="text-gray-400 leading-relaxed mt-10 mb-6 text-base md:text-lg">
+                            {product.category === 'accessories'
+                                ? "Premium accessory designed with durability and aesthetics in mind. Perfect for gifts or personal collection."
+                                : "Premium heavyweight cotton blend designed for oversized comfort and street aesthetics. Features high-definition prints and durable construction tailored for the modern fit."
+                            }
+                        </p>
+
                         {/* Expandable Sections */}
-                        <div className="mt-12 space-y-2">
+                        <div className="mt-8 space-y-2">
                             <Accordion title="Materials & Details">
                                 {getMaterialsText()}
                             </Accordion>
@@ -448,6 +465,25 @@ export default function ProductClient({ product }: ProductClientProps) {
                         </div>
                     </div>
                 </div>
+
+                {/* Related Products */}
+                {relatedProducts.length > 0 && (
+                    <div className="mt-32 border-t border-white/10 pt-16">
+                        <div className="flex items-center justify-between mb-10">
+                            <h2 className="text-3xl font-bold tracking-tighter text-white glow-text">YOU MAY ALSO LIKE</h2>
+                            <div className="h-px flex-1 bg-gradient-to-r from-orange-500/50 to-transparent ml-8" />
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                            {relatedProducts.map((product) => (
+                                <ProductCard
+                                    key={product.id}
+                                    {...product}
+                                    href={`/products/${product.id}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )

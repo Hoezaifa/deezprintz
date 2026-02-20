@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CheckCircle2, Truck, CreditCard, Banknote, Download } from "lucide-react"
-import html2canvas from "html2canvas"
+import { toPng } from "html-to-image"
 
 export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart()
@@ -97,18 +97,20 @@ export default function CheckoutPage() {
 
     const handleDownloadReceipt = async () => {
         if (receiptRef.current) {
-            const canvas = await html2canvas(receiptRef.current, {
-                scale: 2,
-                backgroundColor: "#ffffff",
-                logging: false,
-                useCORS: true
-            })
+            try {
+                const dataUrl = await toPng(receiptRef.current, {
+                    backgroundColor: "#ffffff",
+                    pixelRatio: 2,
+                })
 
-            const image = canvas.toDataURL("image/png")
-            const link = document.createElement("a")
-            link.href = image
-            link.download = `DeezPrints-Receipt-${orderId || 'Confirmed'}.png`
-            link.click()
+                const link = document.createElement("a")
+                link.href = dataUrl
+                link.download = `DeezPrints-Receipt-${orderId || 'Confirmed'}.png`
+                link.click()
+            } catch (err) {
+                console.error("Failed to generate receipt", err);
+                alert("Failed to download receipt image.");
+            }
         }
     }
 
@@ -275,52 +277,54 @@ export default function CheckoutPage() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     className="max-w-md mx-auto py-8"
                                 >
-                                    {/* Digital Receipt Card */}
-                                    <div ref={receiptRef} className="bg-white text-black p-8 rounded-2xl shadow-2xl relative overflow-hidden mb-8">
-                                        {/* Decorative top border */}
-                                        <div className="absolute top-0 left-0 w-full h-2 bg-[#f97316]" />
+                                    {/* Digital Receipt Card Wrapper (shadow outside capture area) */}
+                                    <div className="shadow-2xl rounded-2xl mb-8">
+                                        <div ref={receiptRef} className="p-8 rounded-2xl relative overflow-hidden" style={{ backgroundColor: "#ffffff", color: "#000000" }}>
+                                            {/* Decorative top border */}
+                                            <div className="absolute top-0 left-0 w-full h-2" style={{ backgroundColor: "#f97316" }} />
 
-                                        <div className="text-center mb-8">
-                                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#dcfce7] text-[#16a34a] mb-4">
-                                                <CheckCircle2 className="w-8 h-8" />
+                                            <div className="text-center mb-8">
+                                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style={{ backgroundColor: "#dcfce7", color: "#16a34a" }}>
+                                                    <CheckCircle2 className="w-8 h-8" />
+                                                </div>
+                                                <h2 className="text-2xl font-bold" style={{ color: "#000000" }}>Order Confirmed!</h2>
+                                                <p className="text-sm mt-1" style={{ color: "#6b7280" }}>Thank you, {formData.name}</p>
                                             </div>
-                                            <h2 className="text-2xl font-bold text-black">Order Confirmed!</h2>
-                                            <p className="text-[#6b7280] text-sm mt-1">Thank you, {formData.name}</p>
-                                        </div>
 
-                                        <div className="space-y-4 mb-8">
-                                            <div className="flex justify-between border-b border-[#f3f4f6] pb-2">
-                                                <span className="text-[#6b7280]">Order No.</span>
-                                                <span className="font-mono font-bold text-black">#{orderId?.slice(0, 8)}</span>
-                                            </div>
-                                            <div className="flex justify-between border-b border-[#f3f4f6] pb-2">
-                                                <span className="text-[#6b7280]">Date</span>
-                                                <span className="font-medium text-black">{confirmedOrder?.date}</span>
-                                            </div>
-                                            <div className="flex justify-between border-b border-[#f3f4f6] pb-2">
-                                                <span className="text-[#6b7280]">Customer</span>
-                                                <div className="text-right">
-                                                    <span className="font-medium block text-black">{formData.name}</span>
-                                                    <span className="text-xs text-[#6b7280] block">{formData.phone}</span>
+                                            <div className="space-y-4 mb-8">
+                                                <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
+                                                    <span style={{ color: "#6b7280" }}>Order No.</span>
+                                                    <span className="font-mono font-bold" style={{ color: "#000000" }}>#{orderId?.slice(0, 8)}</span>
+                                                </div>
+                                                <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
+                                                    <span style={{ color: "#6b7280" }}>Date</span>
+                                                    <span className="font-medium" style={{ color: "#000000" }}>{confirmedOrder?.date}</span>
+                                                </div>
+                                                <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
+                                                    <span style={{ color: "#6b7280" }}>Customer</span>
+                                                    <div className="text-right">
+                                                        <span className="font-medium block" style={{ color: "#000000" }}>{formData.name}</span>
+                                                        <span className="text-xs block" style={{ color: "#6b7280" }}>{formData.phone}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
+                                                    <span style={{ color: "#6b7280" }}>Payment Method</span>
+                                                    <span className="font-medium capitalize" style={{ color: "#000000" }}>{confirmedOrder?.method === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center pt-2">
+                                                    <span className="font-bold text-lg" style={{ color: "#111827" }}>Total Amount</span>
+                                                    <span className="font-bold text-2xl" style={{ color: "#ea580c" }}>Rs. {confirmedOrder?.total.toLocaleString()}</span>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between border-b border-[#f3f4f6] pb-2">
-                                                <span className="text-[#6b7280]">Payment Method</span>
-                                                <span className="font-medium capitalize text-black">{confirmedOrder?.method === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center pt-2">
-                                                <span className="text-[#111827] font-bold text-lg">Total Amount</span>
-                                                <span className="text-[#ea580c] font-bold text-2xl">Rs. {confirmedOrder?.total.toLocaleString()}</span>
-                                            </div>
-                                        </div>
 
-                                        <div className="bg-[#f9fafb] rounded-lg p-4 text-center text-sm text-[#4b5563]">
-                                            <p className="mb-2">Please take a screenshot or download this receipt & share on whatsapp.</p>
-                                            {paymentMethod === 'bank' ? (
-                                                <p className="text-[#ea580c] font-bold">Transfer payment & send screenshot to WhatsApp below.</p>
-                                            ) : (
-                                                <p className="text-[#16a34a] font-bold">Confirm your order on WhatsApp below.</p>
-                                            )}
+                                            <div className="rounded-lg p-4 text-center text-sm" style={{ backgroundColor: "#f9fafb", color: "#4b5563" }}>
+                                                <p className="mb-2">Please take a screenshot or download this receipt & share on whatsapp.</p>
+                                                {paymentMethod === 'bank' ? (
+                                                    <p className="font-bold" style={{ color: "#ea580c" }}>Transfer payment & send screenshot to WhatsApp below.</p>
+                                                ) : (
+                                                    <p className="font-bold" style={{ color: "#16a34a" }}>Confirm your order on WhatsApp below.</p>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
 

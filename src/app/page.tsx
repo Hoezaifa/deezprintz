@@ -6,6 +6,8 @@ import { Container } from "@/components/ui/container";
 
 import { getProducts } from "@/lib/products";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const products = await getProducts();
   const FEATURED_PRODUCTS = products.slice(0, 4);
@@ -24,7 +26,7 @@ export default async function Home() {
             <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent ml-8" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {FEATURED_PRODUCTS.map((product) => (
               <ProductCard
                 key={product.id}

@@ -3,6 +3,8 @@ import ProductClient from "./product-client"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 
+export const revalidate = 60;
+
 // Force static generation for these paths
 export async function generateStaticParams() {
     return PRODUCTS.map((product) => ({
@@ -20,9 +22,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         }
     }
 
+    const description = `Buy ${product.title} - Premium ${product.category} by Deez Prints. High-quality streetwear delivered across Pakistan.`;
+    const image = product.image || "/assets/logo.png";
+
     return {
         title: `${product.title} | Deez Prints`,
-        description: `Buy ${product.title} - ${product.category}. Premium streetwear by Deez Prints.`,
+        description,
+        openGraph: {
+            title: `${product.title} | Deez Prints`,
+            description,
+            images: [
+                {
+                    url: image,
+                    width: 800,
+                    height: 800,
+                    alt: product.title,
+                }
+            ],
+            type: "website",
+            siteName: "Deez Prints",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${product.title} | Deez Prints`,
+            description,
+            images: [image],
+        }
     }
 }
 
@@ -41,5 +66,39 @@ export default async function ProductPage({ params }: PageProps) {
         notFound()
     }
 
-    return <ProductClient product={product} />
+    const relatedProducts = PRODUCTS.filter(
+        (p) => p.category === product.category && p.id !== product.id
+    ).slice(0, 4)
+
+    const description = `Buy ${product.title} - Premium ${product.category} by Deez Prints. High-quality streetwear delivered across Pakistan.`;
+    const image = product.image || "https://deezprints.com/assets/logo.png";
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.title,
+        image: image,
+        description: description,
+        brand: {
+            "@type": "Brand",
+            name: "Deez Prints"
+        },
+        offers: {
+            "@type": "Offer",
+            url: `https://deezprints.com/products/${product.id}`,
+            priceCurrency: "PKR",
+            price: product.price,
+            availability: "https://schema.org/InStock",
+        }
+    };
+
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <ProductClient product={product} relatedProducts={relatedProducts} />
+        </>
+    )
 }

@@ -7,25 +7,35 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Copy, Download, Share2 } from "lucide-react"
 import Link from "next/link"
 import { useRef } from "react"
-import html2canvas from "html2canvas"
+import { toPng } from "html-to-image"
 
 export default function CheckoutSuccessPage() {
     const receiptRef = useRef<HTMLDivElement>(null)
 
     const handleDownloadReceipt = async () => {
         if (receiptRef.current) {
-            const canvas = await html2canvas(receiptRef.current, {
-                scale: 2, // Higher resolution
-                backgroundColor: "#ffffff",
-                logging: false,
-                useCORS: true
-            })
+            try {
+                const dataUrl = await toPng(receiptRef.current, {
+                    backgroundColor: "#ffffff",
+                    pixelRatio: 2,
+                    filter: (node) => {
+                        // Keep buttons explicitly hidden based on the old prop convention we added
+                        if (node.tagName?.toLowerCase() === 'button') {
+                            const ignore = node.getAttribute('data-html2canvas-ignore');
+                            if (ignore === 'true') return false;
+                        }
+                        return true;
+                    }
+                })
 
-            const image = canvas.toDataURL("image/png")
-            const link = document.createElement("a")
-            link.href = image
-            link.download = `DeezPrints-Receipt-${new Date().getTime()}.png`
-            link.click()
+                const link = document.createElement("a")
+                link.href = dataUrl
+                link.download = `DeezPrints-Receipt-${new Date().getTime()}.png`
+                link.click()
+            } catch (err) {
+                console.error("Failed to generate receipt", err);
+                alert("Failed to download receipt image.");
+            }
         }
     }
 
@@ -45,43 +55,51 @@ export default function CheckoutSuccessPage() {
                         Thank you for your order. Your order ID is <span className="font-mono font-bold text-foreground">#DP-8821</span>
                     </p>
 
-                    {/* Receipt Card to be captured */}
-                    <div ref={receiptRef} className="bg-white p-8 rounded-2xl shadow-xl text-left mb-8 border border-zinc-200 relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+                    {/* Receipt Card Wrapper (shadow outside capture area) */}
+                    <div className="shadow-xl rounded-2xl mb-8 border border-zinc-200">
+                        <div ref={receiptRef} className="p-8 rounded-2xl text-left relative overflow-hidden" style={{ backgroundColor: "#ffffff", borderColor: "#e4e4e7", borderWidth: "1px", color: "#18181b" }}>
+                            <div className="absolute top-0 left-0 w-full h-2" style={{ background: "linear-gradient(to right, #fb923c, #ea580c)" }}></div>
 
-                        <div className="text-center mb-6 border-b border-zinc-100 pb-6">
-                            <h2 className="font-bold text-2xl text-zinc-900">PAYMENT RECEIPT</h2>
-                            <p className="text-zinc-500 text-sm mt-1">Please transfer the amount below</p>
-                        </div>
-
-                        <div className="flex justify-between items-center bg-zinc-50 p-4 rounded-lg mb-6 border border-zinc-100">
-                            <span className="text-zinc-500 font-medium">Total Amount</span>
-                            <span className="font-bold text-2xl text-green-600">PKR 468.00</span>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-center">
-                                <span className="text-zinc-500 text-sm">Bank Name</span>
-                                <span className="font-bold text-zinc-900">Meezan Bank</span>
+                            <div className="text-center mb-6 pb-6" style={{ borderBottom: "1px solid #f4f4f5" }}>
+                                <h2 className="font-bold text-2xl" style={{ color: "#18181b" }}>PAYMENT RECEIPT</h2>
+                                <p className="text-sm mt-1" style={{ color: "#71717a" }}>Please transfer the amount below</p>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <span className="text-zinc-500 text-sm">Account Title</span>
-                                <span className="font-bold text-zinc-900">Deez Prints Studio</span>
+
+                            <div className="flex justify-between items-center p-4 rounded-lg mb-6" style={{ backgroundColor: "#fafafa", borderColor: "#f4f4f5", borderWidth: "1px" }}>
+                                <span className="font-medium" style={{ color: "#71717a" }}>Total Amount</span>
+                                <span className="font-bold text-2xl" style={{ color: "#16a34a" }}>PKR 468.00</span>
                             </div>
-                            <div className="pt-2">
-                                <span className="text-zinc-500 text-sm block mb-1">Account Number / IBAN</span>
-                                <div className="flex items-center justify-between bg-zinc-100 p-3 rounded font-mono font-bold text-sm">
-                                    <span>PK27 MEZN 0001 0701 0454</span>
-                                    <Button size="icon" variant="ghost" className="h-6 w-6 ml-2" onClick={() => navigator.clipboard.writeText("PK27 MEZN 0001 0701 0454")}>
-                                        <Copy className="h-3 w-3" />
-                                    </Button>
+
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm" style={{ color: "#71717a" }}>Bank Name</span>
+                                    <span className="font-bold" style={{ color: "#18181b" }}>Meezan Bank</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm" style={{ color: "#71717a" }}>Account Title</span>
+                                    <span className="font-bold" style={{ color: "#18181b" }}>Deez Prints Studio</span>
+                                </div>
+                                <div className="pt-2">
+                                    <span className="text-sm block mb-1" style={{ color: "#71717a" }}>Account Number / IBAN</span>
+                                    <div className="flex items-center justify-between p-3 rounded font-mono font-bold text-sm" style={{ backgroundColor: "#f4f4f5", color: "#18181b" }}>
+                                        <span>PK27 MEZN 0001 0701 0454</span>
+                                        {/* Copy Button (hidden from html2canvas using data-html2canvas-ignore) */}
+                                        <button
+                                            data-html2canvas-ignore="true"
+                                            className="h-6 w-6 ml-2 flex items-center justify-center opacity-50 hover:opacity-100"
+                                            onClick={() => navigator.clipboard.writeText("PK27 MEZN 0001 0701 0454")}
+                                        >
+                                            <Copy className="h-3 w-3" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div className="mt-8 text-center text-xs" style={{ color: "#a1a1aa" }}>
+                                <p>Screenshot this receipt and share it on WhatsApp</p>
+                            </div>
                         </div>
 
-                        <div className="mt-8 text-center text-xs text-zinc-400">
-                            <p>Screenshot this receipt and share it on WhatsApp</p>
-                        </div>
                     </div>
 
                     <div className="space-y-3">

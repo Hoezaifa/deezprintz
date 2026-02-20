@@ -15,7 +15,9 @@ export function getCloudinaryUrl(path: string) {
     // Construct URL
     // Format: https://res.cloudinary.com/<cloud_name>/image/upload/q_auto,f_auto/deez-prints/<path>
     // Assuming the folder structure in Cloudinary matches "deez-prints/assets/..." and locally we use "/assets/..."
-    // So if local path is "assets/hero/image.png", Cloudinary path should be "deez-prints/assets/hero/image.png"
 
-    return `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/deez-prints/${cleanPath}`;
+    // Prevent Cloudinary from rasterizing SVGs by stripping format/quality conversions for them
+    const transforms = cleanPath.toLowerCase().endsWith(".svg") ? "" : "q_auto,f_auto/";
+
+    return `https://res.cloudinary.com/${cloudName}/image/upload/${transforms}deez-prints/${cleanPath}`;
 }

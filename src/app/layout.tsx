@@ -6,7 +6,13 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Deez Prints",
-  description: "Premium Streetwear",
+  description: "Premium Streetwear from Pakistan. Discover exclusive t-shirts, hoodies, and accessories.",
+  icons: {
+    icon: "/assets/logo.png",
+    shortcut: "/assets/logo.png",
+    apple: "/assets/logo.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 import { Navbar } from "@/components/layout/Navbar";
