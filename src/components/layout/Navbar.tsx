@@ -256,7 +256,34 @@ export function Navbar() {
 
 
                     {/* User Auth */}
-                    {/* User Login - Disabled */}
+                    {user ? (
+                        <div className="relative group">
+                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white rounded-full" aria-label="User Account">
+                                <User className="h-5 w-5 text-orange-500" />
+                            </Button>
+                            <div className="absolute top-full right-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                <div className="w-48 bg-zinc-950 border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col p-2">
+                                    <div className="px-4 py-3 border-b border-white/5 mb-2">
+                                        <p className="text-sm text-white font-medium truncate">{user.user_metadata?.full_name || 'User'}</p>
+                                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                                    </div>
+                                    {/* Admin conditional link logic can easily be added here later */}
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg transition-colors cursor-pointer"
+                                    >
+                                        Sign out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <Link href="/auth/login">
+                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white rounded-full" aria-label="Log in">
+                                <User className="h-5 w-5" />
+                            </Button>
+                        </Link>
+                    )}
                 </div>
             </Container>
 

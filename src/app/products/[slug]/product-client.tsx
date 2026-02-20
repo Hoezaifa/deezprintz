@@ -155,24 +155,24 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
             return <p>2.25 inch round button badges with glossy protective film and secure pin back.</p>
         }
         if (product.subcategory === 'wallet-cards') {
-            return <p>Standard ATM size PVC/Metal cards. Durable, waterproof, and fits perfectly in any wallet.</p>
+            return <p>Standard ATM size PVC/ cards. Durable, waterproof, and fits perfectly in any wallet.</p>
         }
         if (product.category === 'hoodies') {
             return (
                 <ul className="list-disc list-inside space-y-1">
-                    <li>Cotton Fleece Fabric</li>
+                    <li>High GSM Cotton Fleece Fabric</li>
                     <li>Warm fabric for winters</li>
                     <li>DTF Prints - Washable and Super Long Lasting</li>
-                    <li>The Print/Design size on the shirt varies from 11x2 inches or 5x5 inches as per design and proportionally</li>
+                    <li>The Print/Design size varies as per design, proportionally</li>
                     <li>The color of hoodie and print might vary tad bit from original</li>
                 </ul>
             )
         }
         return (
             <ul className="list-disc list-inside space-y-1">
-                <li>Cotton Jersey Fabric</li>
+                <li>High GSM Fabric</li>
                 <li>Direct to Film prints (washable and durable)</li>
-                <li>The Print/Design size on the shirt varies from 10 to 14 inches as per design and proportionally</li>
+                <li>The Print/Design size on the shirt varies as per design, proportionally</li>
                 <li>The color of Tshirts and print might vary tad bit from original</li>
             </ul>
         )

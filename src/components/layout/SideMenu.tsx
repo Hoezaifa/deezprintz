@@ -156,7 +156,40 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
 
                         {/* Footer */}
                         <div className="p-6 border-t border-white/10 bg-black/40">
-                            {/* User Login - Disabled */}
+                            {user ? (
+                                <div className="mb-6 space-y-4">
+                                    <div className="flex items-center gap-3 text-white">
+                                        <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500 font-bold">
+                                            {user.email?.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div className="text-sm border-b-transparent">
+                                            <p className="font-bold">{user.user_metadata?.full_name || 'User'}</p>
+                                            <p className="text-gray-400 text-xs">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <button
+                                            onClick={() => {
+                                                onLogout();
+                                                onClose();
+                                            }}
+                                            className="w-full py-2 flex items-center justify-center gap-2 text-sm font-bold border border-white/10 hover:bg-white/10 rounded-lg transition-colors text-white cursor-pointer"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="mb-6">
+                                    <Link
+                                        href="/auth/login"
+                                        onClick={onClose}
+                                        className="flex items-center justify-center w-full py-3 bg-white text-black font-bold uppercase tracking-wider rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        Login
+                                    </Link>
+                                </div>
+                            )}
 
                             <div className="flex gap-6 text-gray-400">
                                 <Link href="https://www.facebook.com/profile.php?id=61556303432172" target="_blank" rel="noopener noreferrer">
