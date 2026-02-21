@@ -33,7 +33,7 @@ export function CollectionsSection() {
                         <Link
                             key={collection.title}
                             href={collection.href}
-                            className="group relative flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30"
+                            className="group relative flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30"
                         >
                             {/* Image Container with Glow */}
                             <div className="relative aspect-square w-full overflow-hidden rounded-xl sm:rounded-2xl bg-black/20">
@@ -43,7 +43,7 @@ export function CollectionsSection() {
                                     src={collection.image}
                                     alt={collection.title}
                                     fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
+                                    className="object-cover transition duration-500 group-hover:scale-110 group-hover:-rotate-3 will-change-transform"
                                 />
                             </div>
 

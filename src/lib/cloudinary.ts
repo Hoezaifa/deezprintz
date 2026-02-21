@@ -1,4 +1,11 @@
-export function getCloudinaryUrl(path: string) {
+/**
+ * Helper to generate Cloudinary URLs with optimizations.
+ * - IMPORTANT: All product images must use this helper.
+ * - Never hardcode Cloudinary URLs directly in components.
+ * - Never remove the width limit (w_600) for grid images to prevent decoding oversized images on mobile.
+ * - Avoid mount animations on large collections to improve main-thread performance.
+ */
+export function getCloudinaryUrl(path: string, mode: 'product' | 'hero' = 'product') {
     // If it's already a full URL, return it
     if (path.startsWith("http")) return path;
 
@@ -17,7 +24,10 @@ export function getCloudinaryUrl(path: string) {
     // Assuming the folder structure in Cloudinary matches "deez-prints/assets/..." and locally we use "/assets/..."
 
     // Prevent Cloudinary from rasterizing SVGs by stripping format/quality conversions for them
-    const transforms = cleanPath.toLowerCase().endsWith(".svg") ? "" : "q_auto,f_auto/";
+    const isSvg = cleanPath.toLowerCase().endsWith(".svg");
+    const transforms = isSvg
+        ? ""
+        : (mode === 'product' ? "q_auto,f_auto,w_600/" : "q_auto,f_auto/");
 
     return `https://res.cloudinary.com/${cloudName}/image/upload/${transforms}deez-prints/${cleanPath}`;
 }

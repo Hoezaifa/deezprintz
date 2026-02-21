@@ -59,7 +59,7 @@ export function ProductCard({ id, title, price, image, images, category, rating 
     }
 
     return (
-        <Link href={href} aria-label={`View ${title}`} className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-secondary/30 cursor-pointer">
+        <Link href={href} aria-label={`View ${title}`} className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30 cursor-pointer">
 
             {/* Image Container with Glow */}
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-black/20">
@@ -71,12 +71,12 @@ export function ProductCard({ id, title, price, image, images, category, rating 
                         src={image}
                         alt={title}
                         fill
-                        className={`object-cover transition-all duration-500 z-10 
+                        className={`object-cover transition duration-500 z-10 will-change-transform
                             ${secondaryImage ? 'group-hover:opacity-0' : 'group-hover:scale-110 group-hover:-rotate-3'}
                         `}
                     />
                 ) : (
-                    <div className="w-full h-full p-2 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2">
+                    <div className="w-full h-full p-2 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2 will-change-transform">
                         <StreetwearPlaceholder type="shirt" className="w-full h-full rounded-xl" />
                     </div>
                 )}
@@ -88,7 +88,7 @@ export function ProductCard({ id, title, price, image, images, category, rating 
                         src={secondaryImage}
                         alt={`${title} - View 2`}
                         fill
-                        className="object-cover transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-3 z-20"
+                        className="object-cover transition duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-3 z-20 will-change-transform"
                     />
                 )}
 
@@ -98,8 +98,8 @@ export function ProductCard({ id, title, price, image, images, category, rating 
                     onClick={handleAddToCart}
                     aria-label="Add to Cart"
                     className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-white text-black 
-                             hover:bg-white/90 hover:scale-110 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] z-30
-                             opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0"
+                             hover:bg-white/90 hover:scale-110 transition duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] z-30
+                             opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 will-change-transform"
                 >
                     <Plus className="h-5 w-5" />
                 </Button>
