@@ -6,7 +6,24 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
     try {
-        const { messages } = await req.json();
+        let body;
+        try {
+            body = await req.json();
+        } catch (e) {
+            return new Response(JSON.stringify({ error: 'Invalid JSON payload' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+        const { messages } = body;
+
+        if (!messages || !Array.isArray(messages)) {
+            return new Response(JSON.stringify({ error: 'Invalid or missing messages array' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
 
         const systemPrompt = `
 You are a helpful, friendly, and knowledgeable AI shopping assistant for "Deez Prints", a premium e-commerce store in Pakistan.
@@ -31,9 +48,6 @@ Store Policies (General Info):
 - Payment: Bank Transfer available.
         `;
 
-        console.log('Processing chat request...');
-        console.log('API Key configured:', !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
-
         const result = streamText({
             model: google('gemini-flash-latest'),
             messages,
@@ -42,8 +56,7 @@ Store Policies (General Info):
 
         return result.toTextStreamResponse();
     } catch (error) {
-        console.error('Chat API Error:', error);
-        return new Response(JSON.stringify({ error: 'Failed to process chat request', details: error instanceof Error ? error.message : String(error) }), {
+        return new Response(JSON.stringify({ error: 'Internal Server Error. Unable to process request.' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' },
         });

@@ -3,7 +3,19 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { email, name, phone, orderId, total, items, paymentMethod } = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (e) {
+      return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
+    }
+
+    const { email, name, phone, orderId, total, items, paymentMethod } = body;
+
+    // Validate required fields exist
+    if (!email || !name || !orderId || typeof total !== 'number' || !Array.isArray(items)) {
+      return NextResponse.json({ error: 'Missing or invalid required fields' }, { status: 400 });
+    }
 
     // 1. Send Confirmation to User
     const userEmail = await resend.emails.send({
@@ -53,17 +65,8 @@ export async function POST(request: Request) {
       `,
     });
 
-    // 2. Send Alert to Admin (Process env email or hardcoded fallback for now if verified)
-    // Since we are likely on free tier without domain, we can only send to the verified email.
-    // Assuming the user's email 'huzaifa...' is the verified one.
-    // We will send a copy to the same email as the 'to' if it matches the verified one, 
-    // OR we just try to send to the admin email if provided in env var.
-
-    // console.log("Email sent to user:", userEmail);
-
     return NextResponse.json(userEmail);
   } catch (error) {
-    console.error("Email Error:", error);
-    return NextResponse.json({ error }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
