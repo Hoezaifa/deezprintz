@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
 const outfit = Outfit({ subsets: ["latin"] });
+const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
 
 export const metadata: Metadata = {
   title: "Deez Prints",
@@ -33,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased bg-background text-foreground`}>
+      <body className={`${outfit.className} ${bebasNeue.variable} antialiased bg-background text-foreground`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

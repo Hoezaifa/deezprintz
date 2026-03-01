@@ -22,7 +22,7 @@
 
   --color-border: var(--border);
 
-  --animate-marquee: marquee 25s linear infinite;
+  --animate-marquee: marquee 200s linear infinite;
 
   @keyframes marquee {
     0% {
@@ -238,6 +238,7 @@ body {
     @apply border-border outline-ring/50;
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     @apply bg-background text-foreground;
