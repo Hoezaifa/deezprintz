@@ -33,6 +33,7 @@ export function HeroSection() {
                         alt="deez PRINTS Modern Printing Solution"
                         fill
                         priority
+                        unoptimized
                         fetchPriority="high"
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-contain"
