@@ -5,7 +5,7 @@ export function HeroSection() {
     return (
         <section className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black py-10 lg:py-0">
             {/* Background Repeating Text */}
-            <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.03] pointer-events-none overflow-hidden select-none"
+            <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.075] pointer-events-none overflow-hidden select-none"
                 style={{ fontFamily: "var(--font-bebas)" }}>
                 {[...Array(7)].map((_, i) => {
                     const isEven = i % 2 === 0;
