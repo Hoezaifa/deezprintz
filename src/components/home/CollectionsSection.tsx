@@ -43,6 +43,7 @@ export function CollectionsSection() {
                                     src={collection.image}
                                     alt={collection.title}
                                     fill
+                                    sizes="(max-width: 768px) 50vw, 33vw"
                                     className="object-cover transition duration-500 group-hover:scale-110 group-hover:-rotate-3 will-change-transform"
                                 />
                             </div>

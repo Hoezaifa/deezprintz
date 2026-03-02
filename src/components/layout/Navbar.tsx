@@ -120,11 +120,13 @@ export function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-4 relative z-10">
-                        {/* Using standard img to ensure visibility */}
-                        <img
+                        <Image
                             src="/assets/logo.png"
                             alt="Deez Prints"
+                            width={160}
+                            height={48}
                             className="w-auto h-12 object-contain"
+                            priority
                         />
                     </Link>
                 </div>

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export function HeroSection() {
     return (
@@ -27,10 +28,13 @@ export function HeroSection() {
             <div className="container relative z-10 flex flex-col items-center justify-center text-center">
                 {/* Scale down to 75% of previous size: max-w-[600px] -> max-w-[450px], max-w-[800px] -> max-w-[600px] */}
                 <div className="relative w-full max-w-[450px] lg:max-w-[600px] aspect-[4/3] -mt-10 lg:-mt-10">
-                    <img
+                    <Image
                         src="/assets/hero/hero-typography.svg"
                         alt="deez PRINTS Modern Printing Solution"
-                        className="w-full h-full object-contain"
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-contain"
                     />
                 </div>
             </div>

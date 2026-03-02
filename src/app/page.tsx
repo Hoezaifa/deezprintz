@@ -1,7 +1,9 @@
 import { HeroSection } from "@/components/home/HeroSection";
-import { CollectionsSection } from "@/components/home/CollectionsSection";
+import dynamic from "next/dynamic";
+
+const CollectionsSection = dynamic(() => import("@/components/home/CollectionsSection").then(mod => mod.CollectionsSection));
+const ProductCard = dynamic(() => import("@/components/ui/ProductCard").then(mod => mod.ProductCard));
 // import { HeroSectionV2 } from "@/components/home/HeroSectionV2";
-import { ProductCard } from "@/components/ui/ProductCard";
 import { Container } from "@/components/ui/container";
 
 import { getProducts } from "@/lib/products";

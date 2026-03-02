@@ -71,6 +71,7 @@ export function ProductCard({ id, title, price, image, images, category, rating 
                         src={image}
                         alt={title}
                         fill
+                        sizes="(max-width: 768px) 50vw, 33vw"
                         className={`object-cover transition duration-500 z-10 will-change-transform
                             ${secondaryImage ? 'group-hover:opacity-0' : 'group-hover:scale-110 group-hover:-rotate-3'}
                         `}
@@ -88,6 +89,7 @@ export function ProductCard({ id, title, price, image, images, category, rating 
                         src={secondaryImage}
                         alt={`${title} - View 2`}
                         fill
+                        sizes="(max-width: 768px) 50vw, 33vw"
                         className="object-cover transition duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-3 z-20 will-change-transform"
                     />
                 )}
