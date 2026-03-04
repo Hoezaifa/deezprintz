@@ -12,7 +12,7 @@ import { toPng } from "html-to-image"
 export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart()
     const [step, setStep] = useState(1) // 1: Info, 2: Payment, 3: Success
-    const [paymentMethod, setPaymentMethod] = useState<"cod" | "bank">("bank") // Default to bank since COD is disabled
+    const [paymentMethod, setPaymentMethod] = useState<"bank">("bank")
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -37,7 +37,7 @@ export default function CheckoutPage() {
         total: number,
         items: typeof items,
         date: string,
-        method: "cod" | "bank"
+        method: "bank"
     } | null>(null)
 
     const handlePlaceOrder = async () => {
@@ -213,27 +213,15 @@ export default function CheckoutPage() {
                                 >
                                     <h2 className="text-2xl font-bold text-white">Payment Method</h2>
                                     <div className="space-y-4">
-                                        {/* COD Disabled */}
-                                        {/* <button
-                                            onClick={() => setPaymentMethod("cod")}
-                                            className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${paymentMethod === "cod" ? "bg-white/10 border-white" : "bg-zinc-900/50 border-white/10 hover:border-white/30"}`}
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <Truck className="w-5 h-5" />
-                                                <span className="font-bold">Cash on Delivery</span>
-                                            </div>
-                                            {paymentMethod === "cod" && <div className="w-3 h-3 bg-white rounded-full" />}
-                                        </button> */}
-
                                         <button
                                             onClick={() => setPaymentMethod("bank")}
-                                            className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${paymentMethod === "bank" ? "bg-white/10 border-white" : "bg-zinc-900/50 border-white/10 hover:border-white/30"}`}
+                                            className="w-full flex items-center justify-between p-4 rounded-xl border transition-all bg-white/10 border-white"
                                         >
                                             <div className="flex items-center gap-3">
                                                 <Banknote className="w-5 h-5" />
                                                 <span className="font-bold">Bank Transfer</span>
                                             </div>
-                                            {paymentMethod === "bank" && <div className="w-3 h-3 bg-white rounded-full" />}
+                                            <div className="w-3 h-3 bg-white rounded-full" />
                                         </button>
 
                                         {paymentMethod === "bank" && (
@@ -309,7 +297,7 @@ export default function CheckoutPage() {
                                                 </div>
                                                 <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
                                                     <span style={{ color: "#6b7280" }}>Payment Method</span>
-                                                    <span className="font-medium capitalize" style={{ color: "#000000" }}>{confirmedOrder?.method === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}</span>
+                                                    <span className="font-medium capitalize" style={{ color: "#000000" }}>Bank Transfer</span>
                                                 </div>
                                                 <div className="flex justify-between items-center pt-2">
                                                     <span className="font-bold text-lg" style={{ color: "#111827" }}>Total Amount</span>
@@ -319,11 +307,7 @@ export default function CheckoutPage() {
 
                                             <div className="rounded-lg p-4 text-center text-sm" style={{ backgroundColor: "#f9fafb", color: "#4b5563" }}>
                                                 <p className="mb-2">Please take a screenshot or download this receipt & share on whatsapp.</p>
-                                                {paymentMethod === 'bank' ? (
-                                                    <p className="font-bold" style={{ color: "#ea580c" }}>Transfer payment & send screenshot to WhatsApp below.</p>
-                                                ) : (
-                                                    <p className="font-bold" style={{ color: "#16a34a" }}>Confirm your order on WhatsApp below.</p>
-                                                )}
+                                                <p className="font-bold" style={{ color: "#ea580c" }}>Transfer payment & send screenshot to WhatsApp below.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -339,7 +323,7 @@ export default function CheckoutPage() {
                                     {/* WhatsApp Button */}
                                     <a
                                         href={`https://wa.me/923272487127?text=${encodeURIComponent(
-                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${confirmedOrder?.total}\nPayment Method: ${paymentMethod === 'bank' ? 'Bank Transfer' : 'COD'}\n\n${paymentMethod === 'bank' ? 'Here is my payment screenshot:' : 'Please confirm my order.'}`
+                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${confirmedOrder?.total}\nPayment Method: Bank Transfer\n\nHere is my payment screenshot:`
                                         )}`}
                                         target="_blank"
                                         rel="noopener noreferrer"

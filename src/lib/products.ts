@@ -23,11 +23,15 @@ export const PRODUCTS: Product[] = [
     // --- FEATURED ---
     {
         id: "kanye-yeezus-shirt",
-        title: "KANYE WEST YEEZUS T-SHIRT",
-        artist: "KANYE WEST",
+        title: "Scarlet Bloom Tee",
+        artist: " ",
         price: 3200,
-        image: getCloudinaryUrl('/assets/products/regular-t-shirts/kanye-yeezus-shirt-v1.jpg'),
-        images: [],
+        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772652301/Gemini_Generated_Image_ox19ckox19ckox19_sfssfg.png'),
+        images: [
+
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651794/rose1_fg88h0.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651795/backrose1_iqatfb.webp"
+        ],
         rating: 5,
         category: "t-shirts",
         subcategory: "graphic"
@@ -135,15 +139,18 @@ export const PRODUCTS: Product[] = [
     },
     {
         id: "tshirt-reg-2",
-        title: "Regular Fit Graphic Tee 2",
+        title: "Scarlet Bloom Tee",
         price: 2500,
-        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1771522535/sample-v1.jpg",
-        images: [],
+        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772652301/Gemini_Generated_Image_ox19ckox19ckox19_sfssfg.png",
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651794/rose1_fg88h0.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651795/backrose1_iqatfb.webp"
+        ],
         category: 't-shirts',
         subcategory: 'regular',
-        artist: 'TBSM',
+        artist: ' ',
         rating: 4,
-        colors: ["Black", "White", "Blue", "Red"]
+        colors: ["Black"]
     },
 
     // --- DROP SHOULDER T-SHIRTS ---
