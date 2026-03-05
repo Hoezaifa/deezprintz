@@ -38,34 +38,49 @@ export const PRODUCTS: Product[] = [
     },
     {
         id: "kanye-west-hoodie",
-        title: "KeNYE WEST HOODIE",
-        artist: "KANYE WEST",
-        price: 5500,
-        image: getCloudinaryUrl('/assets/products/hoodies/kanye-west-hoodie-v1.jpg'),
-        images: [],
+        title: "PUNK IS DEAD TEE",
+        artist: " ",
+        price: 1200,
+        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkB_tubrry.webp'),
+        images: [
+
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkB_tubrry.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739463/punk_tkwemj.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkw_pqvdnn.webp"
+        ],
         rating: 5,
         category: "hoodies",
         subcategory: "original",
-        colors: ["Black", "White", "Navy", "Charcoal"]
+        colors: ["Black", "White", "Beige"]
     },
     {
         id: "night-met-shirt",
-        title: "THE NIGHT WE MET",
-        artist: "LORD HURON",
-        price: 2800,
-        image: getCloudinaryUrl('/assets/products/regular-t-shirts/night-met-shirt-v1.jpg'),
-        images: [],
+        title: "BREAKOUT TEE",
+        artist: " ",
+        price: 1500,
+        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/breakb_zkkch0.webp'),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/breakb_zkkch0.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/break2_bnjlfy.webp"
+
+        ],
         rating: 5,
         category: "t-shirts",
         subcategory: "graphic"
     },
     {
         id: "seedhe-maut-shirt",
-        title: "SEEDHE MAUT TSHIRT",
-        artist: "SEEDHE MAUT",
-        price: 2500,
-        image: getCloudinaryUrl('/assets/products/regular-t-shirts/seedhe-maut-shirt-v1.jpg'),
-        images: [],
+        title: "BERSERK TEE",
+        artist: " ",
+        price: 1800,
+        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/white_ber_bztrq9.webp'),
+        images: [
+
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/bersk_B_yzgt10.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/berserk_Bb_dsrns9.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739462/whtieb_mewjvg.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/white_ber_bztrq9.webp",
+        ],
         rating: 4,
         category: "t-shirts",
         subcategory: "graphic"
