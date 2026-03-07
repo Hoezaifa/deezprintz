@@ -25,7 +25,16 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     // Filter products
     // Logic: If category matches high-level 'category' OR 'subcategory'
     const filteredProducts = PRODUCTS.filter(p => {
-        const matchesCategory = category === 'all' || p.category === category || p.subcategory === category;
+        let matchesCategory = false;
+
+        if (category === 'all') {
+            matchesCategory = true;
+        } else if (category === 't-shirts') {
+            // Hide drop-shoulder and acid-wash tees from the general t-shirts section as they have their own
+            matchesCategory = p.category === 't-shirts' && p.subcategory !== 'drop-shoulder' && p.subcategory !== 'acid-wash';
+        } else {
+            matchesCategory = p.category === category || p.subcategory === category;
+        }
         const matchesSearch = !searchQuery ||
             p.title.toLowerCase().includes(searchQuery) ||
             p.category.toLowerCase().includes(searchQuery) ||

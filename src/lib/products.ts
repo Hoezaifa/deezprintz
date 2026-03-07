@@ -26,9 +26,8 @@ export const PRODUCTS: Product[] = [
         title: "Scarlet Bloom Tee",
         artist: " ",
         price: 3200,
-        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772652301/Gemini_Generated_Image_ox19ckox19ckox19_sfssfg.png'),
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772652301/Gemini_Generated_Image_ox19ckox19ckox19_sfssfg.png"),
         images: [
-
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651794/rose1_fg88h0.webp",
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651795/backrose1_iqatfb.webp"
         ],
@@ -98,7 +97,7 @@ export const PRODUCTS: Product[] = [
         ],
         rating: 5,
         category: "t-shirts",
-        subcategory: "drop-shoulder",
+        subcategory: "regular",
         colors: ["Black", "White", "Olive", "Sand"]
     },
 
