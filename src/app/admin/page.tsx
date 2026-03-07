@@ -39,10 +39,14 @@ export default function AdminPage() {
     // Check for existing session on mount
     useEffect(() => {
         const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession()
-            if (session) {
-                setIsAuthenticated(true)
-                if (session.user.email) setEmail(session.user.email)
+            try {
+                const { data: { session } } = await supabase.auth.getSession()
+                if (session) {
+                    setIsAuthenticated(true)
+                    if (session.user.email) setEmail(session.user.email)
+                }
+            } finally {
+                setLoading(false)
             }
         }
         checkSession()
