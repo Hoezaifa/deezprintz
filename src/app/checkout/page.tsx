@@ -43,23 +43,25 @@ export default function CheckoutPage() {
     const handlePlaceOrder = async () => {
         setLoading(true)
         try {
-            // 1. Save to Supabase
-            const { data: order, error } = await supabase
-                .from('orders')
-                .insert({
-                    user_email: formData.email,
-                    payment_method: paymentMethod,
-                    total_amount: cartTotal,
-                    items: items,
-                    customer_details: formData,
-                    status: 'pending'
+            // 1. Save to Supabase via Server API
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    formData,
+                    items,
+                    cartTotal,
+                    paymentMethod
                 })
-                .select()
-                .single()
+            });
 
-            if (error) throw error
+            const data = await response.json();
 
-            setOrderId(order.id)
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to place order server-side");
+            }
+
+            setOrderId(data.orderId)
 
             // 2. Send Email (Fire and forget, don't block)
             fetch('/api/emails', {
@@ -67,7 +69,7 @@ export default function CheckoutPage() {
                 body: JSON.stringify({
                     email: formData.email,
                     name: formData.name,
-                    orderId: order.id,
+                    orderId: data.orderId,
                     total: cartTotal,
                     items: items
                 })
