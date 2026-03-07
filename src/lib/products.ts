@@ -86,12 +86,16 @@ export const PRODUCTS: Product[] = [
         subcategory: "graphic"
     },
     {
-        id: "oversized-tee-tbsm",
-        title: "OVERSIZED TEE",
-        artist: "TBSM",
+        id: "tshirt-reg-5",
+        title: "SPIDERVERSE TEE",
+        artist: " ",
         price: 2900,
-        image: getCloudinaryUrl('/assets/products/drop-shoulder-t-shirts/oversized-tee-tbsm-v1.jpg'),
-        images: [],
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737933/sppiderf_aqsefr.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737933/sppiderf_aqsefr.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp"
+
+        ],
         rating: 5,
         category: "t-shirts",
         subcategory: "drop-shoulder",
@@ -154,12 +158,12 @@ export const PRODUCTS: Product[] = [
     },
     {
         id: "tshirt-reg-2",
-        title: "Scarlet Bloom Tee",
+        title: "DIVINE TEE",
         price: 2500,
-        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772652301/Gemini_Generated_Image_ox19ckox19ckox19_sfssfg.png",
+        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738656/divin_en7ejg.webp",
         images: [
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651794/rose1_fg88h0.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772651795/backrose1_iqatfb.webp"
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738656/divin_en7ejg.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738656/div_uzioib.webp"
         ],
         category: 't-shirts',
         subcategory: 'regular',
@@ -167,14 +171,59 @@ export const PRODUCTS: Product[] = [
         rating: 4,
         colors: ["Black"]
     },
+    {
+        id: "tshirt-reg-3",
+        title: "LCNST TEE",
+        price: 2500,
+        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883234/lcsntregF_g3cnas.webp",
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883234/lcsntregF_g3cnas.webp",
+        ],
+        category: 't-shirts',
+        subcategory: 'regular',
+        artist: ' ',
+        rating: 4,
+        colors: ["Black"]
+    },
+    {
+        id: "tshirt-reg-4",
+        title: "SNAKE TEE",
+        price: 2500,
+        image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883233/snakeREGF_ezwmpp.webp",
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883233/snakeREGF_ezwmpp.webp"],
+        category: 't-shirts',
+        subcategory: 'regular',
+        artist: ' ',
+        rating: 4,
+        colors: ["Black"]
+    },
+
 
     // --- DROP SHOULDER T-SHIRTS ---
     {
         id: "tshirt-drop-1",
-        title: "Oversized Drop Shoulder Tee 1",
+        title: "BERSERK DRP SHLDR",
         price: 2900,
-        image: getCloudinaryUrl("/assets/products/drop-shoulder-t-shirts/tshirt-drop-1.jpg"),
-        images: [],
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883554/berserkdropf_bed9qx.webp"),
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883554/berserkdropf_bed9qx.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883553/berserkdropb_ktediz.webp",
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black", "White"]
+    },
+    {
+        id: "tshirt-drop-2",
+        title: "DIVINE DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883558/divinedropf_rdsrbr.webp"),
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883558/divinedropf_rdsrbr.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883558/divinedropb_gr0u8g.webp"
+        ],
         category: 't-shirts',
         subcategory: 'drop-shoulder',
         artist: 'OVERSIZED',
@@ -182,17 +231,35 @@ export const PRODUCTS: Product[] = [
         colors: ["Black", "beige", "White"]
     },
     {
-        id: "tshirt-drop-2",
-        title: "Oversized Drop Shoulder Tee 2",
+        id: "tshirt-drop-3",
+        title: "PUNK IS DEAD DRP SHLDR",
         price: 2900,
-        image: getCloudinaryUrl("/assets/products/drop-shoulder-t-shirts/tshirt-drop-2.jpg"),
-        images: [],
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883545/punkdropf_wrggcm.webp"),
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883545/punkdropf_wrggcm.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884578/punkdropfWHITE_o74ukj.webp"
+        ],
         category: 't-shirts',
         subcategory: 'drop-shoulder',
         artist: 'OVERSIZED',
         rating: 5,
-        colors: ["Black", "beige", "White"]
+        colors: ["Black", "White"]
     },
+    {
+        id: "tshirt-drop-4",
+        title: "LCNST DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp"),
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883562/lcsntDropF_tlpen9.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black", "White"]
+    },
+
+
 
     // --- ACID WASH T-SHIRTS ---
     {
