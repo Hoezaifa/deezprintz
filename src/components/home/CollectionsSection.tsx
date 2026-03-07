@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/container"
 
 const COLLECTIONS = [
     { title: "T-SHIRTS", href: "/collections/t-shirts", image: "/assets/collections/tshirt.jpg" },
+    { title: "ACID WASH TEES", href: "/collections/acid-wash", image: "/assets/collections/acidwash.png" },
     { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: "/assets/collections/dropshoulder.jpg" },
     { title: "HOODIES", href: "/collections/hoodies", image: "/assets/collections/hoodies.jpg" },
     { title: "MUGS", href: "/collections/mugs", image: "/assets/collections/mugs.png" },
@@ -16,7 +17,6 @@ const COLLECTIONS = [
     { title: "KEYCHAINS", href: "/collections/keychains", image: "/assets/collections/keychains.jpg" },
     { title: "MAGNETS", href: "/collections/magnets", image: "/assets/collections/magnets.jpg" },
     { title: "NOTEBOOKS", href: "/collections/notebooks", image: "/assets/collections/notebooks.jpg" },
-    { title: "CORPORATE GIFT BOXES", href: "/collections/gift-boxes", image: "/assets/collections/gift-boxes.jpg" },
 ]
 
 export function CollectionsSection() {
