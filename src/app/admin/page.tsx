@@ -99,16 +99,15 @@ export default function AdminPage() {
     const fetchOrders = async () => {
         setLoading(true)
         try {
-            const { data, error } = await supabase
-                .from('orders')
-                .select('*')
-                .order('created_at', { ascending: false })
+            const response = await fetch('/api/orders')
+            const data = await response.json()
 
-            if (error) {
-                console.error("Supabase error:", error)
+            if (!response.ok) {
+                console.error("Fetch error:", data.error)
+                return
             }
 
-            const enhancedOrders = data?.map(o => ({
+            const enhancedOrders = data.map((o: any) => ({
                 ...o,
                 is_read: o.is_read ?? false
             })) || []
@@ -124,21 +123,30 @@ export default function AdminPage() {
     const handleToggleRead = async (id: string, currentStatus: boolean) => {
         setOrders(orders.map(o => o.id === id ? { ...o, is_read: !currentStatus } : o))
         try {
-            await supabase.from('orders').update({ is_read: !currentStatus }).eq('id', id)
+            await fetch('/api/orders', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, is_read: !currentStatus })
+            })
         } catch (err) {
             console.error("Failed to update read status:", err)
         }
     }
 
     const handleDelete = async (id: string) => {
-        const backup = [...orders]
-        setOrders(orders.filter(o => o.id !== id))
+        if (!confirm("Are you sure you want to delete this order?")) return
+
         try {
-            await supabase.from('orders').delete().eq('id', id)
+            const response = await fetch(`/api/orders?id=${id}`, {
+                method: 'DELETE'
+            })
+            if (response.ok) {
+                setOrders(orders.filter(o => o.id !== id))
+            } else {
+                alert("Failed to delete order")
+            }
         } catch (err) {
-            console.error("Failed to delete order", err)
-            setOrders(backup)
-            alert("Failed to delete order")
+            console.error("Delete error:", err)
         }
     }
 
