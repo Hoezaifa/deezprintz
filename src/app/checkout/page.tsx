@@ -6,13 +6,12 @@ import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, Truck, CreditCard, Banknote, Download, Copy, Check } from "lucide-react"
+import { CheckCircle2, Truck, CreditCard, Banknote, Download } from "lucide-react"
 import { toPng } from "html-to-image"
 
 export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart()
     const [step, setStep] = useState(1) // 1: Info, 2: Payment, 3: Success
-    const [copied, setCopied] = useState<string | null>(null)
     const [paymentMethod, setPaymentMethod] = useState<"bank">("bank")
     const [subPaymentMethod, setSubPaymentMethod] = useState<"easypaisa" | "meezan" | null>(null)
     const [formData, setFormData] = useState({
@@ -26,13 +25,6 @@ export default function CheckoutPage() {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
-    const handleCopy = (e: React.MouseEvent, text: string, id: string) => {
-        e.stopPropagation()
-        navigator.clipboard.writeText(text)
-        setCopied(id)
-        setTimeout(() => setCopied(null), 2000)
     }
 
     const handleSubmitInfo = (e: React.FormEvent) => {
@@ -243,11 +235,9 @@ export default function CheckoutPage() {
 
                                         {paymentMethod === "bank" && (
                                             <div className="pl-4 border-l border-white/20 ml-2 space-y-3">
-                                                <div
-                                                    role="button"
-                                                    tabIndex={0}
+                                                <button
                                                     onClick={() => setSubPaymentMethod("easypaisa")}
-                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left cursor-pointer ${subPaymentMethod === 'easypaisa' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
+                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left ${subPaymentMethod === 'easypaisa' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
                                                 >
                                                     <div className="flex items-center justify-between mb-2">
                                                         <span className="font-bold text-orange-500">Easypaisa / Jazzcash / Zindigi</span>
@@ -264,29 +254,17 @@ export default function CheckoutPage() {
                                                             >
                                                                 <div className="pt-2 text-sm text-gray-300 space-y-1">
                                                                     <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
-                                                                    <div className="flex items-center gap-2">
-                                                                        <p>Account Number: <span className="text-white font-mono tracking-wider">03272487127</span></p>
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={(e) => handleCopy(e, "03272487127", "easypaisa")}
-                                                                            className="p-1.5 hover:bg-white/10 rounded-md transition-colors text-zinc-400 hover:text-white"
-                                                                            title="Copy to clipboard"
-                                                                        >
-                                                                            {copied === "easypaisa" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                                                                        </button>
-                                                                    </div>
+                                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">03272487127</span></p>
                                                                     <p className="mt-2 text-xs text-yellow-500">Please send screenshot of payment to WhatsApp.</p>
                                                                 </div>
                                                             </motion.div>
                                                         )}
                                                     </AnimatePresence>
-                                                </div>
+                                                </button>
 
-                                                <div
-                                                    role="button"
-                                                    tabIndex={0}
+                                                <button
                                                     onClick={() => setSubPaymentMethod("meezan")}
-                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left cursor-pointer ${subPaymentMethod === 'meezan' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
+                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left ${subPaymentMethod === 'meezan' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
                                                 >
                                                     <div className="flex items-center justify-between mb-2">
                                                         <span className="font-bold text-orange-500">Meezan Bank</span>
@@ -303,23 +281,13 @@ export default function CheckoutPage() {
                                                             >
                                                                 <div className="pt-2 text-sm text-gray-300 space-y-1">
                                                                     <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
-                                                                    <div className="flex items-center gap-2">
-                                                                        <p>Account Number: <span className="text-white font-mono tracking-wider">01890110481675</span></p>
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={(e) => handleCopy(e, "01890110481675", "meezan")}
-                                                                            className="p-1.5 hover:bg-white/10 rounded-md transition-colors text-zinc-400 hover:text-white"
-                                                                            title="Copy to clipboard"
-                                                                        >
-                                                                            {copied === "meezan" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                                                                        </button>
-                                                                    </div>
+                                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">01890110481675</span></p>
                                                                     <p className="mt-2 text-xs text-yellow-500">Please send screenshot of payment to WhatsApp.</p>
                                                                 </div>
                                                             </motion.div>
                                                         )}
                                                     </AnimatePresence>
-                                                </div>
+                                                </button>
                                             </div>
                                         )}
                                     </div>
