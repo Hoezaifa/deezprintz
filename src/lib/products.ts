@@ -199,7 +199,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         id: "tshirt-reg-5",
-        title: "ABSTRACT WINGS DRP SHLDR",
+        title: "ABSTRACT WINGS TEE",
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737955/calligraphyf_i50rtp.webp"),
 
@@ -214,6 +214,24 @@ export const PRODUCTS: Product[] = [
         rating: 4,
         colors: ["Black"]
     },
+    {
+        id: "tshirt-reg-6",
+        title: "FERRARI TEE",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/regferrariFblack_kpig1e.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/regferrariFblack_kpig1e.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908160/regferrariBblack_wgsjpf.webp",
+
+
+        ],
+        category: 't-shirts',
+        subcategory: 'regular',
+        artist: ' ',
+        rating: 4,
+        colors: ["Black"]
+    },
+
 
 
 
@@ -329,7 +347,38 @@ export const PRODUCTS: Product[] = [
         rating: 5,
         colors: ["Black", "White"]
     },
+    {
+        id: "tshirt-drop-8",
+        title: "FERRARI DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/ferrariFblack_vnhkw1.webp"),
 
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/ferrariFblack_vnhkw1.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908160/ferrariBblack_ofgzyq.webp",
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black"]
+    },
+    {
+        id: "tshirt-drop-9",
+        title: "TBSM DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/whitesmdropF_tfl5vw.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/whitesmdropF_tfl5vw.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908160/ferrariBblack_ofgzyq.webp",
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black"]
+    },
 
 
     // --- ACID WASH T-SHIRTS ---
