@@ -8,7 +8,19 @@ import { OrderRow } from "@/components/admin/OrderRow"
 import { OrderSlip } from "@/components/admin/OrderSlip"
 import { ProductManager } from "@/components/admin/ProductManager"
 import { AnimatePresence } from "framer-motion"
-import { Search, ShoppingBag, Package } from "lucide-react"
+import { Search, ShoppingBag, Package, LogOut } from "lucide-react"
+
+interface Order {
+    id: string
+    created_at: string
+    user_email: string
+    payment_method: string
+    total_amount: number
+    items: any[]
+    customer_details: any
+    status: string
+    is_read?: boolean
+}
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -19,8 +31,9 @@ export default function AdminPage() {
     // Tab State
     const [activeTab, setActiveTab] = useState<'orders' | 'products'>('orders')
 
-    const [orders, setOrders] = useState<any[]>([])
-    const [loading, setLoading] = useState(false) // Fixed: Start as false so login button is enabled
+    const [orders, setOrders] = useState<Order[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null)
 
     // Check for existing session on mount
@@ -46,6 +59,7 @@ export default function AdminPage() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
+        setError(null) // Clear any previous errors
 
         // EMERGENCY BACKDOOR FOR ADMIN
         if (email === "admin@deez.com" && password === "123123123") {
@@ -96,13 +110,22 @@ export default function AdminPage() {
         setLoading(false)
     }
 
+    const handleLogout = async () => {
+        await supabase.auth.signOut()
+        setIsAuthenticated(false)
+        setOrders([]) // Clear orders on logout
+        setError(null) // Clear error on logout
+    }
+
     const fetchOrders = async () => {
         setLoading(true)
+        setError(null)
         try {
             const response = await fetch('/api/orders')
             const data = await response.json()
 
             if (!response.ok) {
+                setError(data.error || "Failed to fetch orders from server")
                 console.error("Fetch error:", data.error)
                 return
             }
@@ -113,7 +136,8 @@ export default function AdminPage() {
             })) || []
 
             setOrders(enhancedOrders)
-        } catch (err) {
+        } catch (err: any) {
+            setError(err.message || "An unexpected error occurred while fetching orders")
             console.error(err)
         } finally {
             setLoading(false)
@@ -150,8 +174,8 @@ export default function AdminPage() {
         }
     }
 
-    const groupOrdersByDate = (orders: any[]) => {
-        const groups: { [key: string]: any[] } = {}
+    const groupOrdersByDate = (orders: Order[]) => {
+        const groups: { [key: string]: Order[] } = {}
         orders.forEach(order => {
             const date = new Date(order.created_at)
             const today = new Date()
@@ -210,16 +234,38 @@ export default function AdminPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold mb-1">Admin Dashboard</h1>
-                        <p className="text-zinc-500 text-sm">Manage orders</p>
+                        <h1 className="text-3xl font-bold text-white mb-2">Order Management</h1>
+                        <p className="text-zinc-400">Manage and track your customer orders</p>
                     </div>
                     <div className="flex gap-4">
-                        <Button variant="destructive" onClick={() => {
-                            supabase.auth.signOut()
-                            setIsAuthenticated(false)
-                        }}>Logout</Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={fetchOrders}
+                            disabled={loading}
+                            className="bg-zinc-900 border-white/10"
+                        >
+                            Refresh Orders
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleLogout}
+                            className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Logout
+                        </Button>
                     </div>
                 </div>
+
+                {error && (
+                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 p-4 rounded-xl mb-8 flex flex-col gap-2">
+                        <p className="font-bold">Error loading orders:</p>
+                        <p className="text-sm font-mono bg-black/30 p-2 rounded">{error}</p>
+                        <p className="text-xs text-zinc-400">This usually means your Supabase project is having DNS/Connection issues or the Database Rules (RLS) are blocking access.</p>
+                    </div>
+                )}
 
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold">Orders</h2>
