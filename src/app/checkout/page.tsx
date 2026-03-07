@@ -13,6 +13,7 @@ export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart()
     const [step, setStep] = useState(1) // 1: Info, 2: Payment, 3: Success
     const [paymentMethod, setPaymentMethod] = useState<"bank">("bank")
+    const [subPaymentMethod, setSubPaymentMethod] = useState<"easypaisa" | "meezan" | null>(null)
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -37,10 +38,15 @@ export default function CheckoutPage() {
         total: number,
         items: typeof items,
         date: string,
-        method: "bank"
+        method: "bank",
+        subMethod: "easypaisa" | "meezan" | null
     } | null>(null)
 
     const handlePlaceOrder = async () => {
+        if (paymentMethod === "bank" && !subPaymentMethod) {
+            alert("Please select a specific bank transfer option (Easypaisa/Jazzcash or Meezan Bank).")
+            return
+        }
         setLoading(true)
         try {
             // 1. Save to Supabase via Server API
@@ -51,7 +57,7 @@ export default function CheckoutPage() {
                     formData,
                     items,
                     cartTotal,
-                    paymentMethod
+                    paymentMethod: subPaymentMethod === 'easypaisa' ? 'easypaisa' : subPaymentMethod === 'meezan' ? 'meezan_bank' : paymentMethod
                 })
             });
 
@@ -81,7 +87,8 @@ export default function CheckoutPage() {
                 total: cartTotal,
                 items: items,
                 date: new Date().toLocaleString(),
-                method: paymentMethod
+                method: paymentMethod,
+                subMethod: subPaymentMethod
             })
             setStep(3)
             clearCart()
@@ -227,24 +234,60 @@ export default function CheckoutPage() {
                                         </button>
 
                                         {paymentMethod === "bank" && (
-                                            <div className="p-4 bg-zinc-900 rounded-lg text-sm text-gray-300 space-y-3 border border-white/5">
-                                                <p className="font-semibold text-white">Please transfer the total amount to:</p>
+                                            <div className="pl-4 border-l border-white/20 ml-2 space-y-3">
+                                                <button
+                                                    onClick={() => setSubPaymentMethod("easypaisa")}
+                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left ${subPaymentMethod === 'easypaisa' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
+                                                >
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <span className="font-bold text-orange-500">Easypaisa / Jazzcash / Zindigi</span>
+                                                        <div className={`w-3 h-3 rounded-full border ${subPaymentMethod === 'easypaisa' ? 'border-[4px] border-orange-500 bg-white' : 'border-white/50'}`} />
+                                                    </div>
 
-                                                <div className="space-y-1">
-                                                    <p className="font-bold text-orange-500">Easypaisa / Jazzcash / Zindigi (JS Bank)</p>
-                                                    <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
-                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">03272487127</span></p>
-                                                </div>
+                                                    <AnimatePresence>
+                                                        {subPaymentMethod === "easypaisa" && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                className="overflow-hidden"
+                                                            >
+                                                                <div className="pt-2 text-sm text-gray-300 space-y-1">
+                                                                    <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
+                                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">03272487127</span></p>
+                                                                    <p className="mt-2 text-xs text-yellow-500">Please send screenshot of payment to WhatsApp.</p>
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </button>
 
-                                                <div className="w-full h-px bg-white/10 my-2" />
+                                                <button
+                                                    onClick={() => setSubPaymentMethod("meezan")}
+                                                    className={`w-full flex flex-col p-4 rounded-xl border transition-all text-left ${subPaymentMethod === 'meezan' ? 'bg-zinc-800 border-orange-500' : 'bg-black/50 border-white/10 hover:border-white/30'}`}
+                                                >
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <span className="font-bold text-orange-500">Meezan Bank</span>
+                                                        <div className={`w-3 h-3 rounded-full border ${subPaymentMethod === 'meezan' ? 'border-[4px] border-orange-500 bg-white' : 'border-white/50'}`} />
+                                                    </div>
 
-                                                <div className="space-y-1">
-                                                    <p className="font-bold text-orange-500">Meezan Bank</p>
-                                                    <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
-                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">01890110481675</span></p>
-                                                </div>
-
-                                                <p className="mt-2 text-xs text-yellow-500">Please send screenshot of payment to WhatsApp.</p>
+                                                    <AnimatePresence>
+                                                        {subPaymentMethod === "meezan" && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                className="overflow-hidden"
+                                                            >
+                                                                <div className="pt-2 text-sm text-gray-300 space-y-1">
+                                                                    <p>Account Title: <span className="text-white">MUHAMMAD HUZAIFA RIAZ</span></p>
+                                                                    <p>Account Number: <span className="text-white font-mono tracking-wider">01890110481675</span></p>
+                                                                    <p className="mt-2 text-xs text-yellow-500">Please send screenshot of payment to WhatsApp.</p>
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </button>
                                             </div>
                                         )}
                                     </div>
@@ -299,7 +342,7 @@ export default function CheckoutPage() {
                                                 </div>
                                                 <div className="flex justify-between pb-2" style={{ borderBottom: "1px solid #f3f4f6" }}>
                                                     <span style={{ color: "#6b7280" }}>Payment Method</span>
-                                                    <span className="font-medium capitalize" style={{ color: "#000000" }}>Bank Transfer</span>
+                                                    <span className="font-medium capitalize" style={{ color: "#000000" }}>{confirmedOrder?.subMethod === 'easypaisa' ? 'Easypaisa / Jazzcash' : 'Meezan Bank'}</span>
                                                 </div>
                                                 <div className="flex justify-between items-center pt-2">
                                                     <span className="font-bold text-lg" style={{ color: "#111827" }}>Total Amount</span>
@@ -325,7 +368,7 @@ export default function CheckoutPage() {
                                     {/* WhatsApp Button */}
                                     <a
                                         href={`https://wa.me/923272487127?text=${encodeURIComponent(
-                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${confirmedOrder?.total}\nPayment Method: Bank Transfer\n\nHere is my payment screenshot:`
+                                            `Hi Deez Prints, I just placed Order #${orderId?.slice(0, 8)}.\n\nName: ${formData.name}\nTotal: Rs. ${confirmedOrder?.total}\nPayment Method: ${confirmedOrder?.subMethod === 'easypaisa' ? 'Easypaisa/Jazzcash' : 'Meezan Bank'}\n\nHere is my payment screenshot:`
                                         )}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
