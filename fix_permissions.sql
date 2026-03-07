@@ -1,12 +1,20 @@
 -- 1. Enable RLS (just in case it's not)
 alter table "orders" enable row level security;
 
--- 2. Allow ANYONE to insert orders (for Guest Checkout)
-create policy "Enable insert for everyone"
-on "orders"
-for insert
-to public
-with check (true);
+-- 1. Create policy to allow inserting orders without login (for checkout)
+CREATE POLICY "Allow anonymous inserts"
+ON "public"."orders"
+FOR INSERT
+TO anon
+WITH CHECK (true);
+
+-- 2. Create policy to allow reading orders (for admin dashboard functionality)
+-- Assuming the admin dashboard uses the anon key for simplicity in this project phase
+CREATE POLICY "Allow anonymous reads for admin"
+ON "public"."orders"
+FOR SELECT
+TO anon
+USING (true);
 
 -- 3. Allow ANYONE to view orders (for Admin Dashboard)
 -- Ideally, we would restrict this, but since the Admin Panel is client-side, 

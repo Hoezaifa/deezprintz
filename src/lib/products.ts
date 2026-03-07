@@ -89,10 +89,10 @@ export const PRODUCTS: Product[] = [
         title: "SPIDERVERSE TEE",
         artist: " ",
         price: 2900,
-        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737933/sppiderf_aqsefr.webp"),
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp"),
         images: [
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737933/sppiderf_aqsefr.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp"
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderf_aqsefr.webp"
 
         ],
         rating: 5,
@@ -205,7 +205,10 @@ export const PRODUCTS: Product[] = [
         title: "BERSERK DRP SHLDR",
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883554/berserkdropf_bed9qx.webp"),
-        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883554/berserkdropf_bed9qx.webp",
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772898857/berserkdropwF_kacpml.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772898857/berserkdropwb_ap83rw.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883554/berserkdropf_bed9qx.webp",
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883553/berserkdropb_ktediz.webp",
 
         ],
@@ -299,13 +302,13 @@ export const PRODUCTS: Product[] = [
     // --- MUGS ---
     {
         id: 'mug-white',
-        title: 'Sublimation Mug (Inner White)',
-        price: 900,
+        title: 'SKULL',
+        price: 600,
         category: 'accessories',
         subcategory: 'mugs',
         rating: 4,
-        image: getCloudinaryUrl('/assets/products/mugs/mug-white.jpg'),
-        images: [],
+        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772897480/mug_sample_sfu1kd.webp'),
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772897480/mug_sample_sfu1kd.webp"],
         // Mugs: White color only for this specific product
         colors: ["White"],
     },
