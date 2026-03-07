@@ -197,6 +197,24 @@ export const PRODUCTS: Product[] = [
         rating: 4,
         colors: ["Black"]
     },
+    {
+        id: "tshirt-reg-5",
+        title: "ABSTRACT WINGS DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737955/calligraphyf_i50rtp.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737955/calligraphyf_i50rtp.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737946/wingsback_ojdcgx.webp",
+
+
+        ],
+        category: 't-shirts',
+        subcategory: 'regular',
+        artist: ' ',
+        rating: 4,
+        colors: ["Black"]
+    },
+
 
 
     // --- DROP SHOULDER T-SHIRTS ---
@@ -253,6 +271,57 @@ export const PRODUCTS: Product[] = [
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp"),
         images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp",
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883562/lcsntDropF_tlpen9.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black", "White"]
+    },
+    {
+        id: "tshirt-drop-5",
+        title: "TBSM CALM DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmcalmDropf_l9ue5n.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmcalmDropf_l9ue5n.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmcalmb_iycg6e.webp"
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["White"]
+    },
+    {
+        id: "tshirt-drop-6",
+        title: "TBSM ENCORE DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmencoreDropf_zg7rey.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmencoreDropf_zg7rey.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/tbsmencoreb_qb39e5.webp"
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black"]
+    },
+    {
+        id: "tshirt-drop-7",
+        title: "PUNISH DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904109/blackskulldropb_yq9f2b.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/whiteskulldropf_wvd5fg.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904109/whiteskulldropb_vubnr2.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904108/blackskulldropf_flp7ma.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772904109/blackskulldropb_yq9f2b.webp",
+
+
         ],
         category: 't-shirts',
         subcategory: 'drop-shoulder',
