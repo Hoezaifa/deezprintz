@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
         subcategory: "graphic"
     },
     {
-        id: "kanye-west-hoodie",
+        id: "punk-dead-tee",
         title: "PUNK IS DEAD TEE",
         artist: " ",
         price: 1200,
@@ -53,7 +53,7 @@ export const PRODUCTS: Product[] = [
         colors: ["Black", "White", "Beige"]
     },
     {
-        id: "night-met-shirt",
+        id: "breakout-tee",
         title: "BREAKOUT TEE",
         artist: " ",
         price: 1500,
@@ -68,7 +68,7 @@ export const PRODUCTS: Product[] = [
         subcategory: "graphic"
     },
     {
-        id: "seedhe-maut-shirt",
+        id: "berserk-tee",
         title: "BERSERK TEE",
         artist: " ",
         price: 1800,
@@ -190,7 +190,8 @@ export const PRODUCTS: Product[] = [
         price: 2500,
         image: "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883233/snakeREGF_ezwmpp.webp",
         images: [
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883233/snakeREGF_ezwmpp.webp"],
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883233/snakeREGF_ezwmpp.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772909295/whitesnakeREGF_qczni7.webp"],
         category: 't-shirts',
         subcategory: 'regular',
         artist: ' ',
