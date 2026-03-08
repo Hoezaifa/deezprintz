@@ -14,6 +14,11 @@ export const metadata: Metadata = {
     apple: "/assets/logo.png",
   },
   manifest: "/site.webmanifest",
+  verification: {
+    other: {
+      "p:domain_verify": "224a4bde89bf6ae8a33af0493a310072",
+    },
+  },
 };
 
 import { Navbar } from "@/components/layout/Navbar";
