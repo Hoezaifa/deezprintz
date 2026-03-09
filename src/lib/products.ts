@@ -36,21 +36,19 @@ export const PRODUCTS: Product[] = [
         subcategory: "graphic"
     },
     {
-        id: "punk-dead-tee",
-        title: "PUNK IS DEAD TEE",
-        artist: " ",
-        price: 1200,
-        image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkB_tubrry.webp'),
+        id: "tshirt-acid-9",
+        title: "SPIDERVERSE Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/spiderAcidBack_dlpk7d.webp"),
         images: [
-
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkB_tubrry.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739463/punk_tkwemj.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772739461/punkw_pqvdnn.webp"
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/spiderAcidBack_dlpk7d.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086650/spiderAcidF_m4jkna.webp"
         ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
         rating: 5,
-        category: "hoodies",
-        subcategory: "original",
-        colors: ["Black", "White", "Beige"]
+        colors: ["Acid Black"]
     },
     {
         id: "breakout-tee",
@@ -385,16 +383,153 @@ export const PRODUCTS: Product[] = [
     // --- ACID WASH T-SHIRTS ---
     {
         id: "tshirt-acid-1",
-        title: "Vintage Acid Wash Tee 1",
+        title: "Berserk Warrior Acid Wash Tee",
         price: 3200,
-        image: getCloudinaryUrl("/assets/products/acid-wash-t-shirts/tshirt-acid-1.jpg"),
-        images: [],
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/AcidBerB_hlqkml.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/AcidBerB_hlqkml.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidBerF_csztus.webp"
+        ],
         category: 't-shirts',
         subcategory: 'acid-wash',
-        artist: 'VINTAGE',
+        artist: 'BRSRK',
         rating: 5,
-        colors: ["Acid Black", "Acid Wash Blue"]
+        colors: ["Acid Black"]
     },
+    {
+        id: "tshirt-acid-2",
+        title: "DIVINE Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/DivineAcidF_xi1lrp.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/DivineAcidF_xi1lrp.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/DivineAcidB_k4xqvo.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+
+    {
+        id: "tshirt-acid-3",
+        title: "PUNK IS DEAD Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/PunkAcidF_rz3omv.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/PunkAcidF_rz3omv.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+
+    {
+        id: "tshirt-acid-4",
+        title: "Berserk Skull Blade Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidBerserkEmbossF_izdjez.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidBerserkEmbossF_izdjez.webp",
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-5",
+        title: "FERRARI Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidFerrariF_wlx5yi.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidFerrariF_wlx5yi.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085750/AcidFerrariB_oechir.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-6",
+        title: "KNIGHTFALL Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085757/AcidKnioghtF_smiizk.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085757/AcidKnioghtF_smiizk.webp",
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-7",
+        title: "ABSTRACT WINGS Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085757/AcidWingsF_nb80ux.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085757/AcidWingsF_nb80ux.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086408/acidwingsB_kejkg1.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-8",
+        title: "BERSERK Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/BerserkAcidF_x9zx9m.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-9",
+        title: "SPIDERVERSE Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/spiderAcidBack_dlpk7d.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085749/spiderAcidBack_dlpk7d.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086650/spiderAcidF_m4jkna.webp"
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+    {
+        id: "tshirt-acid-9",
+        title: "BREAKOUT Acid Wash Tee",
+        price: 3200,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086685/breakoutAcid_dp04ei.webp"),
+        images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086685/breakoutAcid_dp04ei.webp",
+        ],
+        category: 't-shirts',
+        subcategory: 'acid-wash',
+        artist: ' ',
+        rating: 5,
+        colors: ["Acid Black"]
+    },
+
 
     // --- JERSEYS ---
     {
