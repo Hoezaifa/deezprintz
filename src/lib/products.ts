@@ -91,8 +91,8 @@ export const PRODUCTS: Product[] = [
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp"),
         images: [
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737933/sppiderf_aqsefr.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderf_aqsefr.webp"
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderf_aqsefr.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp"
 
         ],
         rating: 5,
@@ -199,7 +199,7 @@ export const PRODUCTS: Product[] = [
         colors: ["Black"]
     },
     {
-        id: "tshirt-reg-5",
+        id: "tshirt-reg-6",
         title: "ABSTRACT WINGS TEE",
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737955/calligraphyf_i50rtp.webp"),
@@ -216,7 +216,7 @@ export const PRODUCTS: Product[] = [
         colors: ["Black"]
     },
     {
-        id: "tshirt-reg-6",
+        id: "tshirt-reg-7",
         title: "FERRARI TEE",
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/regferrariFblack_kpig1e.webp"),
@@ -397,7 +397,7 @@ export const PRODUCTS: Product[] = [
         colors: ["Black"]
     },
     {
-        id: "tshirt-drop-10",
+        id: "tshirt-drop-11",
         title: "SNAKE DRP SHLDR",
         price: 2900,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772909295/whitesnakeDropF_choivf.webp"),
