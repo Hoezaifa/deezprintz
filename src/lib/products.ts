@@ -57,8 +57,10 @@ export const PRODUCTS: Product[] = [
         price: 1500,
         image: getCloudinaryUrl('https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/breakb_zkkch0.webp'),
         images: [
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255816/breakoutvariations_birjvm.webp",
             "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/breakb_zkkch0.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/break2_bnjlfy.webp"
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772738506/break2_bnjlfy.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255816/breakoutvariations_birjvm.webp"
 
         ],
         rating: 5,
@@ -369,7 +371,6 @@ export const PRODUCTS: Product[] = [
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/whitesmdropF_tfl5vw.webp"),
 
         images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908159/whitesmdropF_tfl5vw.webp",
-            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772908160/ferrariBblack_ofgzyq.webp",
 
         ],
         category: 't-shirts',
@@ -378,6 +379,42 @@ export const PRODUCTS: Product[] = [
         rating: 5,
         colors: ["Black"]
     },
+    {
+        id: "tshirt-drop-10",
+        title: "ABSTRACT WINGS DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255990/wingsdropF_shnexu.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255990/wingsdropF_shnexu.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255989/wingsdropb_uzek1d.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255893/wingsvariations_u6b8p5.webp",
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black"]
+    },
+    {
+        id: "tshirt-drop-10",
+        title: "SNAKE DRP SHLDR",
+        price: 2900,
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772909295/whitesnakeDropF_choivf.webp"),
+
+        images: ["https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772909295/whitesnakeDropF_choivf.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883546/snakeDropF_t9bwzi.webp",
+            "https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773256442/snakevariations_f1h87f.webp",
+
+        ],
+        category: 't-shirts',
+        subcategory: 'drop-shoulder',
+        artist: 'OVERSIZED',
+        rating: 5,
+        colors: ["Black"]
+    },
+
+
 
 
     // --- ACID WASH T-SHIRTS ---
