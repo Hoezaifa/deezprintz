@@ -1,27 +1,36 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { Container } from "@/components/ui/container"
 import { getCloudinaryUrl } from "@/lib/cloudinary"
 
-const COLLECTIONS = [
-    { title: "TEES", href: "/collections/t-shirts", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255816/breakoutvariations_birjvm.webp") },
-    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255893/wingsvariations_u6b8p5.webp") },
-    { title: "ACID WASH TEES", href: "/collections/acid-wash", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp") },
+const REST_COLLECTIONS = [
+    { title: "HOODIES", href: "/collections/hoodies", image: getCloudinaryUrl("/assets/collections/hoodies.jpg") },
+    { title: "MUGS", href: "/collections/mugs", image: getCloudinaryUrl("/assets/collections/mugs.png") },
+    { title: "TAPESTRIES", href: "/collections/tapestries", image: getCloudinaryUrl("/assets/collections/tapestries.jpg") },
+    { title: "WRISTBANDS", href: "/collections/wristbands", image: getCloudinaryUrl("/assets/collections/wristbands.jpg") },
+    { title: "BADGES", href: "/collections/badges", image: getCloudinaryUrl("/assets/collections/badges.jpg") },
+    { title: "WALLET CARDS", href: "/collections/wallet-cards", image: getCloudinaryUrl("/assets/collections/wallet-cards.jpg") },
+    { title: "KEYCHAINS", href: "/collections/keychains", image: getCloudinaryUrl("/assets/collections/keychains.jpg") },
+    { title: "MAGNETS", href: "/collections/magnets", image: getCloudinaryUrl("/assets/collections/magnets.jpg") },
+    { title: "NOTEBOOKS", href: "/collections/notebooks", image: getCloudinaryUrl("/assets/collections/notebooks.jpg") },
+    { title: "CORPORATE GIFT BOXES", href: "/collections/gift-boxes", image: getCloudinaryUrl("/assets/collections/gift-boxes.jpg") },
 ]
 
-export function CollectionsSection() {
+export default function CollectionsPage() {
     return (
-        <section className="py-20 bg-background relative z-10">
+        <main className="min-h-screen pt-20 pb-20 bg-background text-foreground">
             <Container>
-                <div className="flex items-center justify-between mb-12">
-                    <h2 className="text-3xl font-bold tracking-tighter text-white glow-text">COLLECTIONS</h2>
-                    <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent ml-8" />
+                {/* Header */}
+                <div className="mb-12 space-y-4">
+                    <h1 className="text-5xl font-bold tracking-tighter text-white glow-text">MORE COLLECTIONS</h1>
+                    <p className="text-muted-foreground text-lg max-w-2xl">
+                        Explore all our premium collections, designed for the streets.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-12" suppressHydrationWarning>
-                    {COLLECTIONS.map((collection, index) => (
+                {/* Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6" suppressHydrationWarning>
+                    {REST_COLLECTIONS.map((collection, index) => (
                         <Link
                             key={collection.title}
                             href={collection.href}
@@ -35,7 +44,7 @@ export function CollectionsSection() {
                                     src={collection.image}
                                     alt={collection.title}
                                     fill
-                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                    sizes="(max-width: 768px) 50vw, 33vw"
                                     className="object-cover transition duration-500 group-hover:scale-110 group-hover:-rotate-3 will-change-transform"
                                 />
                             </div>
@@ -52,18 +61,7 @@ export function CollectionsSection() {
                         </Link>
                     ))}
                 </div>
-
-                {/* Shop All Button */}
-                <div className="flex justify-center mt-8">
-                    <Link
-                        href="/collections"
-                        className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white uppercase tracking-widest overflow-hidden rounded-full bg-secondary/30 border border-white/10 transition-all duration-300 hover:scale-105 hover:bg-white hover:text-black hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]"
-                    >
-                        <span className="relative z-10 transition-colors duration-300">Shop All</span>
-                        <div className="absolute inset-0 border border-white/20 rounded-full group-hover:opacity-0 transition-opacity" />
-                    </Link>
-                </div>
             </Container>
-        </section>
-    )
+        </main>
+    );
 }
