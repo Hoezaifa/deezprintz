@@ -187,6 +187,15 @@ export default function CheckoutPage() {
                                             onChange={handleInputChange}
                                             className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-zinc-500 focus:border-white/30 outline-none transition-colors"
                                         />
+                                        <input
+                                            required
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="Phone Number (e.g. 0300 1234567)"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                            className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-zinc-500 focus:border-white/30 outline-none transition-colors"
+                                        />
                                         <div className="grid grid-cols-2 gap-4">
                                             <input
                                                 required
