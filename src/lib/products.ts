@@ -553,7 +553,7 @@ export const PRODUCTS: Product[] = [
         colors: ["Acid Black"]
     },
     {
-        id: "tshirt-acid-9",
+        id: "tshirt-acid-10",
         title: "BREAKOUT Acid Wash Tee",
         price: 3200,
         image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773086685/breakoutAcid_dp04ei.webp"),

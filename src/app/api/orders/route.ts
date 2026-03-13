@@ -28,6 +28,50 @@ export async function POST(req: Request) {
             );
         }
 
+        // 2. Send Telegram Notification
+        try {
+            const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+            const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+            if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+                let itemsList = items.map((item: any) => 
+                    `- ${item.title} (Size: ${item.selectedSize}) x${item.quantity}`
+                ).join('\n');
+
+                const message = `🛒 *NEW ORDER*
+
+*Order ID:* ${order.id}
+*Name:* ${formData.name}
+*Phone:* ${formData.phone}
+*City:* ${formData.city}
+
+*Products:*
+${itemsList}
+
+*Total:* Rs ${cartTotal.toLocaleString()}
+
+*WhatsApp:*
+[Chat with Customer](https://wa.me/${formData.phone.replace(/[^0-9]/g, '')})`;
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                // Fire and forget, don't await so it doesn't block the response
+                fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                }).catch(err => console.error("Telegram exact fetch error:", err));
+            } else {
+                console.warn("Telegram credentials not found in environment variables.");
+            }
+        } catch (err) {
+            console.error("Telegram notification construction failed", err);
+        }
+
         return NextResponse.json({ success: true, orderId: order.id }, { status: 200 });
 
     } catch (error: any) {
