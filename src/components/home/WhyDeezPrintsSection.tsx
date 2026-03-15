@@ -107,9 +107,11 @@ export function WhyDeezPrintsSection() {
                             className="object-cover md:object-contain object-right md:object-right-bottom group-hover:scale-105 transition-transform duration-700 opacity-60 md:opacity-80"
                             sizes="(max-width: 768px) 100vw, 66vw"
                         />
-                        {/* Gradient Fades for Image on Desktop */}
-                        <div className="hidden md:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10" />
-                        <div className="hidden md:block absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10" />
+                        {/* Gradient Fades for Image on Desktop (Smooth transition) */}
+                        <div className="hidden md:block absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent z-10" />
+                        <div className="hidden md:block absolute inset-y-0 left-48 w-32 bg-gradient-to-r from-[#0a0a0a]/90 to-transparent z-10" />
+                        
+                        <div className="hidden md:block absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10" />
                     </div>
 
                     {/* Content Section */}
