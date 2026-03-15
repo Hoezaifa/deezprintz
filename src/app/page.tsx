@@ -2,6 +2,8 @@ import { HeroSection } from "@/components/home/HeroSection";
 import dynamic from "next/dynamic";
 
 const CollectionsSection = dynamic(() => import("@/components/home/CollectionsSection").then(mod => mod.CollectionsSection));
+const BuiltForPresenceSection = dynamic(() => import("@/components/home/BuiltForPresenceSection").then(mod => mod.BuiltForPresenceSection));
+const WhyDeezPrintsSection = dynamic(() => import("@/components/home/WhyDeezPrintsSection").then(mod => mod.WhyDeezPrintsSection));
 const ProductCard = dynamic(() => import("@/components/ui/ProductCard").then(mod => mod.ProductCard));
 // import { HeroSectionV2 } from "@/components/home/HeroSectionV2";
 import { Container } from "@/components/ui/container";
@@ -20,6 +22,8 @@ export default async function Home() {
       {/* <HeroSectionV2 /> */}
 
       <CollectionsSection />
+      <BuiltForPresenceSection />
+      <WhyDeezPrintsSection />
 
       <section className="py-20 relative z-10">
         <Container>

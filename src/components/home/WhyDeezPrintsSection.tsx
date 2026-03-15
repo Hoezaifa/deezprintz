@@ -1,19 +1,62 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Container } from "@/components/ui/container"
 import { getCloudinaryUrl } from "@/lib/cloudinary"
+import { motion, AnimatePresence } from "framer-motion"
+
+const SLIDES = [
+    {
+        id: "acid-wash",
+        badge: "NEW DROP",
+        title1: "ACID WASH",
+        title2: "COLLECTION",
+        description: "Vintage Texture. Heavy Cotton.",
+        href: "/collections/acid-wash",
+        image: "/images/generated/acid_wash_vibe.png" // AI Generated Aesthetic Image
+    },
+    {
+        id: "tees",
+        badge: "ESSENTIALS",
+        title1: "PREMIUM",
+        title2: "TEES",
+        description: "240 GSM. Statement Graphics.",
+        href: "/collections/t-shirts",
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773573578/regulars_vtmc2k.webp")
+    },
+    {
+        id: "drop-shoulder",
+        badge: "RELAXED",
+        title1: "DROP",
+        title2: "SHOULDER",
+        description: "Everyday Wear. Effortless Style.",
+        href: "/collections/drop-shoulder",
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773574932/drp_btiwfr.webp")
+    }
+]
 
 export function WhyDeezPrintsSection() {
+    const [currentSlide, setCurrentSlide] = useState(0)
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % SLIDES.length)
+        }, 5000)
+        return () => clearInterval(timer)
+    }, [])
+
     return (
         <section className="py-10 bg-background relative z-10" suppressHydrationWarning>
             <Container>
                 {/* Header */}
                 <div className="flex items-center justify-center gap-4 mb-4 md:mb-8">
-                    <div className="h-px w-16 md:w-32 bg-white/20" />
+                    <div className="h-px w-10 md:w-32 bg-white/20 hidden sm:block" />
                     <h2 className="text-xl md:text-2xl font-bold tracking-widest text-[#FF5900] uppercase text-center glow-text-orange" style={{ fontFamily: "var(--font-bebas)" }}>
                         <span className="text-white">WHY DEEZ </span>PRINTS
                     </h2>
-                    <div className="h-px w-16 md:w-32 bg-white/20" />
+                    <div className="h-px w-10 md:w-32 bg-white/20 hidden sm:block" />
                 </div>
 
                 {/* Features Row */}
@@ -92,54 +135,76 @@ export function WhyDeezPrintsSection() {
                     </div>
                 </div>
 
-                {/* Banner Banner */}
+                {/* Slider Banner */}
                 <div className="relative w-full rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/5 bg-[#0a0a0a] min-h-[300px] md:h-[280px] group flex flex-col md:flex-row">
                     
-                    {/* Background Overlay Component for Mobile */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:hidden z-10" />
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentSlide}
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -50 }}
+                            transition={{ duration: 0.6, ease: "easeInOut" }}
+                            className="absolute inset-0 flex flex-col md:flex-row"
+                        >
+                            {/* Background Overlay Component for Mobile */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:hidden z-10" />
 
-                    {/* Background Image Container */}
-                    <div className="absolute inset-0 md:left-1/3 md:right-0 overflow-hidden pt-8 md:pt-0">
-                        <Image
-                            src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773572385/acidddd_dqm3v8.webp")} // Acid wash tee image
-                            alt="Acid Wash Collection"
-                            fill
-                            className="object-cover md:object-contain object-right md:object-right-bottom group-hover:scale-105 transition-transform duration-700 opacity-60 md:opacity-80"
-                            sizes="(max-width: 768px) 100vw, 66vw"
-                        />
-                        {/* Gradient Fades for Image on Desktop (Smooth transition) */}
-                        <div className="hidden md:block absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent z-10" />
-                        <div className="hidden md:block absolute inset-y-0 left-48 w-32 bg-gradient-to-r from-[#0a0a0a]/90 to-transparent z-10" />
-                        
-                        <div className="hidden md:block absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10" />
-                    </div>
+                            {/* Background Image Container */}
+                            <div className="absolute inset-0 overflow-hidden">
+                                <Image
+                                    src={SLIDES[currentSlide].image}
+                                    alt={SLIDES[currentSlide].title1}
+                                    fill
+                                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-60 md:opacity-50"
+                                    sizes="100vw"
+                                />
+                                {/* Gradient Overlay to ensure text readability */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 md:via-[#0a0a0a]/60 to-transparent z-10" />
+                            </div>
 
-                    {/* Content Section */}
-                    <div className="relative z-20 h-full flex flex-col justify-end md:justify-center p-8 lg:p-12 w-full md:max-w-xl md:bg-[#0a0a0a]/50 md:backdrop-blur-[2px]">
-                        <span className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-3 md:mb-4 opacity-70">
-                            NEW DROP
-                        </span>
-                        
-                        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-tight mb-2 md:mb-3 flex flex-wrap gap-2">
-                            <span>ACID WASH</span> 
-                            <span className="font-light text-white/90">COLLECTION</span>
-                        </h3>
-                        
-                        <p className="text-xs md:text-sm lg:text-base font-normal tracking-wide text-white/60 mb-8 max-w-sm">
-                            Vintage Texture. Heavy Cotton.
-                        </p>
-                        
-                        <div>
-                            <Link 
-                                href="/collections/acid-wash"
-                                className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-white/20 bg-transparent text-white font-bold text-xs tracking-widest uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-300 w-fit"
-                            >
-                                SHOP NOW
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
-                                    <path d="m6 9 6 6 6-6"/>
-                                </svg>
-                            </Link>
-                        </div>
+                            {/* Content Section */}
+                            <div className="relative z-20 h-full flex flex-col justify-end md:justify-center px-6 py-10 md:p-12 lg:p-16 w-full md:max-w-xl">
+                                <span className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-3 md:mb-4 opacity-70">
+                                    {SLIDES[currentSlide].badge}
+                                </span>
+                                
+                                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-tight mb-2 md:mb-3 flex flex-wrap gap-2">
+                                    <span>{SLIDES[currentSlide].title1}</span> 
+                                    <span className="font-light text-white/90">{SLIDES[currentSlide].title2}</span>
+                                </h3>
+                                
+                                <p className="text-xs md:text-sm lg:text-base font-normal tracking-wide text-white/60 mb-8 max-w-sm">
+                                    {SLIDES[currentSlide].description}
+                                </p>
+                                
+                                <div>
+                                    <Link 
+                                        href={SLIDES[currentSlide].href}
+                                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-white/20 bg-transparent text-white font-bold text-xs tracking-widest uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-300 w-fit"
+                                    >
+                                        SHOP NOW
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+                                            <path d="m6 9 6 6 6-6"/>
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+
+                    {/* Slider Navigation Dots */}
+                    <div className="absolute bottom-6 right-8 md:right-12 z-30 flex gap-2">
+                        {SLIDES.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentSlide(index)}
+                                className={`h-1.5 rounded-full transition-all duration-500 ${
+                                    currentSlide === index ? "w-8 bg-white" : "w-2 bg-white/20 hover:bg-white/40"
+                                }`}
+                                aria-label={`Go to slide ${index + 1}`}
+                            />
+                        ))}
                     </div>
                 </div>
             </Container>

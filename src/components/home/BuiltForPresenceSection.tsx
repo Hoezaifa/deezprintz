@@ -15,7 +15,7 @@ const SLIDES = [
         description: "PREMIUM COTTON. OVERSIZED FIT. STATEMENT GRAPHICS.",
         buttonText: "EXPLORE TEES",
         href: "/collections/t-shirts",
-        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773571100/place_al0unb.webp")
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773573578/regulars_vtmc2k.webp")
     },
     {
         id: "drop-shoulder",
@@ -24,7 +24,7 @@ const SLIDES = [
         description: "RELAXED SHOULDERS. EVERYDAY WEAR. EFFORTLESS STYLE.",
         buttonText: "SHOP DROP SHOULDER",
         href: "/collections/drop-shoulder",
-        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp") // Placeholder
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773574932/drp_btiwfr.webp")
     },
     {
         id: "acid-wash",
@@ -33,7 +33,7 @@ const SLIDES = [
         description: "VINTAGE WASH. HEAVYWEIGHT FEEL. UNIQUE FINISH.",
         buttonText: "VIEW ACID WASH",
         href: "/collections/acid-wash",
-        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp") // Placeholder
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773575788/acioddddd_byto0p.webp")
     }
 ]
 
@@ -54,10 +54,10 @@ export function BuiltForPresenceSection() {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={currentSlide}
-                            initial={{ opacity: 0, scale: 1.05 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -50 }}
+                            transition={{ duration: 0.6, ease: "easeInOut" }}
                             className="absolute inset-0 flex flex-col md:flex-row items-center md:items-stretch"
                         >
                             {/* Left: Image */}
@@ -75,16 +75,16 @@ export function BuiltForPresenceSection() {
                             </div>
 
                             {/* Right: Content */}
-                            <div className="relative z-20 w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center h-[50%] md:h-full bg-[#0A0A0A] md:bg-transparent">
-                                <div className="text-[#FF5900] font-bold tracking-widest mb-4">
+                            <div className="relative z-20 w-full md:w-1/2 p-6 md:p-16 flex flex-col justify-center h-[50%] md:h-full bg-[#0A0A0A] md:bg-transparent">
+                                <div className="text-[#FF5900] font-bold tracking-widest mb-3 md:mb-4">
                                     - - -
                                 </div>
-                                <h2 className="text-5xl md:text-6xl lg:text-[5.5rem] tracking-widest uppercase leading-none mb-6" style={{ fontFamily: "var(--font-bebas)" }}>
+                                <h2 className="text-4xl md:text-6xl lg:text-[5.5rem] tracking-normal md:tracking-wide font-bold uppercase leading-none mb-4 md:mb-6" style={{ fontFamily: "var(--font-bebas)" }}>
                                     <span className="text-white block">{SLIDES[currentSlide].title1}</span>
                                     <span className="text-[#FF5900] block">{SLIDES[currentSlide].title2}</span>
                                 </h2>
                                 
-                                <p className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest mb-8 uppercase leading-loose max-w-sm">
+                                <p className="text-xs md:text-sm text-muted-foreground font-bold tracking-wider mb-8 uppercase leading-relaxed max-w-sm">
                                     {SLIDES[currentSlide].description}
                                 </p>
 

@@ -7,7 +7,7 @@ import { getCloudinaryUrl } from "@/lib/cloudinary"
 
 const COLLECTIONS = [
     { title: "TEES", href: "/collections/t-shirts", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp") },
-    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883558/divinedropf_rdsrbr.webp") },
+    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772884869/LCNSTWHITE_gully7.webp") },
     { title: "ACID WASH TEES", href: "/collections/acid-wash", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp") },
 ]
 
@@ -20,12 +20,14 @@ export function CollectionsSection() {
                     <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent ml-8" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-12" suppressHydrationWarning>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 mb-12">
                     {COLLECTIONS.map((collection, index) => (
                         <Link
                             key={collection.title}
                             href={collection.href}
-                            className="group relative flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30"
+                            className={`group relative flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30 ${
+                                index === 2 ? "col-span-2 md:col-span-1 w-[calc(50%-0.375rem)] md:w-full mx-auto" : "w-full"
+                            }`}
                         >
                             {/* Image Container with Glow */}
                             <div className="relative aspect-square w-full overflow-hidden rounded-xl sm:rounded-2xl bg-black/20">
