@@ -146,16 +146,16 @@ export function WhyDeezPrintsSection() {
                 {/* Slider Banner */}
                 <div className="relative w-full rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/5 bg-[#0a0a0a] min-h-[300px] md:h-[280px] group flex flex-col md:flex-row">
                     
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence initial={false} mode="wait">
                         <motion.div
                             key={currentSlide}
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ duration: 0.6, ease: "easeInOut" }}
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "-100%" }}
+                            transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
                             drag="x"
                             dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.2}
+                            dragElastic={0.4}
                             onDragEnd={handleDragEnd}
                             className="absolute inset-0 flex flex-col md:flex-row cursor-grab active:cursor-grabbing"
                         >

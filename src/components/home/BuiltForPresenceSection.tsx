@@ -61,16 +61,16 @@ export function BuiltForPresenceSection() {
         <section className="py-10 bg-background relative z-10" suppressHydrationWarning>
             <Container>
                 <div className="relative rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/5 min-h-[500px] md:min-h-[450px]">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence initial={false} mode="wait">
                         <motion.div
                             key={currentSlide}
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ duration: 0.6, ease: "easeInOut" }}
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "-100%" }}
+                            transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
                             drag="x"
                             dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.2}
+                            dragElastic={0.4}
                             onDragEnd={handleDragEnd}
                             className="absolute inset-0 flex flex-col md:flex-row items-center md:items-stretch cursor-grab active:cursor-grabbing"
                         >
