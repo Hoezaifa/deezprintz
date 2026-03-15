@@ -616,6 +616,50 @@ export const PRODUCTS: Product[] = [
         // Mugs: Colored options
         colors: ["Red", "Green", "Black", "Blue"],
     },
+    {
+        id: 'mug-manga-panel',
+        title: 'Manga Panel Mug',
+        price: 2000,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 5,
+        image: "/images/generated/mug_manga_panel.png",
+        images: [],
+        colors: ["White"],
+    },
+    {
+        id: 'mug-trust-process',
+        title: 'Trust The Process Mug',
+        price: 1000,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 5,
+        image: "/images/generated/mug_trust_process.png",
+        images: [],
+        colors: ["White"],
+    },
+    {
+        id: 'mug-rap-quote',
+        title: 'Rap Quote Mug',
+        price: 1800,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 5,
+        image: "/images/generated/mug_rap_quote.png",
+        images: [],
+        colors: ["Black"],
+    },
+    {
+        id: 'mug-street-typo',
+        title: 'Street Typography Mug',
+        price: 1000,
+        category: 'accessories',
+        subcategory: 'mugs',
+        rating: 5,
+        image: "/images/generated/mug_street_typo.png",
+        images: [],
+        colors: ["Black"],
+    },
 
     // --- FLAGS ---
     {
@@ -637,19 +681,63 @@ export const PRODUCTS: Product[] = [
 
     // --- TAPESTRIES ---
     {
-        id: "tapestry-1",
-        title: "Wall Tapestry 1",
-        price: 2400, // Starting price
-        image: getCloudinaryUrl("/assets/products/tapestries/tapestry-1.jpg"),
+        id: "tapestry-berserk-eclipse",
+        title: "Berserk Eclipse Tapestry",
+        price: 1000,
+        image: "/images/generated/tapestry_berserk.png",
         images: [],
         category: 'accessories',
         subcategory: 'tapestries',
         rating: 5,
-        // Tapestries: Dynamic Size Pricing
         sizePricing: {
-            "24\"x36\"": 2400,
-            "36\"x48\"": 3000,
-            "48\"x60\"": 3800
+            "24\"x36\"": 1000,
+            "36\"x48\"": 1500,
+            "48\"x60\"": 2000
+        }
+    },
+    {
+        id: "tapestry-cyber-city",
+        title: "Cyber City Night Tapestry",
+        price: 2000,
+        image: "/images/generated/tapestry_cybercity.png",
+        images: [],
+        category: 'accessories',
+        subcategory: 'tapestries',
+        rating: 5,
+        sizePricing: {
+            "24\"x36\"": 2000,
+            "36\"x48\"": 2500,
+            "48\"x60\"": 3200
+        }
+    },
+    {
+        id: "tapestry-manga-panel",
+        title: "Manga Panel Tapestry",
+        price: 2100,
+        image: "/images/generated/tapestry_manga.png",
+        images: [],
+        category: 'accessories',
+        subcategory: 'tapestries',
+        rating: 5,
+        sizePricing: {
+            "24\"x36\"": 2100,
+            "36\"x48\"": 2700,
+            "48\"x60\"": 3400
+        }
+    },
+    {
+        id: "tapestry-demon-sigil",
+        title: "Demon Sigil Wall Art",
+        price: 2000,
+        image: "/images/generated/tapestry_demon_sigil.png",
+        images: [],
+        category: 'accessories',
+        subcategory: 'tapestries',
+        rating: 5,
+        sizePricing: {
+            "24\"x36\"": 2000,
+            "36\"x48\"": 2500,
+            "48\"x60\"": 3200
         }
     },
 
