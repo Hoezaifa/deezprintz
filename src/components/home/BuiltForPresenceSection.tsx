@@ -58,9 +58,9 @@ export function BuiltForPresenceSection() {
     }
 
     return (
-        <section className="py-10 bg-background relative z-10" suppressHydrationWarning>
+        <section className="py-4 md:py-10 bg-background relative z-10" suppressHydrationWarning>
             <Container>
-                <div className="relative rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/5 min-h-[500px] md:min-h-[450px]">
+                <div className="relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/5 min-h-[380px] md:min-h-[450px]">
                     <AnimatePresence initial={false} mode="wait">
                         <motion.div
                             key={currentSlide}
@@ -75,7 +75,7 @@ export function BuiltForPresenceSection() {
                             className="absolute inset-0 flex flex-col md:flex-row items-center md:items-stretch cursor-grab active:cursor-grabbing"
                         >
                             {/* Left: Image */}
-                            <div className="relative w-full md:w-1/2 h-[50%] md:h-full">
+                            <div className="relative w-full md:w-1/2 h-[45%] md:h-full">
                                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent md:bg-none z-10" />
                                 <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0A0A0A] to-transparent hidden md:block z-10" />
                                 <Image
@@ -89,11 +89,11 @@ export function BuiltForPresenceSection() {
                             </div>
 
                             {/* Right: Content */}
-                            <div className="relative z-20 w-full md:w-1/2 p-6 md:p-16 flex flex-col justify-center h-[50%] md:h-full bg-[#0A0A0A] md:bg-transparent">
+                            <div className="relative z-20 w-full md:w-1/2 p-5 md:p-16 flex flex-col justify-center h-[55%] md:h-full bg-[#0A0A0A] md:bg-transparent">
                                 <div className="text-[#FF5900] font-bold tracking-widest mb-3 md:mb-4">
                                     - - -
                                 </div>
-                                <h2 className="text-4xl md:text-6xl lg:text-[5.5rem] tracking-normal md:tracking-wide font-bold uppercase leading-none mb-4 md:mb-6" style={{ fontFamily: "var(--font-bebas)" }}>
+                                <h2 className="text-3xl md:text-6xl lg:text-[5.5rem] tracking-normal md:tracking-wide font-bold uppercase leading-none mb-3 md:mb-6" style={{ fontFamily: "var(--font-bebas)" }}>
                                     <span className="text-white block">{SLIDES[currentSlide].title1}</span>
                                     <span className="text-[#FF5900] block">{SLIDES[currentSlide].title2}</span>
                                 </h2>

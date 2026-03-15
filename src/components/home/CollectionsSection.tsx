@@ -16,7 +16,7 @@ const COLLECTIONS = [
 
 export function CollectionsSection() {
     return (
-        <section className="py-20 bg-background relative z-10">
+        <section className="py-10 md:py-20 bg-background relative z-10">
             <Container>
                 <div className="flex items-center justify-between mb-12">
                     <h2 className="text-3xl font-bold tracking-tighter text-white glow-text">FEATURED COLLECTIONS</h2>
