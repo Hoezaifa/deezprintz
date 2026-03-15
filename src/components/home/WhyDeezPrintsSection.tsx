@@ -47,6 +47,14 @@ export function WhyDeezPrintsSection() {
         return () => clearInterval(timer)
     }, [])
 
+    const handleDragEnd = (event: any, info: any) => {
+        if (info.offset.x > 100) {
+            setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)
+        } else if (info.offset.x < -100) {
+            setCurrentSlide((prev) => (prev + 1) % SLIDES.length)
+        }
+    }
+
     return (
         <section className="py-10 bg-background relative z-10" suppressHydrationWarning>
             <Container>
@@ -145,7 +153,11 @@ export function WhyDeezPrintsSection() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -50 }}
                             transition={{ duration: 0.6, ease: "easeInOut" }}
-                            className="absolute inset-0 flex flex-col md:flex-row"
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.2}
+                            onDragEnd={handleDragEnd}
+                            className="absolute inset-0 flex flex-col md:flex-row cursor-grab active:cursor-grabbing"
                         >
                             {/* Background Overlay Component for Mobile */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:hidden z-10" />

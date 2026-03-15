@@ -15,7 +15,7 @@ const SLIDES = [
         description: "PREMIUM COTTON. OVERSIZED FIT. STATEMENT GRAPHICS.",
         buttonText: "EXPLORE TEES",
         href: "/collections/t-shirts",
-        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773573578/regulars_vtmc2k.webp")
+        image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773571102/place_d2aqxn.webp")
     },
     {
         id: "drop-shoulder",
@@ -47,6 +47,16 @@ export function BuiltForPresenceSection() {
         return () => clearInterval(timer)
     }, [])
 
+    const handleDragEnd = (event: any, info: any) => {
+        if (info.offset.x > 100) {
+            // Swiped right - show previous
+            setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)
+        } else if (info.offset.x < -100) {
+            // Swiped left - show next
+            setCurrentSlide((prev) => (prev + 1) % SLIDES.length)
+        }
+    }
+
     return (
         <section className="py-10 bg-background relative z-10" suppressHydrationWarning>
             <Container>
@@ -58,7 +68,11 @@ export function BuiltForPresenceSection() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -50 }}
                             transition={{ duration: 0.6, ease: "easeInOut" }}
-                            className="absolute inset-0 flex flex-col md:flex-row items-center md:items-stretch"
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.2}
+                            onDragEnd={handleDragEnd}
+                            className="absolute inset-0 flex flex-col md:flex-row items-center md:items-stretch cursor-grab active:cursor-grabbing"
                         >
                             {/* Left: Image */}
                             <div className="relative w-full md:w-1/2 h-[50%] md:h-full">
