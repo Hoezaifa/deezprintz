@@ -101,7 +101,7 @@ export function WhyDeezPrintsSection() {
                     {/* Background Image Container */}
                     <div className="absolute inset-0 md:left-1/3 md:right-0 overflow-hidden pt-8 md:pt-0">
                         <Image
-                            src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp")} // Acid wash tee placeholder
+                            src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773572385/acidddd_dqm3v8.webp")} // Acid wash tee image
                             alt="Acid Wash Collection"
                             fill
                             className="object-cover md:object-contain object-right md:object-right-bottom group-hover:scale-105 transition-transform duration-700 opacity-60 md:opacity-80"
