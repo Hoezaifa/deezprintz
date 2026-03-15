@@ -6,8 +6,8 @@ import { Container } from "@/components/ui/container"
 import { getCloudinaryUrl } from "@/lib/cloudinary"
 
 const COLLECTIONS = [
-    { title: "TEES", href: "/collections/t-shirts", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255816/breakoutvariations_birjvm.webp") },
-    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773255893/wingsvariations_u6b8p5.webp") },
+    { title: "TEES", href: "/collections/t-shirts", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772737932/sppiderb_srlaq3.webp") },
+    { title: "DROP SHOULDER", href: "/collections/drop-shoulder", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772883558/divinedropf_rdsrbr.webp") },
     { title: "ACID WASH TEES", href: "/collections/acid-wash", image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773085752/BerserkAcidB_pow8mm.webp") },
 ]
 
