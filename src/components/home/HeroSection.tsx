@@ -4,8 +4,10 @@ import Image from "next/image"
 export function HeroSection() {
     return (
         <section className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black py-10 lg:py-0">
-            {/* Background Repeating Text */}
+            {/* Background Repeating Text – decorative only, hidden from crawlers & screen readers */}
             <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.075] pointer-events-none overflow-hidden select-none"
+                aria-hidden="true"
+                role="presentation"
                 style={{ fontFamily: "var(--font-bebas)" }}>
                 {[...Array(7)].map((_, i) => {
                     const isEven = i % 2 === 0;
@@ -16,7 +18,7 @@ export function HeroSection() {
                                 style={{ animationDirection: isEven ? 'normal' : 'reverse' }}>
                                 {/* Generate 16 exact copies. 50% translation means it slides by exactly 8 copies. As long as 8 copies are wider than the screen, the loop will clearly be seamless. */}
                                 {[...Array(16)].map((_, j) => (
-                                    <span key={j} className="pr-4 md:pr-8">IMPACT. DETAIL. PRESENCE.</span>
+                                    <div key={j} className="inline pr-4 md:pr-8">IMPACT. DETAIL. PRESENCE.</div>
                                 ))}
                             </div>
                         </div>

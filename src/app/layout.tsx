@@ -6,8 +6,8 @@ const outfit = Outfit({ subsets: ["latin"] });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
 
 export const metadata: Metadata = {
-  title: "Deez Prints",
-  description: "Premium Streetwear from Pakistan. Discover exclusive t-shirts, hoodies, and accessories.",
+  title: "Deez Prints – Premium Streetwear & Graphic Tees",
+  description: "Deez Prints is a modern printing studio creating premium drop-shoulder tees, streetwear graphics, and limited statement apparel built for impact.",
   icons: {
     icon: "/assets/logo.png",
     shortcut: "/assets/logo.png",
