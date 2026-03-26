@@ -141,6 +141,7 @@ export function Navbar() {
                             onMouseLeave={() => setOpenDropdown(null)}
                         >
                             <Link
+                                prefetch={true}
                                 href={item.href}
                                 className="px-4 py-2 text-sm font-bold tracking-widest text-muted-foreground hover:text-white transition-colors duration-300 relative z-10 block whitespace-nowrap"
                             >
@@ -163,6 +164,7 @@ export function Navbar() {
                                         >
                                             {item.subcategories.map((sub) => (
                                                 <Link
+                                                    prefetch={true}
                                                     key={sub.name}
                                                     href={sub.href}
                                                     className="block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"

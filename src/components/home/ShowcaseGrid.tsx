@@ -48,16 +48,16 @@ const DROP_SHOULDER_ITEMS = [
 
 /* ─── TAPESTRY PRODUCTS ─── */
 const TAPESTRY_ITEMS = [
-    { title: "Berserk Eclipse", price: 1000, image: "/images/generated/tapestry_berserk.png", href: "/products/tapestry-berserk-eclipse" },
-    { title: "Cyber City Night", price: 2000, image: "/images/generated/tapestry_cybercity.png", href: "/products/tapestry-cyber-city" },
-    { title: "Manga Panel", price: 2100, image: "/images/generated/tapestry_manga.png", href: "/products/tapestry-manga-panel" },
-    { title: "Demon Sigil", price: 2000, image: "/images/generated/tapestry_demon_sigil.png", href: "/products/tapestry-demon-sigil" },
+    { title: "Berserk Eclipse", price: 1000, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773597161/tapestry_hr14wa.webp"), href: "/products/tapestry-berserk-eclipse" },
+    { title: "Cyber City Night", price: 2000, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773597161/tapestry_hr14wa.webp"), href: "/products/tapestry-cyber-city" },
+    { title: "Manga Panel", price: 2100, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773597161/tapestry_hr14wa.webp"), href: "/products/tapestry-manga-panel" },
+    { title: "Demon Sigil", price: 2000, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773597161/tapestry_hr14wa.webp"), href: "/products/tapestry-demon-sigil" },
 ]
 
 /* ─── MUG PRODUCTS ─── */
 const MUG_ITEMS = [
     { title: "Skull Mug", price: 600, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1772897480/mug_sample_sfu1kd.webp"), href: "/products/mug-white" },
-    { title: "Custom Mug", price: 1200, image: "/images/generated/mugs_hero.png", href: "/products/mug-colored" },
+    { title: "Custom Mug", price: 1200, image: getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773596802/mug_collection_gntc3f.webp"), href: "/products/mug-colored" },
 ]
 
 export function ShowcaseGrid() {
@@ -149,7 +149,7 @@ export function ShowcaseGrid() {
                     <div className="rounded-2xl overflow-hidden bg-[#0A0A0A] border border-white/5">
                         {/* Hero */}
                         <div className="relative h-[180px] md:h-[200px]">
-                            <Image src="/images/generated/tapestry_room_hero.png" alt="Tapestry room" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                            <Image src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773597161/tapestry_hr14wa.webp")} alt="Tapestry room" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
                             <div className="absolute bottom-0 left-0 p-5 z-10">
@@ -178,7 +178,7 @@ export function ShowcaseGrid() {
                     <div className="rounded-2xl overflow-hidden bg-[#0A0A0A] border border-white/5">
                         {/* Hero */}
                         <div className="relative h-[180px] md:h-[200px]">
-                            <Image src="/images/generated/drop_shoulder_era_v2.png" alt="Drop Shoulder Era" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                            <Image src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773574932/drp_btiwfr.webp")} alt="Drop Shoulder Era" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
                             <div className="absolute bottom-0 left-0 p-5 z-10">
@@ -208,7 +208,7 @@ export function ShowcaseGrid() {
                     <div className="rounded-2xl overflow-hidden bg-[#0A0A0A] border border-white/5 flex flex-col">
                         {/* Hero */}
                         <div className="relative h-[180px] md:h-[200px]">
-                            <Image src="/images/generated/mugs_hero.png" alt="Custom Mugs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                            <Image src={getCloudinaryUrl("https://res.cloudinary.com/dsjnjbsgi/image/upload/v1773596802/mug_collection_gntc3f.webp")} alt="Custom Mugs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
                             <div className="absolute bottom-0 left-0 p-5 z-10">

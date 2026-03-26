@@ -59,7 +59,7 @@ export function ProductCard({ id, title, price, image, images, category, rating 
     }
 
     return (
-        <Link href={href} aria-label={`View ${title}`} className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30 cursor-pointer">
+        <Link prefetch={true} href={href} aria-label={`View ${title}`} className="group relative flex flex-col gap-4 p-4 rounded-3xl bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors duration-300 hover:bg-secondary/30 cursor-pointer">
 
             {/* Image Container with Glow */}
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-black/20">

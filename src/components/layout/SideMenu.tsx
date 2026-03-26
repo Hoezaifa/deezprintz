@@ -94,6 +94,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                         // Flatten Accessories for Side Menu
                                         return item.subcategories.map((sub: SubCategory) => (
                                             <Link
+                                                prefetch={true}
                                                 key={sub.name}
                                                 href={sub.href}
                                                 onClick={onClose}
@@ -127,6 +128,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                                         <div className="flex flex-col pl-4 mt-2 mb-2 space-y-2 border-l border-white/10 ml-1">
                                                             {item.subcategories.map((sub: SubCategory) => (
                                                                 <Link
+                                                                    prefetch={true}
                                                                     key={sub.name}
                                                                     href={sub.href}
                                                                     onClick={onClose}
@@ -141,6 +143,7 @@ export function SideMenu({ isOpen, onClose, navLinks, user, onLogout }: SideMenu
                                             ) : (
                                                 // Simple Link
                                                 <Link
+                                                    prefetch={true}
                                                     href={item.href}
                                                     onClick={onClose}
                                                     className="block w-full py-2 text-xl font-bold text-white uppercase tracking-wider hover:text-orange-500 transition-colors"

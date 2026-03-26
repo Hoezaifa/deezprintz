@@ -45,6 +45,7 @@ export interface Product {
     artist?: string
     rating: number
     colors?: string[]
+    images?: string[]
 }
 
 export function ProductManager() {
@@ -63,7 +64,8 @@ export function ProductManager() {
         subcategory: "",
         artist: "",
         rating: 5,
-        colors: []
+        colors: [],
+        images: []
     })
 
     const [selectedType, setSelectedType] = useState("")
@@ -176,7 +178,8 @@ export function ProductManager() {
             subcategory: "",
             artist: "",
             rating: 5,
-            colors: []
+            colors: [],
+            images: []
         })
     }
 
@@ -328,16 +331,45 @@ export function ProductManager() {
                                 })()}
 
                                 <div className="space-y-2">
-                                    <Label>Image URL (or Path)</Label>
+                                    <Label>Main Image URL (Cloudinary or Local)</Label>
                                     <div className="flex gap-2">
                                         <Input
                                             value={formData.image}
                                             onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                            placeholder="/assets/products/..."
+                                            placeholder="e.g. https://res.cloudinary.com/... or /assets/products/..."
                                             className="bg-zinc-800 border-zinc-700 flex-1"
                                         />
                                     </div>
-                                    <p className="text-xs text-zinc-500">For now, manually paste the path or URL. Drag & Drop upload coming soon.</p>
+                                    {formData.image && (
+                                        <div className="mt-2 relative w-32 h-32 rounded-lg overflow-hidden border border-white/10 bg-black/40">
+                                            <img src={formData.image} alt="Preview" className="object-cover w-full h-full" />
+                                            <div className="absolute top-0 right-0 bg-black/60 px-2 py-0.5 text-[10px]">Main</div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label>Secondary Images (Comma separated URLs)</Label>
+                                    <Textarea
+                                        value={formData.images?.join(", ") || ""}
+                                        onChange={(e) => setFormData({
+                                            ...formData,
+                                            images: e.target.value.split(",").map(url => url.trim()).filter(Boolean)
+                                        })}
+                                        placeholder="url1, url2, url3..."
+                                        className="bg-zinc-800 border-zinc-700 min-h-[100px]"
+                                    />
+                                    {formData.images && formData.images.length > 0 && (
+                                        <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
+                                            {formData.images.map((url, i) => (
+                                                <div key={i} className="relative w-24 h-24 shrink-0 rounded-lg overflow-hidden border border-white/10 bg-black/40">
+                                                    <img src={url} alt={`Preview ${i}`} className="object-cover w-full h-full" />
+                                                    <div className="absolute top-0 right-0 bg-black/60 px-1.5 py-0.5 text-[10px]">{i + 1}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <p className="text-xs text-zinc-500 italic">Enter Cloudinary links or direct image URLs. Separate with commas.</p>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">

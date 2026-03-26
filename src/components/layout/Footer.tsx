@@ -25,10 +25,10 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold text-white mb-4 tracking-widest uppercase text-xs">Shop</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><Link href="/collections/t-shirts" className="hover:text-white transition-colors">T-Shirts</Link></li>
-                            <li><Link href="/collections/hoodies" className="hover:text-white transition-colors">Hoodies</Link></li>
-                            <li><Link href="/collections/jerseys" className="hover:text-white transition-colors">Jerseys</Link></li>
-                            <li><Link href="/collections/accessories" className="hover:text-white transition-colors">Accessories</Link></li>
+                            <li><Link prefetch={true} href="/collections/t-shirts" className="hover:text-white transition-colors">T-Shirts</Link></li>
+                            <li><Link prefetch={true} href="/collections/hoodies" className="hover:text-white transition-colors">Hoodies</Link></li>
+                            <li><Link prefetch={true} href="/collections/jerseys" className="hover:text-white transition-colors">Jerseys</Link></li>
+                            <li><Link prefetch={true} href="/collections/accessories" className="hover:text-white transition-colors">Accessories</Link></li>
                         </ul>
                     </div>
 
@@ -36,10 +36,10 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold text-white mb-4 tracking-widest uppercase text-xs">Support</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
-                            <li><Link href="/faq" className="hover:text-white transition-colors">FAQs</Link></li>
-                            <li><Link href="/shipping" className="hover:text-white transition-colors">Shipping Info</Link></li>
-                            <li><Link href="/returns" className="hover:text-white transition-colors">Returns</Link></li>
+                            <li><Link prefetch={true} href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+                            <li><Link prefetch={true} href="/faq" className="hover:text-white transition-colors">FAQs</Link></li>
+                            <li><Link prefetch={true} href="/shipping" className="hover:text-white transition-colors">Shipping Info</Link></li>
+                            <li><Link prefetch={true} href="/returns" className="hover:text-white transition-colors">Returns</Link></li>
                         </ul>
                     </div>
 

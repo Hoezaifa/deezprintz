@@ -58,10 +58,9 @@ export function BuiltForPresenceSection() {
     }
 
     return (
-        <section className="py-4 md:py-10 bg-background relative z-10" suppressHydrationWarning>
-            <Container>
-                <div className="relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/5 min-h-[380px] md:min-h-[450px]">
-                    <AnimatePresence initial={false} mode="wait">
+        <section className="bg-[#050505] relative z-10 border-y border-white/5 overflow-hidden" suppressHydrationWarning>
+            <div className="relative w-full min-h-[400px] md:min-h-[500px]">
+                <AnimatePresence initial={false} mode="wait">
                         <motion.div
                             key={currentSlide}
                             initial={{ x: "100%" }}
@@ -104,6 +103,7 @@ export function BuiltForPresenceSection() {
 
                                 <div className="flex">
                                     <Link
+                                        prefetch={true}
                                         href={SLIDES[currentSlide].href}
                                         className="group relative inline-flex items-center justify-center px-6 py-3 font-bold text-white uppercase tracking-widest text-xs rounded-lg bg-[#141414] border border-white/10 transition-all duration-300 hover:bg-white hover:text-black hover:border-white"
                                     >
@@ -134,7 +134,6 @@ export function BuiltForPresenceSection() {
                         ))}
                     </div>
                 </div>
-            </Container>
         </section>
     )
 }
