@@ -210,7 +210,18 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.3 }}
-                                        className="w-full h-full p-8 flex items-center justify-center"
+                                        drag={images.length > 1 ? "x" : false}
+                                        dragConstraints={{ left: 0, right: 0 }}
+                                        dragElastic={0.2}
+                                        onDragEnd={(e, { offset }) => {
+                                            const threshold = 50;
+                                            if (offset.x < -threshold) {
+                                                setActiveImage((prev) => (prev + 1) % images.length);
+                                            } else if (offset.x > threshold) {
+                                                setActiveImage((prev) => (prev - 1 + images.length) % images.length);
+                                            }
+                                        }}
+                                        className={`w-full h-full p-8 flex items-center justify-center ${images.length > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
                                     >
                                         {images[activeImage]?.src ? (
                                             <Image
@@ -219,6 +230,7 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
                                                 fill
                                                 className="object-contain"
                                                 priority
+                                                draggable={false}
                                             />
                                         ) : (
                                             <StreetwearPlaceholder type="shirt" className="w-full h-full" />
