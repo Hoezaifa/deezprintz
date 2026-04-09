@@ -30,6 +30,7 @@ import { ChatBot } from "@/components/chat/ChatBot";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ClarityTracker } from "@/components/clarity/ClarityTracker";
 
@@ -56,6 +57,7 @@ export default function RootLayout({
             <Footer />
           </CartProvider>
           <Analytics />
+          <SpeedInsights />
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-2ZTGNEB0B8"} />
         </ThemeProvider>
       </body>
